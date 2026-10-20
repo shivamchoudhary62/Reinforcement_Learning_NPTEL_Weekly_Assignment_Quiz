@@ -1,0 +1,134 @@
+Assignment 10
+Reinforcement Learning
+Prof. B. Ravindran
+1. Consider the update equation for SMDP Q-learning:
+Q(s,a)=Q(s,a)+α[A+Bmax Q(s′,a′)−Q(s,a)]
+a′
+Which of the following are the correct values of A and B ?
+(r is the reward received at time step k, and γ is the discount factor)
+k
+(a) A = r ; B = γ
+t
+(b) A = r +γr +...+γτ−1r ; B = γτ
+t t+1 t+τ
+(c) A = γtr +γt+1r +...+γt+τ−1r ; B = γt+τ
+t t+1 t+τ
+(d) A = γτ−1r ; B = γτ
+t+τ
+Sol. (b)
+Aisthevalueoftotaldiscountedrewardaccumulatedbetweentimesteptandtimestept+τ.
+Discounting starts from the t + 1 step in the recursive formulation. B is the value of the
+discount factor after τ time steps =γτ.
+Refer to the lecture on SMDP Q-learning.
+2. Consider a SMDP in which the next state and the reward only depend on the previous state
+and action i.e P(s′,τ|s,a)=P(s′|s,a)P(τ|s,a), R(s,a,τ,s′)=R(s,a,s′).
+IfwesolvetheaboveSMDPwithconventionalQ-learningwewillendupwiththesamepolicy
+as solving it with SMDP Q-learning.
+(a) yes, because now τ won’t change anything and we end up with same states and action
+sequences
+(b) no, becauseτ stilldependsonthestate, actionpairanddiscountingmayhaveaeffecton
+the final policies.
+(c) no, because the next state will still depend on the τ.
+(d) yes, because the bellman equation is same for both methods in this case.
+Sol. (b)
+The bellman equation for SMDP has γτ factor which will affect the returns and thus affect
+the policy.
+3. In HAM, what will be the immediate rewards received between two choice states.
+(a) Accumulation of immediate rewards of the core MDP obtained between these choice
+points.
+(b) The return of the next choice state.
+(c) The reward of only the next primitive action taken.
+(d) Immediate reward is always zero
+1
+
+Sol. (a)
+The transaction between two choice states may involve going through multiple primitive
+states.Therewardwillbeaccumulatingofalltherewardsobtainedaftertakingtheseprimitive
+actions.
+4. Which of the following is true about Markov and Semi Markov Options?
+(a) In a Markov Option the option’s policy depends only on the current state.
+(b) In a Semi Markov Option the option’s policy can depend only on the current state.
+(c) In a Semi Markov Option, the option’s policy may depend on the history since the exe-
+cution of the option began.
+(d) A Semi-Markov Option is always a Markov Option but not vice versa.
+Sol. (a),(b),(c)
+In Semi-Markov options, the policy π depends on all the states since the option started
+5. Consider the two statements below for an SMDP for a HAM:
+Statement1: The state of the SMDP is defined by the state of the base MDP, the call stack
+and the state of the machine currently executing.
+Statement2: The actions of the SMDP can only be defined by the action states.
+Which of the following are true?
+(a) Statement1 is True and Statement2 is True.
+(b) Statement1 is True and Statement2 is False.
+(c) Statement1 is False and Statement2 is True.
+(d) Statement1 is False and Statement2 is False.
+Sol. (b)
+The actions are defined by the states that can be transitioned to from each choice state.
+6. Which of the following are possible advantages of formulating a given problem as a hierarchy
+of sub-problems?
+(a) A reduced state space.
+(b) More meaningful state-abstraction.
+(c) Temporal abstraction of behaviour.
+(d) Re-usability of learnt sub-problems.
+Sol. (a),(b),(c),(d)
+(a) and (b) are true. By solving sub-problems independent of the overall-problem, we can
+reducethesizeofthestatespace,andusemoremeaningfulstaterepresentations-encapsulating
+only that information required to solve each sub-problem. (c) is true. We abstract away the
+notion of time, as we deal with multiple sub-problems, each of which could take a varying
+amount of time.
+(d) is true. We can reuse the policies learnt for repeated sub-problems in the hierarchy.
+2
+
+7. In SMDP, consider the case when τ is fixed for all state, action pairs. Will we always get the
+same policy for conventional Q-learning and SMDP Q learning then? Provide answer for the
+three cases when τ =3, τ =2, τ =1.
+(a) yes, yes, no
+(b) no, no, no
+(c) yes, yes, yes,
+(d) no, no, yes
+Sol. (d)
+For τ ̸=1 then the discounting changes and thus the policy.
+8. State True or False:
+In the classical options framework, each option has a non-zero probability of terminating in
+any state of the environment.
+(a) True
+(b) False
+Sol. (b)
+In the classical options framework, each option assigns a probability with which it will termi-
+nate to every state of the environment. However, the probability of termination can be zero
+for any number of these states.
+9. Suppose that we model a robot in a room as an SMDP, such that the position of the robot in
+the room is the state of the SMDP. Which of the following scenarios satisfy the assumption
+that the next state and transition time are independent of each other given the current state
+andactioni.eP(s′,τ|s,a)=P(s′|s,a)P(τ|s,a)? (Assumethatprimitiveactions-<left,right,
+up, down> take a single time step to execute.)
+(a) The room has a single door. The actions available are : {exit the room, move left, move
+right, move up, move down}.
+(b) The room has a two doors. The actions available are : {exit the room, move left, move
+right, move up, move down}.
+(c) The room has a two doors. The actions available are: {move left, move right, move up,
+move down}.
+(d) None of the above.
+Sol. (a),(c)
+The assumption holds for (a). There is only one way to exit the room, so the transition time
+takentoexittheroomisindependentofthenextstate, providedthecurrentstateandaction.
+The assumption does not hold for (b). The transition time taken to exit the room depends on
+which door the robot uses (that is, it depends on the next state).
+The assumption holds for (c). Only primitive actions available, each primitive action has a
+transition time of a single time step.
+10. Which of the following is a correct Bellman equation for an SMDP?
+Note: R(s,a,s′) =⇒ reward is a function of only s,a and s′.
+(a) V∗(s)=max [R(s,a,τ,s′)+γτP(s′|s,a)V∗(s′)]
+a∈A(S)
+3
+
+(b) V∗(s)=max [Σ P(s′|s,a,τ)(R(s,a,τ,s′)+γV∗(s′))]
+a∈A(S) s′,τ
+(c) V∗(s)=max [Σ P(s′,τ|s,a)(R(s,a,τ,s′)+γτV∗(s′))]
+a∈A(S) s′,τ
+(d) V∗(s)=max [Σ P(s′,τ|s,a)(R(s,a,s′)+γV∗(s′))]
+a∈A(S) s′,τ
+Sol. (c)
+Reward depend on s, a, s′, τ. We reach next state after τ time so we discount by γτ. Refer
+”Recent advances in hierarchical reinforcement learning” paper for more information.
+4

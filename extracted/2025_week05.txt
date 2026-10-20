@@ -1,0 +1,197 @@
+Assignment 5 (Sol.)
+Reinforcement Learning
+Prof. B. Ravindran
+1. For a particular finite MDP with bounded rewards, let V be the space of bounded functions
+on S, the state space of the MDP. Let Π be the set of all policies, and let v be the value
+π
+function corresponding to policy π where π ∈Π. Is it true that v ∈V, ∀π ∈Π?
+π
+(a) no
+(b) yes
+Sol. (b)
+The question essentially asks whether V contains all value functions, which we have seen in
+the lectures to be true.
+2. Intheproofofthevalueiterationtheorem,wesawthatLvn+1 =L vn+1. Isittrue,ingeneral,
+π
+that for an arbitrary bounded function v, Lv =L v (disregarding any special conditions that
+π
+may be existing in the aforementioned proof)?
+(a) no
+(b) yes
+Sol. (a)
+3. Continuing with the previous question, why is it the case that Lvn+1 = L vn+1 in the proof
+π
+of the value iteration theorem?
+(a) because the equality holds in general
+(b) because vn+1 is the optimal value function
+(c) because we are considering only deterministic policies choosing a max valued action in
+each state
+(d) because vn+1 is not a value function
+Sol. (c)
+4. Given that q (s,a)>v (s), we can conclude
+π π
+(a) action a is the best action that can be taken in state s
+(b) π may be an optimal policy
+(c) π is not an optimal policy
+1
+
+(d) none of the above
+Sol. (c)
+Theinequalityindicatesthatthereexistsanactionthatiftakeninstates,theexpectedreturn
+would be higher than the expected return of taking actions in state s as per policy π. While
+thisindicatesthatπ isnotanoptimalpolicy,itdoesnotindicatethataisthebestactionthat
+can be taken in state s, since there may exist another action a(cid:48) such that q (s,a(cid:48))>q (s,a).
+π π
+5. Recall the problem described in the first question of the previous assignment. Use the MDP
+formulation arrived at in that question and starting with policy π(laughing) = π(silent) =
+(incense, no organ), perform a couple of policy iterations or value iterations (by hand!) until
+you find an optimal policy (if you are taking a lot of iterations, stop and reconsider your
+formulation!). What are the resulting optimal state-action values for all state-action pairs?
+(a) q (s,a)=8, ∀a
+∗
+(b) q (s,a)=10, ∀a
+∗
+(c) q (s,a∗)=10, q (s,a)=−10, ∀a(cid:54)=a∗
+∗ ∗
+(d) q (s,a∗)=10, q (s,a)=8, ∀a(cid:54)=a∗
+∗ ∗
+Sol. (d)
+First consider policy iteration.
+Initialisation: V(L)=V(Q)=0; π(L)=π(Q)=¬O∧I
+Assuming θ =0.7 and given, γ =0.9
+Evaluation:
+∆=0
+V(L)=Pπ(L)∗[Rπ(L)+γV(L)]+Pπ(L)∗[Rπ(L)+γV(Q)]=1∗(−1+0.9∗0)+0=−1
+LL LL LQ LQ
+V(Q)=Pπ(Q)∗[Rπ(Q)+γV(L)]+Pπ(Q)∗[Rπ(Q)+γV(Q)]=0+1∗(1+0.9∗0)=+1
+QL QL QQ QQ
+∆=1
+V(L)=Pπ(L)∗[Rπ(L)+γV(L)]+Pπ(L)∗[Rπ(L)+γV(Q)]=−1.9
+LL LL LQ LQ
+V(Q)=Pπ(Q)∗[Rπ(Q)+γV(L)]+Pπ(Q)∗[Rπ(Q)+γV(Q)]=+1.9
+QL QL QQ QQ
+∆=0.9
+V(L)=Pπ(L)∗[Rπ(L)+γV(L)]+Pπ(L)∗[Rπ(L)+γV(Q)]=−2.71
+LL LL LQ LQ
+V(Q)=Pπ(Q)∗[Rπ(Q)+γV(L)]+Pπ(Q)∗[Rπ(Q)+γV(Q)]=+2.71
+QL QL QQ QQ
+∆=0.81
+V(L)=Pπ(L)∗[Rπ(L)+γV(L)]+Pπ(L)∗[Rπ(L)+γV(Q)]=−3.439
+LL LL LQ LQ
+V(Q)=Pπ(Q)∗[Rπ(Q)+γV(L)]+Pπ(Q)∗[Rπ(Q)+γV(Q)]=+3.439
+QL QL QQ QQ
+∆=0.729
+V(L)=Pπ(L)∗[Rπ(L)+γV(L)]+Pπ(L)∗[Rπ(L)+γV(Q)]=−4.0951
+LL LL LQ LQ
+V(Q)=Pπ(Q)∗[Rπ(Q)+γV(L)]+Pπ(Q)∗[Rπ(Q)+γV(Q)]=+4.0951
+QL QL QQ QQ
+∆=0.6561
+Improvement:
+π(L)=O∧I (or O∧¬I)
+π(Q)=¬O∧I
+Evaluation:
+∆=0
+V(L)=Pπ(L)∗[Rπ(L)+γV(L)]+Pπ(L)∗[Rπ(L)+γV(Q)]=+4.6856
+LL LL LQ LQ
+2
+
+V(Q)=Pπ(Q)∗[Rπ(Q)+γV(L)]+Pπ(Q)∗[Rπ(Q)+γV(Q)]=+4.6856
+QL QL QQ QQ
+∆=0.5905
+Improvement:
+π(L)=O∧I (or O∧¬I)
+π(Q)=¬O∧I
+No change in policy. This is an optimal policy.
+Now consider value iteration.
+Initialisation: V(L)=V(Q)=0; Assuming θ =0.9
+∆=0
+V(L)=max {Pa ∗[Ra +γV(L)]+Pa ∗[Ra +γV(Q)]}
+a LL LL LQ LQ
+For a=O∧I or O∧¬I:
+V(L)=+1
+V(Q)=max {Pa ∗[Ra +γV(L)]+Pa ∗[Ra +γV(Q)]}
+a QL QL QQ QQ
+For a=¬O∧I: V(Q)=+1
+∆=1
+V(L)=+1.9 for a=O∧I or O∧¬I
+V(Q)=+1.9 for a=¬O∧I
+∆=0.9
+V(L)=+2.71 for a=O∧I or O∧¬I
+V(Q)=+2.71 for a=¬O∧I
+∆=0.81
+Deterministic policy:
+π(L)=O∧I (or O∧¬I)
+π(Q)=¬O∧I
+Continuingevaluationwillleadtoconvergencevaluesof±10(±1(1+γ+γ2+...)= ±1 = ±1).
+1−γ .1
+Optimal state-action values:
+Current state Action Next state q (s,a)
+(cid:63)
+L O∧I Q +10
+L O∧¬I Q +10
+L ¬O∧I L +8
+L ¬O∧¬I L +8
+Q O∧I L +8
+Q O∧¬I L +8
+Q ¬O∧I Q +10
+Q ¬O∧¬I L +8
+Note: q (s,a)=+10whenanoptimalactionistakeninanystate,whereas+8(=−1+0.9∗10)
+(cid:63)
+resultswhenaninitialsub-optimalactionisfollowedbyactionstakenaccordingtoanoptimal
+policy.
+6. In the previous question, what does the state value function converge to for the policy we
+started off with?
+(a) v (laughing)=v (silent)=10
+π π
+(b) v (laughing)=8, v (silent)=10
+π π
+(c) v (laughing)=−10, v (silent)=10
+π π
+(d) v (laughing)=−8, v (silent)=10
+π π
+3
+
+Sol. (c)
+Refer to the solution of the previous question.
+7. In solving an episodic problem we observe that all trajectories from the start state to the goal
+state pass through a particular state exactly twice. In such a scenario, is it preferable to use
+first-visit or every-visit MC for evaluating the policy?
+(a) first-visit MC
+(b) every-visit MC
+(c) every-visit MC with exploring starts
+(d) neither, as there are issues with the problem itself
+Sol. (d)
+A state having to be visited exactly twice in any trajectory from the start state to the goal
+state indicates that the problem environment does not follow the Markov property.
+8. Which of the following are advantages of Monte Carlo methods over dynamic programming
+techniques?
+(a) the ability to learn from actual experience
+(b) the ability to learn from simulated experience
+(c) the ability to estimate the value of a single state independent of the number of states
+(d) the ability to show guaranteed convergence to an optimal policy
+Sol. (a), (b), (c)
+Option (c) is an advantage, since it allows us to estimate values of only specific states of an
+MDP if those are the only states we care to know about.
+9. For a specific MDP, suppose we have a policy that we want to evaluate through the use of
+actualexperienceintheenvironmentaloneandusingMonteCarlomethods. Wedecidetouse
+the first-visit approach along with the technique of always picking the start state at random
+from the available set of states. Will this approach ensure complete evaluation of the action
+value function corresponding to the policy?
+(a) no
+(b) yes
+Sol. (a)
+Dependinguponthepolicy,startingfromrandomstatesalonewillnotensureobservingreturns
+for each state-action pairs, which is required to fully evaluate q .
+π
+10. Assuming an MDP where there are n actions a ∈ A each of which is applicable in each state
+s∈S, if π is an (cid:15)-soft policy for some (cid:15)>0, then
+(a) π(a|s)=(cid:15), ∀a,s
+(b) π(a|s)= (cid:15), ∀a,s
+n
+(c) π(a|s)>= (cid:15), ∀a,s
+n
+(d) π(a(cid:48)|s)=1−(cid:15)+ (cid:15), π(a|s)= (cid:15), ∀a(cid:54)=a(cid:48), ∀s
+n n
+Sol. (c)
+An (cid:15)-soft policy is one where the probability of selecting any action is at least (cid:15)/n.
+4

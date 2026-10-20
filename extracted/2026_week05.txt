@@ -1,0 +1,111 @@
+Assignment 5
+Reinforcement Learning
+Prof. B. Ravindran
+Instructions: In the following, one or more choices may be correct. Select all that apply.
+1. Inpolicyiteration,whichofthefollowingis/aretrueofthePolicyEvaluation(PE)andPolicy
+Improvement (PI) steps?
+(a) The values of states that are returned by PE may fluctuate between high and low values
+as the algorithm runs.
+(b) PE returns the fixed point of L
+πn
+(c) PI can randomly select any greedy policy for a given value function vn.
+(d) Policy iteration always converges for a finite MDP.
+Sol. (b), (d)
+At each iteration, the PE step always returns values that are greater than or equal to the
+values of states from the previous iteration. So there is no fluctuation between high, and low
+values.
+Since the PE step always returns values that are greater than or equal to the values of states
+from the previous iteration, by breaking ties consistently when greedily selecting policies in
+the PI stage, the policy returned by the PI step is always better than or equal to the policy
+from the previous iteration. Since for a finite MDP there are a finite number of deterministic
+policies to search through, policy iteration must converge eventually.
+(b) is True. (c) is False - we need to break ties between policies consistently to guarantee
+that the stopping criterion is met. (Refer to lectures).
+2. ConsiderMonte-Carloapproachforpolicyevaluation. SupposethestatesareS ,S ,S ,S ,S ,S
+1 2 3 4 5 6
+and terminal state. You sample one trajectory as follows -
+S →S →S →S →terminal state.
+1 5 4 6
+Which among the following states can be updated from this sample?
+(a) S
+1
+(b) S
+2
+(c) S
+6
+(d) S
+4
+Solution (a),(c),(d)
+Values of all states that appear in the trajectory can be updated.
+3. Which of the following statements are true with regards to Monte Carlo value approximation
+methods?
+(a) To evaluate a policy using these methods, a subset of trajectories in which all states are
+encountered at least once are enough to update all state-values.
+(b) Monte-Carlo value function approximation methods need knowledge of the full model.
+1
+
+(c) Monte-Carlo methods update state-value estimates only at the end of an episode.
+(d) All of the above.
+Solution (a), (c)
+(a) State values of all states that appear in a trajectory can be updated simultaneously. So as
+long as all states appears in at least one trajectory, we can make sure that all state-values for
+all states are updated. (c) Self-explanatory. (b) is wrong since these methods only require a
+way to sample trajectories from the environment.
+4. In every visit Monte Carlo methods, multiple samples for one state are obtained from a single
+trajectory. Which of the following is true?
+(a) There is an increase in bias of the estimates.
+(b) There is an increase in variance of the estimates.
+(c) It does not affect the bias or variance of estimates.
+(d) Both bias and variance of the estimates increase.
+Sol. (a)
+Itonlyleadstoanincreaseinthebiasduetosometransitionsintheobtainedtrajectorybeing
+used multiple times, the distribution itself gets modified due to this.
+5. Which of the following statements are FALSE about solving MDPs using dynamic program-
+ming?
+(a) If the state space is large or computation power is limited, it is preferred to update only
+some states through random sampling or selecting states seen in trajectories.
+(b) Knowledge of transition probabilities is not necessary for solving MDPs using dynamic
+programming.
+(c) Methods that update only a subset of states at a time guarantee performance equal to or
+better than classic DP.
+(d) None of the above.
+Sol. (b), (c)
+(a) Valid reason for updating only subset of states at a time. (b) Solving MDPs using DP re-
+quiresknowledgeofthefullmodel,includingtransitionprobabilities. (c)Thereisnoguarantee
+that it will be better than classic DP.
+6. Select the correct statements about Generalized Policy Iteration (GPI).
+(a) GPI lets policy evaluation and policy improvement interact with each other regardless of
+the details of the two processes.
+(b) Before convergence, the policy evaluation step will usually cause the policy to no longer
+be greedy with respect to the updated value function.
+(c) GPIconvergesonlywhenapolicyhasbeenfoundwhichisgreedywithrespecttoitsown
+value function.
+(d) The policy and value function found by GPI at convergence with both be optimal.
+Sol. (a),(b),(c),(d)
+Refer to Generalized Policy Iteration lectures.
+2
+
+7. What is meant by ”off-policy” Monte Carlo value function evaluation?
+(a) The policy being evaluated is the same as the policy used to generate samples.
+(b) The policy being evaluated is different from the policy used to generate samples.
+(c) The policy being learnt is different from the policy used to generate samples.
+(d) The policy being learnt is different from the policy used to generate samples.
+Sol. (b)
+Monte Carlo value function evaluation is for valuation of a policy, not for learning one. ”Off-
+policy”indicatesthatthesamplegeneratingpolicyisdifferentfromthepolicybeingevaluated.
+8. For both value and policy iteration algorithms we will get a sequence of vectors after some
+iterations, say v ,v ....v for value iteration and v′,v′...v′ for policy iteration. Which of the
+1 2 n 1 2 n
+following statements are true.
+(a) For all v ∈v ,v ....v there exists a policy for which v is a fixed point.
+i 1 2 n i
+(b) For all v′ ∈v′,v′....v′ there exists a policy for which v′ is a fixed point.
+i 1 2 n i
+(c) For all v ∈v ,v ....v there may not exist a policy for which v is a fixed point.
+i 1 2 n i
+(d) For all v′ ∈v′,v′....v′ there may not exist a policy for which v′ is a fixed point.
+i 1 2 n i
+Sol. (b),(c)
+Thevectorsinvalueiterationmaynotcorrespondtoapolicybutthevectorsinpolicyiteration
+always correspond to some policy
+3

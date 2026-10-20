@@ -1,0 +1,228 @@
+Assignment 4 (Sol.)
+Reinforcement Learning
+Prof. B. Ravindran
+1. You receive the following letter:
+Dear Friend,
+Sometimeago,Iboughtthisoldhouse,butfoundittobehauntedbyghostlysardoniclaughter.
+As a result it is hardly habitable. There is hope, however, for by actual testing I have found
+that this haunting is subject to certain laws, obscure but infallible, and that the laughter can
+beaffectedbymyplayingtheorganorburningincense. Ineachminute,thelaughteroccursor
+not, it shows no degree. What it will do during the ensuing minute depends, in the following
+exact way, on what has been happening during the preceding minute:
+Whenever there is laughter, it will continue in the succeeding minute unless I play the organ,
+in which case it will stop. But continuing to play the organ does not keep the house quiet.
+I notice, however, that whenever I burn incense when the house is quiet and do not play the
+organ it remains quiet for the next minute.
+At this minute of writing, the laughter is going on. Please tell me what manipulations of
+incense and organ I should make to get that house quiet, and to keep it so.
+Sincerely, At Wits End
+Assume that we make the following decisions in formulating this problem as an MDP:
+State set: {L,Q}, where L indicates that there is laughter in the room, and Q indicates that
+the room is quiet.
+Action set: {O∧I,O∧¬I,¬O∧I,¬O∧¬I}, where O corresponds to playing the organ, and
+I corresponds to burning incense.
+We consider this as a continuing discounted problem with γ = 0.9 and we let the reward be
++1 on any transition into the silent state, and -1 on any transition into the laughing state.
+Assuming deterministic state transitions and rewards based upon current state and action,
+whichamongthefollowing4-tuples(currentstate,action,nextstate,reward)representcorrect
+state transitions and rewards?
+(a) (L,O∧I,Q,+1)
+(b) (L,O∧¬I,L,−1)
+(c) (L,¬O∧I,Q,+1)
+(d) (L,¬O∧¬I,L,−1)
+(e) (Q,O∧I,Q,+1)
+1
+
+(f) (Q,O∧¬I,L,−1)
+(g) (Q,¬O∧I,Q,+1)
+(h) (Q,¬O∧¬I,L,−1)
+Sol. (a), (d), (f), (g), (h)
+We know that if there is laughter and the organ is played, then in the next step laughter will
+stop. Thiscontradictsoption(b). Similarly,option(c)indicatesthatbyburningincensealone
+laughter can be made to stop, which is incorrect. Option (e) is also not correct because we
+knowthatplayingtheorganwhenthehouseisquietdoesnotresultinthehousestayingquiet.
+2. Based on the above problem description, what advice will you give to At Wit’s End?
+(a) if there is laughter, play the organ and do not burn incense; if room is quite, play the
+organ and burn incense
+(b) never play the organ, always burn incense
+(c) always play the organ, never burn incense
+(d) if there is laughter, play the organ; if room is quite, do not play the organ and burn
+incense
+Sol. (d)
+3. If a policy is greedy with respect to its own value function, then it is an optimal policy.
+(a) false
+(b) true
+Sol. (b)
+Consider the value function corresponding to an arbitrary policy π. If we derive a policy
+that is greedy with respect to this value function, by the policy improvement theorem, we are
+guaranteedtogetapolicywhichisatleastasgoodasthepolicyπ. Thisderivedpolicywillbe
+equivalent to the policy π if and only if π is optimal. Hence, if a policy is greedy with respect
+to its own value function, then it is optimal.
+4. Consider a 4 X 4 grid world problem where the goal is to reach either the top left corner or
+thebottomrightcorner. Theagentcanchoosefromfouractions{up, down, left, right}which
+deterministicallycausethecorrespondingstatetransitions,exceptthatactionsthatwouldtake
+the agent off the grid leave the state unchanged. We model this as an undiscounted, episodic
+task,wheretherewardis-1foralltransitions. Supposethattheagentfollowstheequiprobable
+random policy. Given below is the partial value function for this problem. Calculate respec-
+tively, the missing values in the first and second row? (Hint: the Bellman equation must hold
+for every state.)
+2
+
+(a) -20, -14
+(b) -14, -20
+(c) -14, -18
+(d) -20, -18
+Sol. (b)
+For the value in the first row, we have
+(cid:88) (cid:88)
+v (s)= π(a|s) p(s(cid:48)|s,a)[r+v (s(cid:48))]
+π π
+a s(cid:48)
+v (s)=0.25∗(−1+v (s)−1−21−19)
+π π
+v (s)=0.25v (s)−10.5
+π π
+0.75v (s)=−10.5
+π
+v (s)=−14
+π
+Similarly, for the value in the second row, we have
+v (s)=0.25∗(−23+v (s)−1−21−15)
+π π
+v (s)=0.25v (s)−15
+π π
+0.75v (s)=−15
+π
+v (s)=−20
+π
+5. Ifπistheequiprobablerandompolicy,whataretherespectivevaluesofq (s ,down) and q (s ,down)
+π 1 π 2
+given that s is the last cell in the third row (value -14) and s is the last cell in the second
+1 2
+row?
+(a) -1, -15
+(b) -15, -21
+(c) 0, -14
+(d) -13, -19
+3
+
+Sol. (a)
+For s , we have
+1
+(cid:88)
+q (s ,down)= p(s(cid:48)|s ,down)[r+v (s(cid:48))]
+π 1 1 π
+s(cid:48)
+q (s ,down)=−1+0=−1
+π 1
+Similarly, for s , we have
+2
+q (s ,down)=−1−14=−15
+π 2
+6. In a particular grid-world example, rewards are positive for goals, negative for running into
+the edge of the world, and zero the rest of the time. Are the signs of these rewards important,
+or only the intervals between them? Prove, using the discounted return equation
+∞
+(cid:88)
+G =R +γR +γ2R +...= γkR
+t t+1 t+2 t+3 t+k+1
+k=0
+thataddingaconstantC toalltherewardsaddsaconstant,K,tothevaluesofallstates,and
+thus does not affect the relative values of any states under any policies. What is K in terms
+of C and γ?
+(a) K = 1
+C(1−γ)
+(b) K =C( 1 −1)
+1−γ
+(c) K =C( 1 +1)
+1−γ
+(d) K = C
+1−γ
+Sol. (d)
+Assume that the grid-world problem is a continuing task. For some policy π and state s, the
+value function can be give as
+v (s)=E {G |s =s}.
+π π t t
+Using the discounted reward equation, we have
+∞
+(cid:88)
+v (s)=E { γkR |s =s}.
+π π t+k+1 t
+k=0
+Adding a constant C to all rewards, we have
+∞
+(cid:88)
+v(cid:48)(s)=E { γk(R +C)|s =s}
+π π t+k+1 t
+k=0
+∞ ∞
+(cid:88) (cid:88)
+=E { γkR +C γk|s =s}
+π t+k+1 t
+k=0 k=0
+C
+=v (s)+ .
+π 1−γ
+WeseethataddingaconstantC toallrewardsdoesnotaffecttherelativevaluesofanystates
+under any policies. Here K = C .
+1−γ
+4
+
+7. Given a reinforcement learning problem, algorithm A will return the optimal state value func-
+tionforthatproblemandalgorithmBwillreturntheoptimalactionvaluefunction. Youraim
+is to use the value function so obtained to behave optimally in the environment. Assuming
+that you know the expected rewards but not the transition probabilities corresponding to the
+problem in question, which algorithm would you prefer to use for your control task?
+(a) algorithm A
+(b) algorithm B
+Sol. (b)
+Since algorithm B returns the optimal action value function, we can use the information
+provided by the optimal action value function to control the behaviour of the agent without
+knowledge of the transition probabilities of the underlying MDP.
+8. In proving that L is a contraction, we had the expression
+π
+(cid:88) (cid:88)
+γ p(j|s)[v(j)−u(j)]≤γ||v−u|| p(j|s)
+j j
+This inequality holds because
+(a) v(j)−u(j) is a component of ||v−u||
+(b) the max norm of the difference on the LHS is less than the max norm of the difference
+on the RHS
+(c) the difference in the LHS can be negative but the norm in the RHS is non-negative
+(d) the max norm on the RHS can at worst be equal to the difference in the LHS
+Sol. (d)
+9. We defined the operator L : V → V as L v = r +γP v. Having seen the proof of the
+π π π π
+Banach fixed point theorem and assuming that vπ and v∗ have their usual meanings, which
+among the following are implications of showing that L is a contraction?
+π
+(a) vπ is a fixed point of L
+π
+(b) vπ is a unique fixed point of L
+π
+(c) repeatedly applying L starting with an arbitrary v ∈V results in convergence to vπ
+π
+(d) repeatedly applying L starting with an arbitrary v ∈V results in convergence to v∗
+π
+Sol. (b), (c)
+Note that while the statement of option (a) is true, it is a result of the Bellman equation and
+the definition of the L operator. Option (d) is not true since repeated application of the
+π
+operator guarantees convergence only to vπ and not the optimal v∗.
+10. Given a value v ∈V, suppose L v =v(cid:48). Then we can conclude that
+π
+(a) v =v(cid:48)
+(b) v (cid:54)=v(cid:48)
+(c) ||L v−L v(cid:48)||≤λ||v−v(cid:48)||, 0≤λ<1
+π π
+5
+
+(d) none of the above
+Sol. (c)
+The first option may not hold if v (cid:54)=v . Similarly, the second option may not hold if v =v .
+π π
+The third option is true because L is a contraction and in all three possible scenarios (v (cid:54)=
+π
+v(cid:48) (cid:54)=v , v (cid:54)=v(cid:48) =v , and v =v(cid:48) =v ), the statement holds.
+π π π
+6

@@ -1,0 +1,208 @@
+Assignment 2 (Sol.)
+Reinforcement Learning
+Prof. B. Ravindran
+1. In the UCB 1 algorithm, how is it ensured that the confidence bounds around the estimated
+values for each arm shrink?
+(a) the intervals do not shrink
+(b) the confidence intervals of each arm are made to shrink after every arm selection
+(c) incalculatingtheboundsweusethenumberoftimesanarmisselectedinthedenominator
+(d) on selecting an arm its interval is shrunk by half every time
+Sol. (c)
+Thenumberoftimesarmj isselected,denotedbyn appearsinthedenominatoroftheupper
+j
+confidence bound for each arm. As n increases, the bound decreases.
+j
+2. After12iterationsoftheUCB1algorithmappliedona4-armbanditproblem,wehaven =3,
+1
+n = 4, n = 3, n = 2 and Q (1) = 0.55, Q (2) = 0.63, Q (3) = 0.61, Q (4) = 0.40.
+2 3 4 12 12 12 12
+Which arm should be played next?
+(a) 1
+(b) 2
+(c) 3
+(d) 4
+Sol. (d)
+The next action, A , will be the action with the maximum upper confidence bound among
+13
+the four arms. Calculating these values, we have
+(cid:114) (cid:114)
+2ln12 2ln12
+Q (1)+ =0.55+ =1.837
+12 n 3
+1
+(cid:114) (cid:114)
+2ln12 2ln12
+Q (2)+ =0.63+ =1.745
+12 n 4
+2
+(cid:114) (cid:114)
+2ln12 2ln12
+Q (3)+ =0.61+ =1.897
+12 n 3
+3
+(cid:114) (cid:114)
+2ln12 2ln12
+Q (4)+ =0.40+ =1.976
+12 n 2
+4
+Clearly, arm 4 has the highest upper confidence bound and hence will be selected by the UCB
+1 algorithm.
+1
+
+3. In the proof of the UCB 1 algorithm, we had the following expression:
+{min (cid:0) Q (a∗)+C (cid:1) ≤max (Q (i)+C )}
+0<s<m s m−1,Ta∗(s) l≤si≤m si m−1,Ti(si)
+What does this expression stand for?
+(a) the number of instances where the minimum value among the upper confidence bound
+values of an optimal arm up till the mth time step is less than or equal to the maximum
+value among the upper confidence bound values of the ith arm between the times steps l
+and m
+(b) the condition that the minimum value among the upper confidence bound values of an
+optimal arm up till the mth time step is less than or equal to the maximum value among
+the upper confidence bound values of the ith arm between the times steps l and m
+(c) the condition that there exists an upper confidence bound value of an optimal arm that
+is smaller than the corresponding upper confidence value of the chosen arm i
+(d) the number of instances where the upper confidence bound value of an optimal arm is
+smaller than the corresponding upper confidence value of the chosen arm i
+Sol. (b)
+4. In the initial stage of the UCB 1 algorithm, each arm is selected one time. Thereafter, the
+armthatisselecteddependsonthearmwiththemaximumupperconfidencebound. Suppose
+that one of the arms has not been selected after its initial selection in the first stage of the
+algorithm. What happens to the upper confidence bound of this arm?
+(a) it increases
+(b) it decreases
+(c) it remains constant until it is selected
+Sol. (a)
+Presence of n, the number of time steps in the numerator ensures that at each step the upper
+confidence bounds of each unselected arm increases.
+5. Suppose that we apply the naive PAC algorithm on a 10-arm bandit problem where the
+required ((cid:15),δ) values are: (cid:15) = 0.5 and δ = 0.05. How many iterations would the algorithm
+take to output an arm selection? (Note: each arm is sampled
+2ln(cid:0)2k(cid:1)
+times).
+(cid:15)2 δ
+(a) 48
+(b) 21
+(c) 210
+(d) 480
+Sol. (d)
+We know that in the naive algorithm, each arm is sampled
+(cid:18) (cid:19)
+2 2k
+l= ln
+(cid:15)2 δ
+2
+
+times, where k is the number of arms. Thus, we have
+(cid:18) (cid:19)
+2 2∗10
+l= ln =8ln(400)=47.93=48
+0.52 0.05
+Thus, the total number of iterations = 10 * l = 480.
+6. In the proof of the Naive PAC algorithm, we have the expression
+P(Q(a(cid:48))>Q(a∗))≤P(Q(a(cid:48))>q (a(cid:48))+(cid:15)/2 OR Q(a∗)<q (a∗)−(cid:15)/2)
+∗ ∗
+Why is the LHS “less than or equal to” the RHS here?
+(a) because the occurrence of at least one of the events on the RHS is a necessary but not
+sufficient condition for the event on the LHS to occur
+(b) because the event on the LHS does not require that the events on the RHS occur
+(c) because the event on the LHS requires that both the events on the RHS occur
+Sol. (a)
+It should be clear that for Q(a(cid:48)) to be greater than Q(a∗), at least one of the events on the
+RHS must occur, but even then, Q(a(cid:48)) may not be greater than Q(a∗). This implies that the
+probability of the LHS is less than or equal to the probability of the RHS.
+7. Supposewehavea64-armbanditproblem. Weapplythemedianeliminationalgorithmwhere
+the ((cid:15),δ) values are: (cid:15) = 0.5 and δ = 0.01. How many times do we sample arms in the first
+(cid:16) (cid:17)
+round? (Note: in each round, each arm is sampled 1 ln 3 times).
+(cid:15)2 l/2 δl
+(a) 52404
+(b) 818
+(c) 52416
+(d) 819
+Sol. (c)
+We know that in the median elimination algorithm, each arm is sampled
+(cid:18) (cid:19)
+1 3
+ln
+(cid:15)2/2 δ
+l l
+times. In the first round, (cid:15) = (cid:15)/4 and δ = δ/2. Substituting the values of (cid:15) and δ, we have
+1 1
+number of samples
+(cid:18) (cid:19)
+32 6
+ln =818.81=819
+0.52 0.01
+This is the number of times each arm is pulled in the first round. Thus, the total number of
+sampled arms in the first round is 64 * 819 = 52416.
+8. Continuing with the previous example, what is the number of samples in the third round?
+Also, what is the total number of rounds required to identify the ((cid:15),δ)-optimal arm?
+(a) 50384, 6
+3
+
+(b) 50384, 7
+(c) 50378, 6
+(d) 201514, 7
+Sol. (a)
+From the initial and update conditions, we know that (cid:15) =(3)l−1(cid:15) and δ = δ. Now, in any
+l 4 4 l 2l
+given round, each arm is sampled
+1
+(cid:18) 3(cid:19)
+2
+(cid:18) 3∗2l(cid:19)
+ln = ln
+(cid:15)2/2 δ ((3)l−1(cid:15))2 δ
+l l 4 4
+times. Substituting the values of (cid:15) and δ, with l=3, we have
+2
+(cid:18) 3∗23(cid:19)
+ln =3148.65=3149
+((3)20.5)2 0.01
+4 4
+This is the number of times each arm is pulled in the third round. The number of arms in the
+third round is 16 (32 of 64 eliminated at the end of the first round and 16 eliminated at the
+end of the second round). Thus, the total number of sampled arms in the third round is 16 *
+3149 = 50384.
+The number of rounds required to identify the ((cid:15),δ)-optimal arm is log (64)=6.
+2
+9. Consider a bandit problem in which there is a single optimal arm, a∗. Applying the median
+elimination algorithm to this problem, is it possible that arm a∗ is eliminated in the first
+round? In case it is possible, does this mean that the algorithm cannot output an arm that is
+(cid:15)-close to a∗?
+(a) no
+(b) yes, no
+(c) yes, yes
+Sol. (b)
+It is possible that after the first round of sampling, the estimated payoff of the optimal arm is
+below the median estimated payoff and hence is eliminated. However, the algorithm can still
+outputanarmthatis(cid:15)-closetoa∗. Thisisbecauseineachroundtheprobabilitythatthebest
+arm is more than (cid:15) away from the best arm in the previous round is less than δ . Thus, even
+l l
+if a∗ has been eliminated in the first round, it is highly probable (since δ and consequently δ
+l
+are typically small) that an arm that is (cid:15) -close to a∗ remains in the second round. Also, the
+l
+useof(cid:15) andδ ineachround(witheachofthesevaluesgettingsmallerastheroundsprogress)
+l l
+implies that over all rounds, the probability of eliminating all arms that are (cid:15)-close to a∗ is
+less than δ, which is again, typically a small value. Hence, even if the best arm is eliminated
+in the first round, it is still possible that the algorithm outputs an arm that is (cid:15)-close to a∗.
+10. Weknowthatthereisanexploration/exploitationdilemmainreinforcementlearningproblems.
+Considering the Thompson sampling algorithm for solving bandit problems, which step of the
+algorithm ensures that we perform exploration?
+(a) initialisation of each arm’s reward distribution
+4
+
+(b) updating the reward distribution based on observing actual reward for an arm
+(c) sampling the expected payoff of each arm from the corresponding reward distribution
+(d) identifying the correct arm given the set of expected payoffs for each arm sampled from
+each arm’s reward distribution
+Sol. (c)
+At each step, we sample the expected payoffs of each arm from their corresponding reward
+distributions. Thisintroducesanelementofexplorationsinceevenanarmforwhichthemean
+of the distribution is less than the mean of the distribution of another arm can be selected by
+the algorithm if the expected payoff sampled for the former arm is larger than the expected
+payoff sampled for the latter arm.
+5

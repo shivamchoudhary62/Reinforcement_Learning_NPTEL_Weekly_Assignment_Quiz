@@ -1,0 +1,62 @@
+Assignment 11 (Sol.)
+Reinforcement Learning
+Prof. B. Ravindran
+1. Using the MAXQ approach leads to solutions which are
+(a) hierarchically optimal
+(b) recursively optimal
+(c) flat optimal
+Sol. (b)
+Since the MAXQ policy of the core MDP is the set of policies of individual sub-tasks, with
+individual sub-task policies aiming to solve the sub-tasks optimally, you can expect to obtain
+recursively optimal solutions using the MAXQ approach.
+2. We saw that each sub-task has an associated pseudo-reward function. Are the rewards of the
+core MDP available to the agent while it is learning policies of individual sub-tasks or is the
+agent restricted to the corresponding sub-task’s pseudo rewards?
+(a) only pseudo rewards are available
+(b) both pseudo rewards and core MDP rewards are available
+Sol. (b)
+As we observed in the example taxi problem, rewards of the core MDP are available while
+learning the policies of the sub-tasks.
+3. In the MAXQ framework, is termination in a sub-task deterministic or stochastic as in the
+options framework?
+(a) deterministic
+(b) stochastic
+Sol. (a)
+We saw in the sub-task definition that for each sub-task, all states of the core MDP are
+partitioned into a set of active states and a set of terminal states, where sub-task termination
+is immediate (and deterministic) whenever a terminal state is entered.
+4. Each sub-task M is an SMDP because
+i
+(a) the state space of the sub-task is a subset of the state space of the core MDP
+(b) each sub-task has its own policy
+1
+
+(c) actions in a sub-task can be temporally extended
+(d) the rewards received in sub-tasks depend not only on the state but also on the sub-task
+in which an action was executed
+Sol. (c)
+In the definition, we saw that the actions in a sub-task comprise both, primitive actions as
+well as other sub-tasks. The invocation of a sub-task results in a sequence of actions being
+executed (similar to an option). Thus, each sub-task is an SMDP.
+5. TheexpectedrewardfunctionR¯(s,a)oftheSMDPcorrespondingtosub-taskM isequivalent
+i
+to the projected value function Vπi(a,s). True or false?
+(a) false
+(b) true
+Sol. (a)
+Recall that R¯(s,a)=Vπ(a,s) not Vπi(a,s).
+6. In the MAXQ approach to solving a problem, suppose that sub-task M invokes sub-task M .
+i j
+Do the pseudo rewards of M have any effect on sub-task M ?
+j i
+(a) no
+(b) yes
+Sol. (b)
+The pseudo rewards of one sub-task are not directly considered when solving a different sub-
+task regardless of their connectivity. However, since sub-task M invokes sub-task M , and
+i j
+hence depends upon the policy of M , the rewards of M do effect sub-task M , as the pseudo
+j j i
+rewards of sub-task M would be a factor determining the policy of M .
+j j
+2

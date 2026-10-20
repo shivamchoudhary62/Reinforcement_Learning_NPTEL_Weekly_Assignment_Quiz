@@ -1,0 +1,206 @@
+Assignment 3 (Sol.)
+Reinforcement Learning
+Prof. B. Ravindran
+1. In solving a multi-arm bandit problem using the policy gradient method, are we assured of
+converging to the optimal solution?
+(a) no
+(b) yes
+Sol. (a)
+Depending upon the properties of the function whose gradient is being ascended, the policy
+gradient approach may converge to a local optimum.
+2. In many supervised machine learning algorithms, such as neural networks, we rely on the
+gradient descent technique. However, in the policy gradient approach to bandit problems, we
+made use of gradient ascent. This discrepancy can mainly be attributed to the differences in
+(a) the objectives of the learning tasks
+(b) the parameters of the functions whose gradient are being calculated
+(c) the nature of the feedback received by the algorithms
+Sol. (c)
+The feedback in most supervised learning algorithms is an error signal which we wish to
+minimise. Hence,wewouldlooktoperformgradientdescent. Inpolicygradient,wearetrying
+to maximise the reward signal, hence gradient ascent.
+3. Consider a bandit problem in which the parameters on which the policy depends are the
+preferencesoftheactionsandtheactionselectionprobabilitiesaredeterminedbythesoftmax
+relationshipasπ(a )= eθi ,wherek isthetotalnumberofactionsandθ isthepreference
+i (cid:80)k eθj i
+j=1
+value of action a . Derive the parameter update conditions according to the REINFORCE
+i
+procedure considering the above described parameters and where the baseline is the reference
+reward defined as the average of the rewards received for all arms.
+(a) ∆θ =α(R−b)(1−π(a ;θ))
+i i
+(b) ∆θ =α(R−b) eθi
+i (cid:80)k eθj
+j=1
+(c) ∆θ =α(R−b)(π(a ;θ)−1)
+i i
+(d) ∆θ =α(R−b) 1−eθi
+i (cid:80)k eθj
+j=1
+1
+
+Sol. (a)
+According to the REINFORCE method, at each step, we update the parameter as
+∂lnπ(a ;θ)
+∆θ =α(R −b ) n
+n n n ∂θ
+n
+Considering the softmax preferences, the characteristic eligibility is
+∂lnπ(a n;θ)
+=
+∂
+ln
+eθi
+=
+∂
+(θ
+−ln((cid:88)k
+eθj))=1−π(a ;θ)
+∂θ n ∂θ n (cid:80)k eθj ∂θ n n i
+j=1 j=1
+Considering the baseline, b as the average of all rewards seen so far, and α as the step size
+parameter, the update conditions are
+∆θ =α(R−b)(1−π(a ;θ))
+i i
+4. Repeattheaboveproblemforthecasewheretheparametersarethemeanandvarianceofthe
+normal distribution according to which the actions are selected and the baseline is zero.
+(cid:16) (cid:17) (cid:110) (cid:111)
+(a) ∆µ =α r an−µn ;∆σ =α r (an−µn)2 −1
+n n n σn n n n σ n2
+(b) ∆µ
+n
+=α nr n(cid:16) an σ− 2µn(cid:17) ;∆σ
+n
+=α nr n(cid:110) (an−µ σn 2)2−σ n2(cid:111)
+n n
+(c) ∆µ
+n
+=α nr n(cid:16) an σ− 2µn(cid:17) ;∆σ
+n
+=α nr n(cid:110) (an−µ σn 3)2−σ n2(cid:111)
+n n
+(cid:16) (cid:17) (cid:110) (cid:111)
+(d) ∆µ =α r an−µn ;∆σ =α r (an−µn)2−σ
+n n n σn n n n σ n2
+Sol. (c)
+Assuming parameters to be µ and σ, we have policy,
+π(a;µ,σ2)= √1 e−(a− 2σµ)2
+2πσ
+For the mean:
+∂lnπ(a ;µ ,σ ) ∂
+(cid:26)
+(a −µ
+)2(cid:27)
+a −µ
+n n n = − n n = n n
+∂µ ∂µ 2σ2 σ2
+n n n n
+For the variance:
+∂lnπ(a n;µ n,σ n)
+=
+∂ (cid:8) −ln(√
+2πσ
+)(cid:9)
++
+∂ (cid:26) −(a n−µ n)2(cid:27)
+∂σ ∂σ n ∂σ 2σ2
+n n n n
+Solving, we have:
+∂lnπ(a ;µ ,σ ) 1 (a −µ )2 1 (cid:18) a −µ (cid:19)2
+n n n =− + n n = { n n −1}
+∂σ σ σ3 σ σ
+n n n n n
+Thus, the updates are:
+(cid:18) (cid:19)
+a −µ
+µ =µ +α r n n
+n+1 n n n σ2
+n
+1
+(cid:40)(cid:18)
+a −µ
+(cid:19)2 (cid:41)
+σ =σ +α r n n −1
+n+1 n n nσ σ
+n n
+2
+
+5. Whichamongthefollowingis/aredifferencesbetweencontextualbanditsandfullRLproblems?
+(a) the actions and states in contextual bandits share features, but not in full RL problems
+(b) theactionsincontextualbanditsdonotdeterminethenextstate, buttypicallydoinfull
+RL problems
+(c) full RL problems can be modelled as MDPs whereas contextual bandit problems cannot
+(d) no difference
+Sol. (b)
+Option (a) is not true because we can think of representations where actions and states share
+features. Similarly,option(c)isfalsebecausecontextualbanditproblemscanalsobemodelled
+as MDPs.
+6. Given a stationary policy, is it possible that if the agent is in the same state at two different
+time steps, it can choose two different actions?
+(a) no
+(b) yes
+Sol. (b)
+A stationary policy does not mean that the policy is deterministic. For example, for state
+s and actions a and a , a stationary policy π may have π(a |s ) = 0.4 and π(a |s ) = 0.6.
+1 1 2 1 1 2 1
+Thus, at different time steps, if the agent is in the same state s , it may perform either of the
+1
+two actions.
+7. In class we saw that it is possible to learn via a sequence of stationary policies, i.e., during an
+episode, the policy does not change, but we move to a different stationary policy before the
+next episode begins. Does the temporal difference method encountered when discussing the
+tic-tac-toe example follow this pattern of learning?
+(a) no
+(b) yes
+Sol. (a)
+Recall that within an episode, at each step, after observing a reward, we modify the value
+function (the probability values in the tic-tac-toe example). Since the policy used to select
+actions is derived from the value function, in effect we are modifying the policy at each step.
+8. Wesawthefollowingdefinitionoftheaction-valuefunctionforpolicyπ: q (s,a)=E [G |S =
+π π t t
+s,A =a]. Suppose that the action selected according to the policy π in state s is a . For the
+t 1
+same state, will the function be defined for actions other than a ?
+1
+(a) no
+(b) yes
+Sol. (b)
+The interpretation of the action-value function q (s,a)= E [G |S = s,A = a] is the expec-
+π π t t t
+tationofthereturngiventhatwetakeactionainstatesattimetandthereafterselectactions
+based on policy π. Thus, the only constraint for the actions is that they must be applicable
+in state s.
+3
+
+9. Consider a 100x100 grid world domain where the agent starts each episode in the bottom-left
+corner, and the goal is to reach the top-right corner in the least number of steps. To learn an
+optimal policy to solve this problem you decide on a reward formulation in which the agent
+receives a reward of +1 on reaching the goal state and 0 for all other transitions. Suppose
+you try two variants of this reward formulation, (P ), where you use discounted returns with
+1
+γ ∈ (0,1), and (P ), where no discounting is used. Which among the following would you
+2
+expect to observe?
+(a) the same policy is learned in (P ) and (P )
+1 2
+(b) no learning in (P )
+1
+(c) no learning in (P )
+2
+(d) policy learned in (P ) is better than the policy learned in (P )
+2 1
+Sol. (c)
+In (P ), since there is no discounting, the return for each episode regardless of the number of
+2
+stepsis+1. Thispreventstheagentfromlearningapolicywhichtriestominimisethenumber
+of steps to reach the goal state. In (P ), the discount factor ensures that the longer the agent
+1
+takes to reach the goal state, the lesser reward it gets. This motivates the agent to find take
+the shortest path to the goal state.
+10. Given an MDP with finite state set, S, and an arbitrary function, f, that maps S to the real
+numbers, the MDP has a policy π such that f =Vπ.
+(a) false
+(b) true
+Sol. (a)
+Consider an MDP where all rewards are 0.
+4

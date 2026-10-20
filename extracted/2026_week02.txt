@@ -1,0 +1,203 @@
+Assignment 2
+Reinforcement Learning
+Prof. B. Ravindran
+1. Which of the following statements is NOT true about Thompson Sampling or Posterior Sam-
+pling?
+(a) After each sample is drawn, the q distribution for that sampled arm is updated to be
+∗
+closer to the true distribution.
+(b) Thompson sampling has been shown to generally give better regret bounds than UCB.
+(c) InThompsonsampling, wedonotneedtoeliminatearmseachroundtogetgoodsample
+complexity.
+(d) The algorithm requires that we use Gaussian priors to represent distributions over q
+∗
+values for each arm.
+Sol. (d)
+(d)isNOTtrue. WearenotconstrainedtoGaussianpriors. Wecanassumeapriordistribution
+of any type over the q values for each arm.
+∗
+(cid:113)
+2. In UCB, the term 2ln(n) is added to each arm’s Q value and the arm with the highest value
+nj
+of this sum is chosen. Which one of the following would definitely happen to the frequency of
+(cid:113) (cid:113)
+picking sub-optimal arms when adding 2ln(n) instead of 2ln(n)?
+n2
+j
+nj
+(a) Sub-optimal arms would be chosen more frequently.
+(b) Sub-optimal arms would be chosen less frequently.
+(c) Makes no change to the frequency of picking sub-optimal arms.
+(d) Sub-optimal arms could be chosen less or more frequently, depending on the samples.
+Sol. (d)
+The uncertainty term in the UCB algorithm shrinks much faster as actions are selected. This
+means that we have higher confidence that our estimates are correct with fewer samples. If
+we are able to make good estimates of the true action-values within a few samples, this would
+mean that we waste less time selecting sub-optimal arms.
+However, fewer samples typically mean worse estimates -especially for bandit problems with
+noisyrewarddistributions. Lowuncertaintytermswouldincreasetheimportanceofpotentially
+worse Q-value estimates after a few trials, and it is possible that we would select sub-optimal
+actions more often as a result.
+Since either (a) or (b) could be True, depending on the problem setting, the correct answer is
+(d).
+3. In the proof of the UCB Theorem, when l =(cid:6) 8lnm/∆2(cid:7) , q (a∗)−q (i)−2C =0. Which
+i ∗ ∗ m,l
+ofthefollowingcorrectlyexplainsq (a∗)−q (i)−2C beinglessthan0whenwereplace
+∗ ∗ m,Ti(si)
+this fixed value of l by the value T (s ): the number of times the arm i is selected. ?
+i i
+(cid:112)
+Note: C = 2ln(m)/l ,q (a∗)−q (i)=∆
+m,l ∗ ∗ i
+1
+
+(a) T (s )<l thus C <C .
+i i m,Ti(si) m,l
+(b) T (s )>m thus C <C .
+i i m,Ti(si) m,l
+(c) T (s )>l thus C <C .
+i i m,Ti(si) m,l
+(d) T (s )<l thus C >C .
+i i m,Ti(si) m,l
+Sol. (d)
+If the number of times that the arm is selected is less than l, it implies that our confidence
+intervalislarger. i.eC >C =⇒ q (a∗)−q (i)−2C <q (a∗)−q (i)−2C =
+m,Ti(si) m,l ∗ ∗ m,Ti(si) ∗ ∗ m,l
+0
+4. Which of the following is true about the Median Elimination algorithm?
+(a) It is a regret minimizing algorithm.
+(b) The probability of the ϵ -optimal arms of round l being eliminated is less than δ for the
+l l
+round.
+(c) It is guaranteed to provide an ϵ-optimal arm at the end.
+(d) Replacing ϵ with ϵ doubles the sample complexity.
+2
+Sol. (b)
+Look at the derivation for Median Elimination.
+5. We need 8 rounds of median-elimination to get an (ϵ,δ)−PAC arm. Approximately how
+many samples would have been required using the naive (ϵ,δ)−PAC algorithm given (ϵ,δ)=
+(1/2,1/e) ? (Choose the value closest to the correct answer)
+(a) 15000
+(b) 10000
+(c) 500
+(d) 20000
+Sol. (a)
+no. of rounds in median elimination = log (no. of arms)=8
+2
+=⇒ no. of arms=256
+No. of samples required by the naive algorithm = 2k ln(2k/δ)
+ϵ2
+Substituting,
+No. of samples required = 14824
+6. In case of UCB, the regret is generally of the form f(n)+c, where, for the confidence bound
+(cid:113)
+given by 2ln(n), f(n) = (cid:80)k 8ln(n) and c = (1+ π2)(cid:80)k ∆ . What is the form of f(n)
+nj j=1 ∆j 3 j=1 j
+(cid:113)
+for the confidence bound given by αln(n), where α≥2?
+nj
+(a) (cid:80)k 4αln(n)
+j=1 ∆j
+(b)
+(cid:80)k 2α2ln(n)
+j=1 ∆j
+(c)
+(cid:80)k α3ln(n)
+j=1 ∆j
+(d)
+(cid:80)k α4ln(n)
+j=1 2∆j
+2
+
+Sol. (a)
+Re-derive the proof for UCB in class with a general α.
+7. In the naive (ϵ,δ)-PAC algorithm, suppose we draw 2ln(k) samples for each arm instead of
+ϵ2 δ
+2ln(2k) samples. Using the same analysis presented in the lectures, with what probability
+ϵ2 δ
+can we guarantee that the arm a′ returned will have q (a′) value ϵ close to the q value of the
+∗ ∗
+optimal arm?
+(a) 1−δ
+(b) 1−4δ
+(c) 1−2δ
+(d) 1− δ
+2
+Sol. (c)
+From the lectures, assuming that a′ is an arm with q (a′) value at least ϵ away from q (a∗):
+∗ ∗
+P(Q(a′)≥Q(a∗))≤P(Q(a′)≥q (a′)+ϵ/2)+P(Q(a∗)<q (a∗)−ϵ/2)
+∗ ∗
+Using the Chernoff-Hoeffding bounds introduced in the lectures:
+P(Q(a′)≥Q(a∗))≤2e−ϵ 22l
+Substituting the new number of samples drawn =l, we get:
+P(Q(a′)≥Q(a∗))≤ 2δ
+k
+Summing over all k arms, the probability of picking an arm a′ that does not meet our criteria
+is bounded by 2δ, and the probability that the arm returned has q (a′) value ϵ close to the q
+∗ ∗
+value of the optimal arm is, therefore, ≥1−2δ
+8. In median elimination method for obtaining (ϵ,δ)-PAC bounds, which of the following is a
+plausible update rule for ϵ and δ if ϵ = ϵ and δ = δ?
+l l 1 3 1 4
+(a) ϵ
+l+1
+= 3 4ϵl and δ
+l+1
+= 4 5δl
+(b) ϵ
+l+1
+= 3 4ϵl and δ
+l+1
+= 3 4δl
+(c) ϵ
+l+1
+= 2 3ϵl and δ
+l+1
+= 3 4δl
+(d) ϵ
+l+1
+= 2 3ϵl and δ
+l+1
+= 4 5δl
+Sol. (c)
+(cid:80) (cid:80)
+For getting (ϵ,δ)-PAC bound , ϵ ≤ϵ and δ ≤δ
+l l l l
+9. Suppose we are facing a non-stationary bandit problem. We want to use posterior sampling
+for picking the correct arm. What is the likely change that needs to be done to the algorithm
+so that it can adapt to non-stationarity?
+(a) Update the posterior rarely.
+(b) Randomly shift the posterior drastically from time to time.
+(c) Keepaddingaslightnoisetotheposteriortopreventitsvariancefromgoingdownquickly.
+3
+
+(d) No change is required.
+Sol. (c)
+It is necessary to prevent the posterior from collapsing, while simultaneously allowing it to
+learn from the current samples.
+10. In median elimination method for (ϵ,δ)-PAC bounds, we claim that for every phase l, Pr[A≤
+B+ϵ ]>1−δ . (S – is the set of arms remaining in the lth phase)
+l l l
+Consider the following statements:
+(i) A – is the maximum of rewards of true best arm in S , i.e. in lth phase
+l
+(ii) B – is the maximum of rewards of true best arm in S , i.e. in l+1th phase
+l+1
+(iii) B – is the minimum of rewards of true best arm in S , i.e. in l+1th phase
+l+1
+(iv) A – is the minimum of rewards of true best arm in S , i.e. in lth phase
+l
+(v) A – is the maximum of rewards of true best arm in S , i.e. in l+1th phase
+l+1
+(vi) B – is the maximum of rewards of true best arm in S , i.e. in lth phase
+l
+Which of the statements above are correct?
+(a) i and ii
+(b) iii and iv
+(c) iii and iv
+(d) v and vi
+(e) i and iii
+Sol. (a)
+Refer Lemma 1 in the proof for the Median Elimination Algorithm
+4

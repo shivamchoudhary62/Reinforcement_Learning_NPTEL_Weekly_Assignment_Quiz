@@ -1,0 +1,175 @@
+Assignment 3
+Reinforcement Learning
+Prof. B. Ravindran
+1. Which of the following is true for an MDP?
+(a) Pr(s ,r |s ,a )=Pr(s ,r )
+t+1 t+1 t t t+1 t+1
+(b) Pr(s ,r |s ,a ,s ,a ,s ,a ,...,s ,a )=Pr(s ,r |s ,a )
+t+1 t+1 t t t−1 t−1 t−2 t−2 0 0 t+1 t+1 t t
+(c) Pr(s ,r |s ,a )=Pr(s ,r |s ,a )
+t+1 t+1 t t t+1 t+1 0 0
+(d) Pr(s ,r |s ,a )=Pr(s ,r |s ,a )
+t+1 t+1 t t t t t−1 t−1
+Sol. (b)
+(b) is true for any MDP. (a),(c) and (d) are not true.
+2. ThebaselineintheREINFORCEupdateshould notdependonwhichofthefollowing(with-
+out voiding any of the steps in the proof of REINFORCE)?
+(a) r
+n−1
+(b) r
+n
+(c) Action taken(a )
+n
+(d) None of the above
+Sol. (c)
+The baseline must not depend on any action. The baseline can depend on current and past
+rewards. An example baseline is given in the videos where the average of rewards obtained so
+far is considered to be the baseline.
+3. In many supervised machine learning algorithms, such as neural networks, we rely on the
+gradient descent technique. However, in the policy gradient approach to bandit problems, we
+made use of gradient ascent. This discrepancy can mainly be attributed to the differences in
+(a) the objectives of the learning tasks
+(b) the parameters of the functions whose gradient are being calculated
+(c) the nature of the feedback received by the algorithms
+Sol. (a), (c)
+The feedback in most supervised learning algorithms is an error signal which we wish to
+minimise. Hence,wewouldlooktoperformgradientdescent. Inpolicygradient,wearetrying
+to maximise the reward signal, hence gradient ascent.
+4. In case of linear bandits, let’s consider we have 2 actions - a and a . The policy π to be
+1 2
+followed when encountering a state s is given by
+ew 1⊤s
+π(a |s)=
+1 ew 1⊤s+ew 2⊤s
+ew 2⊤s
+π(a |s)=
+2 ew 1⊤s+ew 2⊤s
+1
+
+where w and w are weight vectors associated with a and a respectively. If we are using
+1 2 1 2
+REINFORCE to learn the parameters, what will be the update for w and w , when we pull
+1 2
+action a ?
+1
+(i) w →w +αr(s−
+ew1⊤s
+s)
+1 1 ew1⊤s+ew2⊤s
+(ii) w →w +αr(−
+ew1⊤s
+s)
+1 1 ew1⊤s+ew2⊤s
+(iii) w →w +αr(s−
+ew2⊤s
+s)
+2 2 ew1⊤s+ew2⊤s
+(iv) w →w +αr(−
+ew2⊤s
+s)
+2 2 ew1⊤s+ew2⊤s
+Which of the above updates are correct?
+(a) (i), (iii)
+(b) (i), (iv)
+(c) (ii), (iii)
+(d) (ii), (iv)
+Sol. (b)
+Derive the update using the REINFORCE formula.
+5. The update in REINFORCE is given by θ = θ + αr ∂lnπ(at;θt), where r ∂lnπ(at;θt) is
+t+1 t t ∂θt t ∂θt
+an unbiased estimator of the true gradient of the performance function. However, there was
+anothervariantofREINFORCE,whereabaselineb,thatisindependentoftheactiontaken,is
+subtractedfromtheobtainedreward,i.e,theupdateisgivenbyθ =θ +α(r −b)∂lnπ(at;θt).
+t+1 t t ∂θt
+How are E[(r −b)∂lnπ(at;θt)] and E[r ∂lnπ(at;θt)] related?
+t ∂θt t ∂θt
+(a) E[(r −b)∂lnπ(at;θt)]=E[r ∂lnπ(at;θt)]
+t ∂θt t ∂θt
+(b) E[(r −b)∂lnπ(at;θt)]<E[r ∂lnπ(at;θt)]
+t ∂θt t ∂θt
+(c) E[(r −b)∂lnπ(at;θt)]>E[r ∂lnπ(at;θt)]
+t ∂θt t ∂θt
+(d) Could be either of a, b or c, depending on the choice of baseline
+Sol. (a)
+∂lnπ(a ;θ ) 1 ∂π(a ;θ )
+E[b t t ]=E[b t t ]
+∂θ π(a ;θ ) ∂θ
+t t t t
+=(cid:88)
+[b
+1 ∂π(a;θ t)
+]π(a;θ )
+π(a;θ ) ∂θ t
+t t
+a
+=(cid:88) b∂π(a;θ t)
+∂θ
+t
+a
+∂1
+=b
+∂θ
+t
+=0
+Thus, E[(r −b)∂lnπ(at;θt)]=E[r ∂lnπ(at;θt)]
+t ∂θt t ∂θt
+2
+
+6. Consider the following policy-search algorithm for a multi-armed binary bandit:
+∀a, π (a)=π (a)(1−α)+α(1 r +(1−1 )(1−r ))
+t+1 t a=at t a=at t
+where 1 is 1 if a = a and 0 otherwise. Which of the following is true for the above
+at=a t
+algorithm?
+(a) It is L algorithm.
+R−I
+(b) It is L algorithm.
+R−ϵP
+(c) It would work well if the best arm had probability of 0.9 of resulting in +1 reward and
+the next best arm had probability of 0.5 of resulting in +1 reward
+(d) It would work well if the best arm had probability of 0.3 of resulting in +1 reward and
+the worst arm had probability of 0.25 of resulting in +1 reward
+Sol. (c)
+The given algorithm is L algorithm. It would work well for the case described in (c) as
+R=P
+it gives equal weightage to penalties and rewards, and as the gap between best arm and next
+best arm’s probability of giving +1 reward is significant, it would easily figure out the best
+arm.
+7. The actions in contextual bandits do not determine the next state, but typically do in full RL
+problems. True or false?
+(a) True
+(b) False
+Sol. (a)
+Refer to the contextual bandits lecture.
+8. In a continuous action space environment, we can employ any value function-based algorithm
+to discover an optimal policy.
+(a) True
+(b) False
+Sol. (b)
+Whentheactionspaceiscontinuous, storingvaluesforeachactionishardinthecaseofvalue
+function-based methods. Due to the action approximation for the continuous actions, it is
+necessary to optimize the action space for every action chosen from the policy, to find the
+estimatedoptimalaction. Thisapproachisslow, andpolicygradient-basedmethodsarelikely
+to generalize better.
+9. Let’s assume for some full RL problem we are acting according to a policy π. At some time t,
+we are in a state s where we took action a . After few time steps, at time t′, the same state
+1
+s was reached where we performed an action a (̸= a ). Which of the following statements is
+2 1
+true?
+(a) π is definitely a stationary policy
+(b) π is definitely a non-stationary policy
+3
+
+(c) π can be stationary or non-stationary.
+Sol. (c)
+A stationary policy can be stochastic and thus the for same state different actions can be
+chosen at different time steps. Thus π can be stationary or non-stationary policy.
+10. In solving a multi-arm bandit problem using the policy gradient method, are we assured of
+converging to the optimal solution?
+(a) no
+(b) yes
+Sol. (a)
+Depending upon the properties of the function whose gradient is being ascended, the policy
+gradient approach may converge to a local optimum.
+4

@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.bak
+test_questions.py
+app_part.py
+paraphrased_summary.txt
+text_audit_report.txt
+.DS_Store

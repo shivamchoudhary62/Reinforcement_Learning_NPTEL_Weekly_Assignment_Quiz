@@ -1,0 +1,143 @@
+Assignment 8
+Reinforcement Learning
+Prof. B. Ravindran
+1. You are given a training set of vectors Φ, so that each row of the matrix Φ corresponds to k
+attributesofasingletrainingsample. Supposethatyouareaskedtofindalinearfunctionthat
+minimizesthemeansquarederrorforagivensetofstationarytargetsy usinglinearregression.
+State true/false for the following statement.
+Statement: If the column vectors of Φ are linearly independent, then there exists a unique
+linear function that minimizes the mean-squared-error.
+(a) True
+(b) False
+Sol. (a)
+IfthecolumnvectorsofΦarelinearlyindependent,then(ΦTΦ)isinvertible. Usingtheclosed
+formsolutionθ =(ΦTΦ)−1 ΦTy, auniquesolutiontothelinearregressionproblemmustexist.
+2. Which of the following statements are true ?
+(a) Function approximation allows us to deal with continuous state spaces.
+(b) A lookup table is a linear function approximator.
+(c) State aggregates do not overlap in coarse-coding.
+(d) None of the above.
+Sol. (a),(b)
+Refer to the lectures on function approximation.
+3. In which of the following cases, the loss of a function appoximator as (cid:80) (Vˆ(s)−V(s))2
+s∈S
+would lead to poor performance? Consider ’relevant’ states to be those which are visited
+frequently when executing near optimal policies.
+(a) Large state space with small percentage of relevant states.
+(b) Small state space with large percentage of relevant states.
+(c) Large state space with large percentage of relevant states.
+(d) None of the above.
+Sol. (a)
+A small percentage of relevant states would cause poor performance in this case. Due to only
+a few states being relevant, it would be more important for the function approximator to do
+well in those states as compared to irrelevant states. However in the given loss function, all
+states are equally important, which will make it perform poorly.
+4. Assertion: It is not possible to use look-up table based methods to solve continuous state
+or action space problems. (Assume discretization of continuous space is not allowed)
+Reason: Forcontinuousstateoractionspace,thereareaninfinitenumberofstates/actions.
+(a) Both Assertion and Reason are true, and Reason is correct explanation for Assertion.
+1
+
+(b) Both Assertion and Reason are true, but Reason is not correct explanation for assertion.
+(c) Assertion is true, Reason is false
+(d) Both Assertion and Reason are false
+Sol. (a)
+Unless the space is split into discrete points, it is not possible to maintain a look up table.
+5. Assertion: If we make incremental updates for a linear approximation of the value function
+vˆ under a policy π, using gradient descent to minimize the mean-square-error between vˆ(s )
+t
+andbootstrappedtargetsR +γvˆ(s ), thenwewilleventuallyconvergetothesamesolution
+t t+1
+that we would have if we used the true v values as targets instead.
+π
+Reason: Each update moves vˆ closer to v , so eventually the bootstrapped targets R +
+π t
+γvˆ(s ) will converge to the true v (s ) values
+t+1 π t
+(Assume that we sample on-policy)
+(a) Both Assertion and Reason are true, and Reason is correct explanation for Assertion.
+(b) Both Assertion and Reason are true, but Reason is not correct explanation for assertion.
+(c) Assertion is true and Reason is false
+(d) Both Assertion and Reason are false
+Sol. (d)
+On account of the non-stationarity of the bootstrapped targets, we cannot guarantee that
+we will converge to the same solution (least-squares fit), however, assuming that the column
+vectors of the design matrix Φ are linearly independent, the distance between the function
+that we converge to vˆ∗ and the least squares fit for the targets v (which is denoted by vˆopt in
+π
+the lectures) is bounded.
+6. Assertion: To solve the given optimization problem for some states with linear function
+approximator,
+π (s)=argmax Qˆπt(s,a)
+t+1
+a
+in case of discrete action space, we need to formulate a classification problem.
+Reason: The given problem is equivalent to solving:
+π (s)=argmax Φ(s)⊤Θˆπt(a)
+t+1
+a
+For discrete action space, as we can’t maximize it explicitly, we need to formulate a classifica-
+tion problem.
+(a) Both Assertion and Reason are true, and Reason is correct explanation for Assertion.
+(b) Both Assertion and Reason are true, but Reason is not correct explanation for assertion.
+(c) Assertion is true, Reason is false
+(d) Both Assertion and Reason are false
+Sol. (d)
+Asitsdiscreteactionspace,wedonotneedtotrainaclassifier. Wecansimplypasstheactions
+through the function approximator and pick the one with maximum estimated Q-value.
+2
+
+7. Which of the following is/are true about the LSTD and LSTDQ algorithm?
+(a) Both are iterative algorithms, where the estimate of the parameters are updated using
+the gradient information of the loss function.
+(b) Both LSTD and LSTDQ can reuse samples.
+(c) Both LSTD and LSTDQ are linear function approximation methods.
+(d) None of the above
+Sol. (c)
+Refer to videos on LSTD and LSTDQ
+8. Assertion: When minimizing mean-squared-error to approximate the value of states under
+a given policy π, it is important that we draw samples on-policy.
+Reason: Sampling on-policy makes the training data approximately reflect the steady state
+distribution of states under the policy π.
+(a) Both Assertion and Reason are true, and Reason is correct explanation for Assertion.
+(b) Both Assertion and Reason are true, but Reason is not correct explanation for assertion.
+(c) Assertion is true and Reason is false
+(d) Both Assertion and Reason are false
+Sol. (a)
+Both the Assertion and Reason are true, and the Reason is a correct explanation for the
+Assertion. Refer to the lecture on function approximation.
+9. Tile coding is a method of state aggregation for gridworld problems. Consider the following
+statements.
+(i) The number of indicators for each state is equal to number of tilings.
+(ii) Tile coding cannot be used in continuous state spaces.
+(iii) Tile coding is also a form of Coarse coding.
+Say which of the above statements are true
+(a) (iii) only
+(b) (i), (iii)
+(c) (i) only
+(d) (i), (ii), (iii)
+Sol. (b)
+Tilecodingisoneapproachofcoarsecodingforgrid-world. Also, thenumberoftilingscanbe
+anything as per requirement and number of indicators are equal to number of tilings.
+10. Which of the following are the correct values for A˜ in LSTDQ method.
+Note the samples are D = {s ,a ,s′,r }, ϕ(s ,a ) is the representation used for (s ,a ) pair
+i i i i i i i i
+and π is the policy being followed.
+(a) 1 (cid:80)L [ϕ(s ,a )(ϕ(s ,a )−γϕ(s′,a ))T]
+L i=1 i i i i i i
+3
+
+(b) 1 (cid:80)L [ϕ(s )(ϕ(s )−γϕ(s′))T]
+L i=1 i i i
+(c) 1 (cid:80)L [ϕ(s ,a )(ϕ(s ,a )−γϕ(s′))T]
+L i=1 i i i i i
+(d) 1 (cid:80)L [ϕ(s ,a )(ϕ(s ,a )−γϕ(s′,π(s′)))T]
+L i=1 i i i i i i
+Sol. (d)
+Φ matrix contains features for each state action pair, and a policy π is followed. So when we
+are in state s′ the correct feature to use is ϕ(s′,π(s′)) since after reaching the state s′ in the
+i i i i
+future we would have taken the action π(s′). so 1 (cid:80)L [ϕ(s ,a )(ϕ(s ,a )−γϕ(s′,π(s′)))T]
+i L i=1 i i i i i i
+is the correct answer
+4

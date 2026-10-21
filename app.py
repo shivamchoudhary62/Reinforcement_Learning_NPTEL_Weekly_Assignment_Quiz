@@ -911,16 +911,10 @@ def render_practice_mode(qs, total, wk, bank):
 
     # Question Card with Purple Number Circle Matching Screenshot 3
     is_multi = isinstance(q.get("correct"), list)
-    type_badge = (
-        '<div style="display:inline-block;background:rgba(108,92,231,0.12);color:var(--primary-purple);font-size:0.75rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:6px;margin-bottom:0.4rem;letter-spacing:0.04em;">☑ MULTIPLE CHOICE (Select all that apply)</div>'
-        if is_multi else
-        '<div style="display:inline-block;background:rgba(113,128,150,0.12);color:var(--text-muted);font-size:0.75rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:6px;margin-bottom:0.4rem;letter-spacing:0.04em;">⚪ SINGLE CHOICE (Select one)</div>'
-    )
 
     st.markdown(
         '<div class="q-card">'
         f'<div class="q-badge">{idx + 1}</div>'
-        f'{type_badge}'
         f'<div class="q-text">{q["question"]}</div>'
         '</div>',
         unsafe_allow_html=True
@@ -1040,16 +1034,10 @@ def render_test_mode(qs, total, wk, bank):
     # Sequential Questions Matching Screenshot 4
     for i, q in enumerate(qs):
         is_multi = isinstance(q.get("correct"), list)
-        type_badge = (
-            '<div style="display:inline-block;background:rgba(108,92,231,0.12);color:var(--primary-purple);font-size:0.75rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:6px;margin-bottom:0.4rem;letter-spacing:0.04em;">☑ MULTIPLE CHOICE (Select all that apply)</div>'
-            if is_multi else
-            '<div style="display:inline-block;background:rgba(113,128,150,0.12);color:var(--text-muted);font-size:0.75rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:6px;margin-bottom:0.4rem;letter-spacing:0.04em;">⚪ SINGLE CHOICE (Select one)</div>'
-        )
 
         st.markdown(
             '<div class="q-card">'
             f'<div class="q-badge">{i + 1}</div>'
-            f'{type_badge}'
             f'<div class="q-text">{q["question"]}</div>'
             '</div>',
             unsafe_allow_html=True
@@ -1189,10 +1177,8 @@ def render_results():
 
         if is_multi:
             correct_text = ", ".join([q["options"][c] for c in q["correct"]])
-            type_label = "Multiple Choice"
         else:
             correct_text = q["options"][q["correct"]]
-            type_label = "Single Choice"
 
         box_cls = "feedback-box-correct" if is_correct else "feedback-box-incorrect"
         status_sym = "✓ Correct" if is_correct else "✕ Incorrect"
@@ -1202,7 +1188,7 @@ def render_results():
         st.markdown(
             f'<div class="{box_cls}">'
             f'<div style="display:flex;justify-content:space-between;align-items:center;font-weight:700;">'
-            f'<span>Question {i + 1} <span style="font-size:0.75rem;padding:0.15rem 0.45rem;border-radius:4px;background:rgba(108,92,231,0.12);color:var(--primary-purple);margin-left:0.4rem;font-weight:600;">{type_label}</span></span>'
+            f'<span>Question {i + 1}</span>'
             f'<span>{status_sym}</span>'
             f'</div>'
             f'<div style="font-size:0.95rem;margin:0.5rem 0;color:var(--text-main);font-weight:500;">{q["question"]}</div>'

@@ -228,6 +228,23 @@ section[data-testid="stSidebar"] button:hover * {
     font-size: 0.96rem !important;
 }
 
+/* Checkbox Options Matching Reference App */
+.stCheckbox > label {
+    background: transparent !important;
+    border: none !important;
+    padding: 0.35rem 0.6rem !important;
+    color: var(--text-main) !important;
+    font-size: 0.96rem !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+    cursor: pointer !important;
+}
+
+.stCheckbox > label p, .stCheckbox > label span {
+    color: var(--text-main) !important;
+    font-size: 0.96rem !important;
+}
+
 /* Top Hero Banner (Exact match to Screenshots 1 & 2) */
 .hero-banner {
     background: var(--primary-gradient);
@@ -472,6 +489,9 @@ def start_quiz(week_key, bank_choice, mode):
     st.session_state.quiz_mode = mode
     st.session_state.current_question_idx = 0
     st.session_state.answers = {}
+    for k in list(st.session_state.keys()):
+        if k.startswith("prac_") or k.startswith("test_"):
+            del st.session_state[k]
     st.session_state.current_page = "quiz"
 
 def start_custom_mixed(years, selected_weeks, count, mode):
@@ -498,6 +518,9 @@ def start_custom_mixed(years, selected_weeks, count, mode):
     st.session_state.quiz_mode = mode
     st.session_state.current_question_idx = 0
     st.session_state.answers = {}
+    for k in list(st.session_state.keys()):
+        if k.startswith("prac_") or k.startswith("test_"):
+            del st.session_state[k]
     st.session_state.current_page = "quiz"
 
 def record_quiz_attempt(week_name, bank_name, mode_name, score, total, pct):
@@ -887,27 +910,47 @@ def render_practice_mode(qs, total, wk, bank):
     st.progress((idx + 1) / total)
 
     # Question Card with Purple Number Circle Matching Screenshot 3
+    is_multi = isinstance(q.get("correct"), list)
+    type_badge = (
+        '<div style="display:inline-block;background:rgba(108,92,231,0.12);color:var(--primary-purple);font-size:0.75rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:6px;margin-bottom:0.4rem;letter-spacing:0.04em;">☑ MULTIPLE CHOICE (Select all that apply)</div>'
+        if is_multi else
+        '<div style="display:inline-block;background:rgba(113,128,150,0.12);color:var(--text-muted);font-size:0.75rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:6px;margin-bottom:0.4rem;letter-spacing:0.04em;">⚪ SINGLE CHOICE (Select one)</div>'
+    )
+
     st.markdown(
         '<div class="q-card">'
         f'<div class="q-badge">{idx + 1}</div>'
+        f'{type_badge}'
         f'<div class="q-text">{q["question"]}</div>'
         '</div>',
         unsafe_allow_html=True
     )
 
     ans_record = st.session_state.answers.get(idx, {})
-    prev_idx = ans_record.get("selected_idx", None)
-
-    # Options Matching Screenshot 3
-    selected_choice = st.radio(
-        f"Select an option for Question {idx + 1}:",
-        options=q["options"],
-        index=prev_idx,
-        key=f"prac_opt_{idx}",
-        label_visibility="collapsed"
-    )
-
     checked = ans_record.get("checked", False)
+
+    # Options Rendering
+    if is_multi:
+        selected_indices = []
+        prev_indices = ans_record.get("selected_indices", [])
+        for opt_i, opt_text in enumerate(q["options"]):
+            chk_key = f"prac_chk_{idx}_{opt_i}"
+            if chk_key not in st.session_state:
+                st.session_state[chk_key] = (opt_i in prev_indices)
+            if st.checkbox(opt_text, key=chk_key, disabled=checked):
+                selected_indices.append(opt_i)
+        selected_choice = None
+    else:
+        prev_idx = ans_record.get("selected_idx", None)
+        selected_choice = st.radio(
+            f"Select an option for Question {idx + 1}:",
+            options=q["options"],
+            index=prev_idx,
+            key=f"prac_opt_{idx}",
+            label_visibility="collapsed",
+            disabled=checked
+        )
+        selected_indices = []
 
     st.markdown("<div style='height:1rem;'></div>", unsafe_allow_html=True)
 
@@ -916,18 +959,32 @@ def render_practice_mode(qs, total, wk, bank):
     with b1:
         if not checked:
             if st.button("Check Answer ✓", key="btn_prac_check", use_container_width=True):
-                if selected_choice is not None:
-                    sel_i = q["options"].index(selected_choice)
-                    is_corr = (sel_i in q["correct"]) if isinstance(q["correct"], list) else (sel_i == q["correct"])
-                    st.session_state.answers[idx] = {
-                        "selected": selected_choice,
-                        "selected_idx": sel_i,
-                        "correct": is_corr,
-                        "checked": True,
-                    }
-                    st.rerun()
+                if is_multi:
+                    if selected_indices:
+                        is_corr = (set(selected_indices) == set(q["correct"]))
+                        sel_text = ", ".join([q["options"][i] for i in selected_indices])
+                        st.session_state.answers[idx] = {
+                            "selected": sel_text,
+                            "selected_indices": selected_indices,
+                            "correct": is_corr,
+                            "checked": True,
+                        }
+                        st.rerun()
+                    else:
+                        st.warning("Please select at least one option.")
                 else:
-                    st.warning("Please choose an option first.")
+                    if selected_choice is not None:
+                        sel_i = q["options"].index(selected_choice)
+                        is_corr = (sel_i == q["correct"])
+                        st.session_state.answers[idx] = {
+                            "selected": selected_choice,
+                            "selected_idx": sel_i,
+                            "correct": is_corr,
+                            "checked": True,
+                        }
+                        st.rerun()
+                    else:
+                        st.warning("Please choose an option first.")
         else:
             if idx > 0:
                 if st.button("← Previous", key="btn_prac_prev", use_container_width=True):
@@ -946,12 +1003,16 @@ def render_practice_mode(qs, total, wk, bank):
     # Immediate Feedback Box
     if checked:
         is_corr = ans_record.get("correct", False)
-        correct_txt = ", ".join([q["options"][c] for c in q["correct"]]) if isinstance(q["correct"], list) else q["options"][q["correct"]]
+        if is_multi:
+            correct_txt = "<br>• " + "<br>• ".join([q["options"][c] for c in q["correct"]])
+        else:
+            correct_txt = q["options"][q["correct"]]
+
         if is_corr:
             st.markdown('<div class="feedback-box-correct">✓ Correct!</div>', unsafe_allow_html=True)
         else:
             st.markdown(
-                f'<div class="feedback-box-incorrect">✕ Incorrect. Correct Answer: <strong>{correct_txt}</strong></div>',
+                f'<div class="feedback-box-incorrect">✕ Incorrect.<br><strong>Correct Answer(s):</strong> {correct_txt}</div>',
                 unsafe_allow_html=True
             )
 
@@ -963,7 +1024,7 @@ def render_practice_mode(qs, total, wk, bank):
 # --- TEST MODE (MATCHING SCREENSHOT 4) ---
 def render_test_mode(qs, total, wk, bank):
     title_text = QUIZ_DATA.get(wk, {}).get("title", wk) if wk != "Mixed Quiz" else "Mixed Assignment Questions"
-    answered_count = sum(1 for i in range(total) if st.session_state.answers.get(i, {}).get("selected") is not None)
+    answered_count = sum(1 for i in range(total) if st.session_state.answers.get(i, {}).get("selected") is not None and st.session_state.answers.get(i, {}).get("selected") != "")
 
     # Title & Subtitle Matching Screenshot 4
     st.markdown(
@@ -973,37 +1034,74 @@ def render_test_mode(qs, total, wk, bank):
     )
 
     # Thin Progress Bar
-    st.progress(answered_count / total)
+    st.progress(answered_count / total if total > 0 else 0)
     st.markdown("<div style='height:0.75rem;'></div>", unsafe_allow_html=True)
 
     # Sequential Questions Matching Screenshot 4
     for i, q in enumerate(qs):
+        is_multi = isinstance(q.get("correct"), list)
+        type_badge = (
+            '<div style="display:inline-block;background:rgba(108,92,231,0.12);color:var(--primary-purple);font-size:0.75rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:6px;margin-bottom:0.4rem;letter-spacing:0.04em;">☑ MULTIPLE CHOICE (Select all that apply)</div>'
+            if is_multi else
+            '<div style="display:inline-block;background:rgba(113,128,150,0.12);color:var(--text-muted);font-size:0.75rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:6px;margin-bottom:0.4rem;letter-spacing:0.04em;">⚪ SINGLE CHOICE (Select one)</div>'
+        )
+
         st.markdown(
             '<div class="q-card">'
             f'<div class="q-badge">{i + 1}</div>'
+            f'{type_badge}'
             f'<div class="q-text">{q["question"]}</div>'
             '</div>',
             unsafe_allow_html=True
         )
 
-        prev_idx = st.session_state.answers.get(i, {}).get("selected_idx", None)
-        selected_choice = st.radio(
-            f"Question {i+1} Options",
-            options=q["options"],
-            index=prev_idx,
-            key=f"test_opt_{i}",
-            label_visibility="collapsed"
-        )
+        ans_rec = st.session_state.answers.get(i, {})
 
-        if selected_choice is not None:
-            si = q["options"].index(selected_choice)
-            is_c = (si in q["correct"]) if isinstance(q["correct"], list) else (si == q["correct"])
-            st.session_state.answers[i] = {
-                "selected": selected_choice,
-                "selected_idx": si,
-                "correct": is_c,
-                "checked": False,
-            }
+        if is_multi:
+            prev_indices = ans_rec.get("selected_indices", [])
+            selected_indices = []
+            for opt_i, opt_text in enumerate(q["options"]):
+                chk_key = f"test_chk_{i}_{opt_i}"
+                if chk_key not in st.session_state:
+                    st.session_state[chk_key] = (opt_i in prev_indices)
+                if st.checkbox(opt_text, key=chk_key):
+                    selected_indices.append(opt_i)
+
+            if selected_indices:
+                is_c = (set(selected_indices) == set(q["correct"]))
+                st.session_state.answers[i] = {
+                    "selected": ", ".join([q["options"][si] for si in selected_indices]),
+                    "selected_indices": selected_indices,
+                    "correct": is_c,
+                    "checked": False,
+                }
+            else:
+                if i in st.session_state.answers:
+                    st.session_state.answers[i] = {
+                        "selected": None,
+                        "selected_indices": [],
+                        "correct": False,
+                        "checked": False,
+                    }
+        else:
+            prev_idx = ans_rec.get("selected_idx", None)
+            selected_choice = st.radio(
+                f"Question {i+1} Options",
+                options=q["options"],
+                index=prev_idx,
+                key=f"test_opt_{i}",
+                label_visibility="collapsed"
+            )
+
+            if selected_choice is not None:
+                si = q["options"].index(selected_choice)
+                is_c = (si == q["correct"])
+                st.session_state.answers[i] = {
+                    "selected": selected_choice,
+                    "selected_idx": si,
+                    "correct": is_c,
+                    "checked": False,
+                }
 
         st.markdown("<div style='height:0.75rem;'></div>", unsafe_allow_html=True)
 
@@ -1012,7 +1110,7 @@ def render_test_mode(qs, total, wk, bank):
     sb_col1, sb_col2, sb_col3 = st.columns([1, 2, 1])
     with sb_col2:
         if st.button("Submit Test", key="btn_test_submit", use_container_width=True):
-            unanswered = [i + 1 for i in range(total) if st.session_state.answers.get(i, {}).get("selected") is None]
+            unanswered = [i + 1 for i in range(total) if not st.session_state.answers.get(i, {}).get("selected")]
             if unanswered and len(unanswered) > 0:
                 st.warning(f"Notice: You have {len(unanswered)} unanswered question(s).")
             finish_quiz(qs, total, wk, bank, "Test Mode")
@@ -1086,8 +1184,15 @@ def render_results():
     for i, q in enumerate(qs):
         ans_info = st.session_state.answers.get(i, {})
         is_correct = ans_info.get("correct", False)
-        selected_text = ans_info.get("selected", "Unanswered")
-        correct_text = ", ".join([q["options"][c] for c in q["correct"]]) if isinstance(q["correct"], list) else q["options"][q["correct"]]
+        selected_text = ans_info.get("selected") or "Unanswered"
+        is_multi = isinstance(q.get("correct"), list)
+
+        if is_multi:
+            correct_text = ", ".join([q["options"][c] for c in q["correct"]])
+            type_label = "Multiple Choice"
+        else:
+            correct_text = q["options"][q["correct"]]
+            type_label = "Single Choice"
 
         box_cls = "feedback-box-correct" if is_correct else "feedback-box-incorrect"
         status_sym = "✓ Correct" if is_correct else "✕ Incorrect"
@@ -1097,7 +1202,7 @@ def render_results():
         st.markdown(
             f'<div class="{box_cls}">'
             f'<div style="display:flex;justify-content:space-between;align-items:center;font-weight:700;">'
-            f'<span>Question {i + 1}</span>'
+            f'<span>Question {i + 1} <span style="font-size:0.75rem;padding:0.15rem 0.45rem;border-radius:4px;background:rgba(108,92,231,0.12);color:var(--primary-purple);margin-left:0.4rem;font-weight:600;">{type_label}</span></span>'
             f'<span>{status_sym}</span>'
             f'</div>'
             f'<div style="font-size:0.95rem;margin:0.5rem 0;color:var(--text-main);font-weight:500;">{q["question"]}</div>'

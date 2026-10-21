@@ -30,12 +30,12 @@ W1_2026 = [
         "explanation": "In the stationary case, the weightage of all rewards given so far is 1/n, where n is the number of rewards obtained for that arm/action so far. Therefore it is hyperbolic. In the non-stationary update, the weightage given to the most recent reward is α, for the pre-update Q value it is 1-α. Upon expansion of the pre-update Q value, we can see that the weightage of the reward in the last but one time step is α(1-α). We can continue to expand in a similar fashion to get that a reward obtained t time steps ago has a weightage of α(1-α)^t (exponential decay).",
     },
     {
-        "question": "In the update rule Q_{t+1}(a) <- Q_t(a) + α(R_t - Q_t(a)), select the value of α that we would prefer to estimate Q values in a non-stationary bandit problem.",
+        "question": "In the update rule Q_{t+1}(a) ← Q_t(a) + α(R_t - Q_t(a)), select the value of α that we would prefer to estimate Q values in a non-stationary bandit problem.",
         "options": [
             "α = 1 / (n_a + 1)",
             "α = 0.1",
             "α = n_a + 1",
-            "α = 1 / (n_a + 1)^2",
+            "α = 1 / (n_a + 1)²",
         ],
         "correct": 1,
         "explanation": "By using a constant value of α, we decrease the importance of past samples exponentially as time progresses, so that our Q value estimates are able to shift as the true action values change. Option (a) weights each sample equally (computing a simple average), preventing meaningful updates when action-values change. Option (c) creates an unbounded sum where estimates grow to infinity. Option (d) weights newer samples lower than case (a).",
@@ -52,11 +52,11 @@ W1_2026 = [
         "explanation": "An RL agent needs to take exploratory actions because it needs to estimate the advantage for each action correctly. So, the Assertion is true. Reason is also true because if the rewards are stochastic, the agent might get high reward once and low reward next time for the same action in the same state. However, even if the rewards obtained for actions were deterministic, the agent still needs to take exploratory actions to figure out more advantageous actions. Hence, Reason does not explain the Assertion correctly.",
     },
     {
-        "question": "We are trying different algorithms to find the optimal arm for a multi arm bandit. We plot expected payoff vs time graph for each algorithm for which the expected payoff satisfy some function with respect to time (staring from 0). Which among the following functions will have the least regret. (We know that the optimal expected pay off is 1) (Hint: Plot the functions)",
+        "question": "We are trying different algorithms to find the optimal arm for a multi arm bandit. We plot expected payoff vs time graph for each algorithm for which the expected payoff satisfy some function with respect to time (starting from 0). Which among the following functions will have the least regret. (We know that the optimal expected pay off is 1) (Hint: Plot the functions)",
         "options": [
             "tanh(t)",
-            "1 - 2^(-t)",
-            "x/20 if x<20 and 1 after that",
+            "1 − 2⁻ᵗ",
+            "x/20 if x<20, and 1 after that",
             "Same regret for all the above functions.",
         ],
         "correct": 0,
@@ -74,7 +74,7 @@ W1_2026 = [
         "explanation": "In non-stationary environment since optimal state changes, hence it requires constant exploration to find the optimal state. Decaying epsilon to zero may not find an optimal state; hence, iii is incorrect. Both i and ii are correct.",
     },
     {
-        "question": "Following are two ways for defining the probability of selecting an action/arm. Select the option regarding better choice among the following:\ni Pr(a_t = a) = Q_t(a) / sum_a Q_t(a)\nii Pr(a_t = a) = e^{Q_t(a)} / sum_{b=1}^n e^{Q_t(b)}",
+        "question": "Following are two ways for defining the probability of selecting an action/arm. Select the option regarding better choice among the following:\n(i) Pr(a_t = a) = Q_t(a) / Σ_a Q_t(a)\n(ii) Pr(a_t = a) = e^{Q_t(a)} / Σ_{b=1}^{n} e^{Q_t(b)}",
         "options": [
             "Both are good as both formulas can bound probability in range 0 to 1.",
             "(i) is better because it is differentiable and requires less complex computation.",
@@ -242,7 +242,7 @@ W2_2026 = [
         "explanation": "We are not constrained to Gaussian priors — any prior distribution can be assumed over the q* values for each arm. Statement (d) is false.",
     },
     {
-        "question": "In UCB, the term sqrt(2ln(n)/n_j) is added to each arm’s Q value and the arm with the highest value of this sum is chosen. Which one of the following would definitely happen to the frequency of picking sub-optimal arms when adding sqrt(2ln(n)/n_j^2) instead of sqrt(2ln(n)/n_j)?",
+        "question": "In UCB, the term √(2ln(n)/n_j) is added to each arm’s Q value and the arm with the highest value of this sum is chosen. Which one of the following would definitely happen to the frequency of picking sub-optimal arms when adding √(2ln(n)/n_j²) instead of √(2ln(n)/n_j)?",
         "options": [
             "Sub-optimal arms would be chosen more frequently.",
             "Sub-optimal arms would be chosen less frequently.",
@@ -253,7 +253,7 @@ W2_2026 = [
         "explanation": "The faster-shrinking uncertainty term means fewer samples needed for confidence, which could mean less wasted exploration (fewer sub-optimal pulls) but could also mean worse estimates earlier leading to more sub-optimal pulls. Either (a) or (b) could be True depending on the problem.",
     },
     {
-        "question": "In the proof of the UCB Theorem, when l_i = ceil(8*ln(m)/Delta_i^2), q*(a*) - q*(i) - 2*C_{m,l} = 0. Which of the following correctly explains q*(a*) - q*(i) - 2*C_{m,T_i(s_i)} being less than 0 when we replace this fixed value of l by the value T_i(s_i): the number of times the arm i is selected?",
+        "question": "In the proof of the UCB Theorem, when l_i = ⌈8ln(m)/Δᵢ²⌉, q*(a*) - q*(i) - 2·C_{m,l} = 0. Which of the following correctly explains q*(a*) - q*(i) - 2·C_{m,T_i(s_i)} being less than 0 when we replace this fixed value of l by the value T_i(s_i): the number of times the arm i is selected?",
         "options": [
             "T_i(s_i) < l thus C_{m,T_i(s_i)} < C_{m,l}",
             "T_i(s_i) > m thus C_{m,T_i(s_i)} < C_{m,l}",
@@ -261,7 +261,7 @@ W2_2026 = [
             "T_i(s_i) < l thus C_{m,T_i(s_i)} > C_{m,l}",
         ],
         "correct": 3,
-        "explanation": "If the arm is selected fewer times than l, confidence interval is larger: C_{m,T_i(s_i)} > C_{m,l}, which makes q*(a*) - q*(i) - 2*C_{m,T_i(s_i)} < 0.",
+        "explanation": "If the arm is selected fewer times than l, confidence interval is larger: C_{m,T_i(s_i)} > C_{m,l}, which makes q*(a*) - q*(i) - 2·C_{m,T_i(s_i)} < 0.",
     },
     {
         "question": "Which of the following is true about the Median Elimination algorithm?",
@@ -283,21 +283,21 @@ W2_2026 = [
             "20000",
         ],
         "correct": 0,
-        "explanation": "8 rounds => 2^8 = 256 arms. Naive algorithm samples = 2k*ln(2k/δ)/ϵ^2 = 2*256*ln(512*e)/(0.25) ≈ 14824 ≈ 15000.",
+        "explanation": "8 rounds ⟹ 2⁸ = 256 arms. Naive algorithm samples = 2k·ln(2k/δ)/ϵ² = 2·256·ln(512e)/(0.25) ≈ 14824 ≈ 15000.",
     },
     {
-        "question": "In case of UCB, the regret is generally of the form f(n)+c, where, for the confidence bound given by sqrt(2ln(n)/n_j), f(n) = sum_{j=1}^k (8ln(n)/Delta_j) and c = (1 + pi^2/3) sum_{j=1}^k Delta_j. What is the form of f(n) for the confidence bound given by sqrt(alpha*ln(n)/n_j), where alpha >= 2?",
+        "question": "In case of UCB, the regret is generally of the form f(n)+c, where, for the confidence bound given by √(2ln(n)/n_j), f(n) = Σ_{j=1}^{k} (8ln(n)/Δ_j) and c = (1 + π²/3) Σ_{j=1}^{k} Δ_j. What is the form of f(n) for the confidence bound given by √(α·ln(n)/n_j), where α ≥ 2?",
         "options": [
-            "sum_{j=1}^k 4*alpha*ln(n)/Delta_j",
-            "sum_{j=1}^k 2*alpha^2*ln(n)/Delta_j",
-            "sum_{j=1}^k alpha^3*ln(n)/Delta_j",
-            "sum_{j=1}^k alpha^4*ln(n)/(2*Delta_j)",
+            "Σ_{j=1}^{k} 4α·ln(n)/Δ_j",
+            "Σ_{j=1}^{k} 2α²·ln(n)/Δ_j",
+            "Σ_{j=1}^{k} α³·ln(n)/Δ_j",
+            "Σ_{j=1}^{k} α⁴·ln(n)/(2·Δ_j)",
         ],
         "correct": 0,
-        "explanation": "Re-deriving the UCB proof with general alpha gives f(n) = sum 4*alpha*ln(n)/Delta_j.",
+        "explanation": "Re-deriving the UCB proof with general α gives f(n) = Σ 4α·ln(n)/Δ_j.",
     },
     {
-        "question": "In the naive (ϵ,δ)-PAC algorithm, suppose we draw 2*ln(k/δ)/ϵ^2 samples for each arm instead of 2*ln(2k/δ)/ϵ^2 samples. Using the same analysis presented in the lectures, with what probability can we guarantee that the arm a' returned will have q*(a') value ϵ close to the q* value of the optimal arm?",
+        "question": "In the naive (ϵ,δ)-PAC algorithm, suppose we draw 2ln(k/δ)/ϵ² samples for each arm instead of 2ln(2k/δ)/ϵ² samples. Using the same analysis presented in the lectures, with what probability can we guarantee that the arm a' returned will have q*(a') value ϵ close to the q* value of the optimal arm?",
         "options": [
             "1 - δ",
             "1 - 4δ",
@@ -610,10 +610,10 @@ W3_2025 = [
         "explanation": "Assuming parameters to be µ and σ, we have policy,\nπ(a;µ,σ2)= √1 e−(a− 2σµ)2\n2πσ\nFor the mean:\n∂lnπ(a ;µ ,σ ) ∂\n(cid:26)\n(a −µ\n)2(cid:27)\na −µ\nn n n = − n n = n n\n∂µ ∂µ 2σ2 σ2\nn n n n\nFor the variance:\n∂lnπ(a n;µ n,σ n)\n=\n∂ (cid:8) −ln(√\n2πσ\n)(cid:9)\n+\n∂ (cid:26) −(a n−µ n)2(cid:27)\n∂σ ∂σ n ∂σ 2σ2\nn n n n\nSolving, we have:\n∂lnπ(a ;µ ,σ ) 1 (a −µ )2 1 (cid:18) a −µ (cid:19)2\nn n n =− + n n = { n n −1}\n∂σ σ σ3 σ σ\nn n n n n\nThus, the updates are:\n(cid:18) (cid:19)\na −µ\nµ =µ +α r n n\nn+1 n n n σ2\nn\n1\n(cid:40)(cid:18)\na −µ\n(cid:19)2 (cid:41)\nσ =σ +α r n n −1\nn+1 n n nσ σ\nn n",
     },
     {
-        "question": "Whichamongthefollowingis/aredifferencesbetweencontextualbanditsandfullRLproblems?",
+        "question": "Which among the following is/are differences between contextual bandits and full RL problems?",
         "options": [
             "the actions and states in contextual bandits share features, but not in full RL problems",
-            "theactionsincontextualbanditsdonotdeterminethenextstate, buttypicallydoinfull\nRL problems",
+            "the actions in contextual bandits do not determine the next state, but typically do in full RL problems",
             "full RL problems can be modelled as MDPs whereas contextual bandit problems cannot",
             "no difference",
         ],
@@ -706,7 +706,7 @@ W4_2026 = [
         "explanation": "RL algorithms require to know the state the agent is in, the action it takes and a reward signal from the environment to solve the MDP. However, they do not need to know the state transition probability matrix.",
     },
     {
-        "question": "Consider the following equations:\n(i) vπ(s) = E_π [sum_{i=t}^∞ γ^{i-t} R_{i+1} | S_t = s]\n(ii) qπ(s,a) = sum_{s'} p(s'|s,a) vπ(s')\n(iii) vπ(s) = sum_a π(a|s) qπ(s,a)\nWhich of the above are correct?",
+        "question": "Consider the following equations:\n(i) vπ(s) = E_π [Σ_{i=t}^{∞} γ^{i-t} R_{i+1} | S_t = s]\n(ii) qπ(s,a) = Σ_{s'} p(s'|s,a) vπ(s')\n(iii) vπ(s) = Σ_a π(a|s) qπ(s,a)\nWhich of the above are correct?",
         "options": [
             "Only (i)",
             "Only (i), (ii)",
@@ -760,12 +760,12 @@ W4_2026 = [
         "explanation": "x=B(A(x)) => x=B(x). Therefore, x is a fixed point of B. However, that does not mean x=y. The function B could have multiple fixed points (consider the identity function), so (ii) is False. There is no guarantee that y is a fixed point for A. So, we cannot say (iii) is True.",
     },
     {
-        "question": "Which of the following is not a valid norm function? (x is a D dimensional vector)",
+        "question": "Which of the following is not a valid norm function? (x is a D-dimensional vector)",
         "options": [
-            "max_{d∈{1,...,D}} |x_d|",
-            "sqrt(sum_{d=1}^D x_d^2)",
-            "min_{d∈{1,...,D}} |x_d|",
-            "sum_{d=1}^D |x_d|",
+            "max_{d ∈ {1,...,D}} |x_d|",
+            "√(Σ_{d=1}^{D} x_d²)",
+            "min_{d ∈ {1,...,D}} |x_d|",
+            "Σ_{d=1}^{D} |x_d|",
         ],
         "correct": 2,
         "explanation": "(c) can be zero when x is not the zero vector.",
@@ -845,7 +845,7 @@ W4_2025 = [
         "explanation": "For s_1, moving down transitions to the terminal state (value 0) with reward -1, giving q_π(s_1, down) = -1 + 0 = -1. For s_2, moving down transitions to s_1 (value -14) with reward -1, giving q_π(s_2, down) = -1 + (-14) = -15.",
     },
     {
-        "question": "In a particular grid-world example, rewards are positive for goals, negative for running into the edge of the world, and zero the rest of the time. Are the signs of these rewards important, or only the intervals between them? Prove, using the discounted return equation G_t = sum_{k=0}^∞ γ^k R_{t+k+1}, that adding a constant C to all rewards adds a constant K to the values of all states. What is K in terms of C and γ?",
+        "question": "In a particular grid-world example, rewards are positive for goals, negative for running into the edge of the world, and zero the rest of the time. Are the signs of these rewards important, or only the intervals between them? Prove, using the discounted return equation G_t = Σ_{k=0}^{∞} γᵏ R_{t+k+1}, that adding a constant C to all rewards adds a constant K to the values of all states. What is K in terms of C and γ?",
         "options": [
             "K = 1 / (C(1 - γ))",
             "K = C(1/(1-γ) - 1)",
@@ -853,7 +853,7 @@ W4_2025 = [
             "K = C / (1 - γ)",
         ],
         "correct": 3,
-        "explanation": "G'_t = sum_{k=0}^∞ γ^k (R_{t+k+1} + C) = sum_{k=0}^∞ γ^k R_{t+k+1} + C sum_{k=0}^∞ γ^k = G_t + C / (1 - γ). Thus, K = C / (1 - γ).",
+        "explanation": "G'_t = Σ_{k=0}^{∞} γᵏ (R_{t+k+1} + C) = Σ_{k=0}^{∞} γᵏ R_{t+k+1} + C Σ_{k=0}^{∞} γᵏ = G_t + C / (1 - γ). Thus, K = C / (1 - γ).",
     },
     {
         "question": "Given a reinforcement learning problem, algorithm A will return the optimal state value function for that problem and algorithm B will return the optimal action value function. Your aim is to use the value function so obtained to behave optimally in the environment. Assuming that you know the expected rewards for each state transition, but not the state transition probabilities, which algorithm’s output would you prefer to use?",
@@ -904,10 +904,10 @@ W4_2025 = [
 # ─────────────────────────────────────────────────────────────────────────────
 W5_2026 = [
     {
-        "question": "Inpolicyiteration,whichofthefollowingis/aretrueofthePolicyEvaluation(PE)andPolicy\nImprovement (PI) steps?",
+        "question": "In policy iteration, which of the following is/are true of the Policy Evaluation (PE) and Policy Improvement (PI) steps?",
         "options": [
-            "The values of states that are returned by PE may fluctuate between high and low values\nas the algorithm runs.",
-            "PE returns the fixed point of L\nπn",
+            "The values of states that are returned by PE may fluctuate between high and low values as the algorithm runs.",
+            "PE returns the fixed point of L_{πn}.",
             "PI can randomly select any greedy policy for a given value function vn.",
             "Policy iteration always converges for a finite MDP.",
         ],
@@ -915,12 +915,12 @@ W5_2026 = [
         "explanation": "At each iteration, the PE step always returns values that are greater than or equal to the\nvalues of states from the previous iteration. So there is no fluctuation between high, and low\nvalues.\nSince the PE step always returns values that are greater than or equal to the values of states\nfrom the previous iteration, by breaking ties consistently when greedily selecting policies in\nthe PI stage, the policy returned by the PI step is always better than or equal to the policy\nfrom the previous iteration. Since for a finite MDP there are a finite number of deterministic\npolicies to search through, policy iteration must converge eventually.\n(b) is True. (c) is False - we need to break ties between policies consistently to guarantee\nthat the stopping criterion is met. (Refer to lectures).",
     },
     {
-        "question": "ConsiderMonte-Carloapproachforpolicyevaluation. SupposethestatesareS ,S ,S ,S ,S ,S\n1 2 3 4 5 6\nand terminal state. You sample one trajectory as follows -\nS →S →S →S →terminal state.\n1 5 4 6\nWhich among the following states can be updated from this sample?",
+        "question": "Consider Monte-Carlo approach for policy evaluation. Suppose the states are S₁, S₂, S₃, S₄, S₅, S₆ and a terminal state. You sample one trajectory as follows:\nS₁ → S₅ → S₄ → S₆ → terminal state.\nWhich among the following states can be updated from this sample?",
         "options": [
-            "S",
-            "S",
-            "S",
-            "S",
+            "S₁",
+            "S₂",
+            "S₆",
+            "S₄",
         ],
         "correct": [0, 2, 3],
         "explanation": "Values of all states that appear in the trajectory can be updated.",
@@ -961,10 +961,10 @@ W5_2026 = [
     {
         "question": "Select the correct statements about Generalized Policy Iteration (GPI).",
         "options": [
-            "GPI lets policy evaluation and policy improvement interact with each other regardless of\nthe details of the two processes.",
-            "Before convergence, the policy evaluation step will usually cause the policy to no longer\nbe greedy with respect to the updated value function.",
-            "GPIconvergesonlywhenapolicyhasbeenfoundwhichisgreedywithrespecttoitsown\nvalue function.",
-            "The policy and value function found by GPI at convergence with both be optimal.",
+            "GPI lets policy evaluation and policy improvement interact with each other regardless of the details of the two processes.",
+            "Before convergence, the policy evaluation step will usually cause the policy to no longer be greedy with respect to the updated value function.",
+            "GPI converges only when a policy has been found which is greedy with respect to its own value function.",
+            "The policy and value function found by GPI at convergence will both be optimal.",
         ],
         "correct": [0, 1, 2, 3],
         "explanation": "Refer to Generalized Policy Iteration lectures.",
@@ -981,15 +981,15 @@ W5_2026 = [
         "explanation": "Monte Carlo value function evaluation is for valuation of a policy, not for learning one. ”Off-\npolicy”indicatesthatthesamplegeneratingpolicyisdifferentfromthepolicybeingevaluated.",
     },
     {
-        "question": "For both value and policy iteration algorithms we will get a sequence of vectors after some\niterations, say v ,v ....v for value iteration and v′,v′...v′ for policy iteration. Which of the\n1 2 n 1 2 n\nfollowing statements are true.",
+        "question": "For both value and policy iteration algorithms we will get a sequence of vectors after some\niterations, say v₁, v₂, ..., vₙ for value iteration and v′,v′...v′ for policy iteration. Which of the\n₁', v₂', ..., vₙ' for policy iteration. Which of the following statements are true?",
         "options": [
-            "For all v ∈v ,v ....v there exists a policy for which v is a fixed point.\ni 1 2 n i",
+            "For all vᵢ ∈ {v₁, v₂, ..., vₙ} there exists a policy for which vᵢ is a fixed point.",
             "For all v′ ∈v′,v′....v′ there exists a policy for which v′ is a fixed point.\ni 1 2 n i",
-            "For all v ∈v ,v ....v there may not exist a policy for which v is a fixed point.\ni 1 2 n i",
+            "For all vᵢ ∈ {v₁, v₂, ..., vₙ} there may not exist a policy for which vᵢ is a fixed point.",
             "For all v′ ∈v′,v′....v′ there may not exist a policy for which v′ is a fixed point.\ni 1 2 n i",
         ],
         "correct": [1, 2],
-        "explanation": "Thevectorsinvalueiterationmaynotcorrespondtoapolicybutthevectorsinpolicyiteration\nalways correspond to some policy",
+        "explanation": "The vectors in value iteration may not correspond to a policy but the vectors in policy iteration always correspond to some policy.",
     },
 ]
 
@@ -1007,7 +1007,7 @@ W5_2025 = [
         "explanation": "The question essentially asks whether V contains all value functions, which we have seen in\nthe lectures to be true.",
     },
     {
-        "question": "Intheproofofthevalueiterationtheorem,wesawthatLvn+1 =L vn+1. Isittrue,ingeneral,\nπ\nthat for an arbitrary bounded function v, Lv =L v (disregarding any special conditions that\nπ\nmay be existing in the aforementioned proof)?",
+        "question": "In the proof of the value iteration theorem, we saw that Lvₙ₊₁ = L_{πₙ₊₁} vₙ₊₁. Is it true, in general, that for an arbitrary bounded function v, Lv = L_π v (disregarding any special conditions that may be existing in the aforementioned proof)?",
         "options": [
             "no",
             "yes",
@@ -1016,7 +1016,7 @@ W5_2025 = [
         "explanation": "",
     },
     {
-        "question": "Continuing with the previous question, why is it the case that Lvn+1 = L vn+1 in the proof\nπ\nof the value iteration theorem?",
+        "question": "Continuing with the previous question, why is it the case that Lvₙ₊₁ = L_{πₙ₊₁} vₙ₊₁ in the proof of the value iteration theorem?",
         "options": [
             "because the equality holds in general",
             "because vn+1 is the optimal value function",
@@ -1082,7 +1082,7 @@ W5_2025 = [
         "explanation": "Option (c) is an advantage, since it allows us to estimate values of only specific states of an\nMDP if those are the only states we care to know about.",
     },
     {
-        "question": "For a specific MDP, suppose we have a policy that we want to evaluate through the use of\nactualexperienceintheenvironmentaloneandusingMonteCarlomethods. Wedecidetouse\nthe first-visit approach along with the technique of always picking the start state at random\nfrom the available set of states. Will this approach ensure complete evaluation of the action\nvalue function corresponding to the policy?",
+        "question": "For a specific MDP, suppose we have a policy that we want to evaluate through the use of\nactual experience in the environment alone and using Monte Carlo methods. Wedecidetouse\nthe first-visit approach along with the technique of always picking the start state at random\nfrom the available set of states. Will this approach ensure complete evaluation of the action\nvalue function corresponding to the policy?",
         "options": [
             "no",
             "yes",
@@ -1108,7 +1108,7 @@ W5_2025 = [
 # ─────────────────────────────────────────────────────────────────────────────
 W6_2026 = [
     {
-        "question": "Assertion: Inordertouseimportancesamplingforoff-policyMonte-Carlopolicyevaluation,\nwe require knowledge of the state transition probabilities of the MDP.\nReason: We require knowledge of the probability of each trajectory x according to the\ni\nestimation policy and according to the behaviour policy. Both of these values are dependent\non the state transition probabilities of the MDP.",
+        "question": "Assertion: In order to use importance sampling for off-policy Monte-Carlo policy evaluation, we require knowledge of the state transition probabilities of the MDP.\nReason: We require knowledge of the probability of each trajectory xᵢ according to the estimation policy and according to the behaviour policy. Both of these values are dependent on the state transition probabilities of the MDP.",
         "options": [
             "Both Assertion and Reason are true, and Reason is correct explanation for Assertion.",
             "Both Assertion and Reason are true, but Reason is not correct explanation for assertion.",
@@ -1116,7 +1116,7 @@ W6_2026 = [
             "Both Assertion and Reason are false",
         ],
         "correct": 3,
-        "explanation": "Theimportancefactoronlydependsontheratiobetweentheprobabilityofeachtrajectoryx\ni\naccordingtotheestimationpolicyandaccordingtothebehaviourpolicy. Thestatetransition\nprobabilities cancel out in this ratio. Consequently, we do not require knowledge of the state-\ntransition probabilities for off-policy Monte-Carlo policy evaluation.",
+        "explanation": "The importance factor only depends on the ratio between the probability of each trajectory xᵢ according to the estimation policy and according to the behaviour policy. The state transition probabilities cancel out in this ratio. Consequently, we do not require knowledge of the state-transition probabilities for off-policy Monte-Carlo policy evaluation.",
     },
     {
         "question": "Which of the following are true?",
@@ -1141,7 +1141,7 @@ W6_2026 = [
         "explanation": "Refer to the lecture on UC-Trees.",
     },
     {
-        "question": "Consider the following statements:\n(i) TD(0) methods uses unbiased sample of the return.\n(ii) TD(0) methods uses a sample of the reward from the distribution of rewards.\n(iii) TD(0) methods uses the current estimate of value function.\n1\n\nWhich of the above statements is/are true?",
+        "question": "Consider the following statements:\n(i) TD(0) methods use an unbiased sample of the return.\n(ii) TD(0) methods use a sample of the reward from the distribution of rewards.\n(iii) TD(0) methods use the current estimate of value function.\nWhich of the above statements is/are true?",
         "options": [
             "(i), (ii)",
             "(i),(iii)",
@@ -1155,15 +1155,15 @@ W6_2026 = [
         "question": "Assertion: Q-learning can use asynchronous samples from different policies to update Q\nvalues.\nReason: Q-learning is an off-policy learning algorithm.",
         "options": [
             "Assertion and Reason are both true and Reason is a correct explanation of Assertion.",
-            "AssertionandReasonarebothtrueandReasonisnotacorrectexplanationofAssertion.",
+            "Assertion and Reason are both true and Reason is not a correct explanation of Assertion.",
             "Assertion is true but Reason is false.",
             "Assertion is false but Reason is true.",
         ],
         "correct": 0,
-        "explanation": "Thelearnedaction-valuefunctiondirectlyapproximatesoptimaltheoptimalaction-valuefunc-\ntion independent of the policy being followed.",
+        "explanation": "The learned action-value function directly approximates the optimal action-value function independent of the policy being followed.",
     },
     {
-        "question": "Suppose, for a 2 player game that we have modeled as an MDP, instead of learning a policy\novertheMDPdirectly,weseparatethedeterministicandstochasticresultofplayinganaction\nto create ‘after-states’ (as discussed in the lectures). Consider the following statements:\n(i) The set of states that make up ‘after-states’ may be different from the original set of\nstates for the MDP.\n(ii) The set of ‘after-states’ could be smaller than the original set of states for the MDP.\nWhich of the above statements is/are True?",
+        "question": "Suppose, for a 2 player game that we have modeled as an MDP, instead of learning a policy\nover the MDP directly, we separate the deterministic and stochastic result of playing an action to create ‘after-states’ (as discussed in the lectures). Consider the following statements:\n(i) The set of states that make up ‘after-states’ may be different from the original set of\nstates for the MDP.\n(ii) The set of ‘after-states’ could be smaller than the original set of states for the MDP.\nWhich of the above statements is/are True?",
         "options": [
             "Only (i)",
             "Only (ii)",
@@ -1174,7 +1174,7 @@ W6_2026 = [
         "explanation": "In tic-tac-toe for example, if the agent plays first, then the original set of states will all have\nan even number of marks (knot/cross) on the board. All after-states on the other hand, will\nall have an odd number of marks on the board. Hence (i) is True.\nAs discussed in the lectures, several of the original states of the MDP could map to the same\nafter-state (once an action is played), so (ii) is True.",
     },
     {
-        "question": "Consider the environment given below (CliffWorld discussed in lecture):\nSuppose we use ϵ-greedy policy for exploration with a value of ϵ = 0.1. Select the correct\noption(s):\n2\n\nFigure 1: CliffWorld with two possible policies",
+        "question": "Consider the environment given below (CliffWorld discussed in lecture):\nSuppose we use ϵ-greedy policy for exploration with a value of ϵ = 0.1. Select the correct option(s):",
         "options": [
             "Q-Learning finds the optimal (red) path.",
             "Q-Learning finds the safer (blue) path.",
@@ -1188,12 +1188,12 @@ W6_2026 = [
         "question": "Assertion: Having a simulator/model is an advantage when using rollouts based methods.\nReason: Multiple trajectories can be sampled from the model from any given state.",
         "options": [
             "Assertion and Reason are both true and Reason is a correct explanation of Assertion.",
-            "AssertionandReasonarebothtrueandReasonisnotacorrectexplanationofAssertion.",
+            "Assertion and Reason are both true and Reason is not a correct explanation of Assertion.",
             "Assertion is true but Reason is false.",
             "Assertion and Reason are both false.",
         ],
         "correct": 0,
-        "explanation": "Having a model is necessary when using rollouts based methods. If a simulator is not present,\nthestatefromwhichmultipletrajectoriesarebeingcreatedneedstobereachedmultipletimes,\nmultiple trajectories will actually need to be ”played”. In comparison, simulating trajectories\nin a model that is present, without actually having to ”play” them in the environment is\nsignificantly better.",
+        "explanation": "Having a model is necessary when using rollouts based methods. If a simulator is not present,\nthe state from which multiple trajectories are being created needs to be reached multiple times, and multiple trajectories will actually need to be ”played”. In comparison, simulating trajectories\nin a model that is present, without actually having to ”play” them in the environment is\nsignificantly better.",
     },
     {
         "question": "Consider an MDP with two states A and B. Given the single trajectory shown below (in the\npattern of state, reward, next state...), use on-policy TD(0) updates to make estimates for the\nvalues of the 2 states.\nA,3,B,2,A,5,B,2,A,4,END\nAssume a discount factor γ =1, a learning rate α=1 and initial state-values of zero. What\nare the estimated values for the 2 states at the end of the sampled trajectory? (Note: You are\nnot asked to compute the true values for the two states.)",
@@ -1215,7 +1215,7 @@ W6_2026 = [
             "It always selects the greedy action choice.",
         ],
         "correct": [0, 1, 2],
-        "explanation": "(d)isfalse. SARSArequiresadequateexplorationofthestatespacetoconvergetoanoptimal\npolicy.",
+        "explanation": "(d) is false. SARSA requires adequate exploration of the state space to converge to an optimal policy.",
     },
 ]
 
@@ -1229,7 +1229,7 @@ W6_2025 = [
             "allows us to identify leaf states",
             "allows us to identify terminal states",
             "can be used to impact the choice of action selection",
-            "allowsustospecialisevaluefunctionsbasedonthenumberofstepsthathavebeentaken",
+            "allows us to specialise value functions based on the number of steps that have been taken",
         ],
         "correct": [0, 2, 3],
         "explanation": "",
@@ -1273,7 +1273,7 @@ W6_2025 = [
         "explanation": "The difference in the update rules that differentiate Expected SARSA from the SARSA al-\ngorithm do not obviate the need for exploration in the former, since without exploration the\nalgorithm would, in general, miss out on large parts of the state space, preventing it from\ncorrectly converging (in the limit) to an optimal policy.",
     },
     {
-        "question": "Assumethatwehaveavailableasimulationmodelforaparticularproblem. Tolearnanoptimal\npolicy,insteadoffollowingtrajectoriesend-to-end,ineachiterationwerandomlysupplyastate\nandanactiontothemodelandreceivethecorrespondingreward. Thisinformationisusedfor\nupdating the value function. Which method among the following would you expect to work\nin this scenario?",
+        "question": "Assume that we have available a simulation model for a particular problem. To learn an optimal policy, instead of following trajectories end-to-end, in each iteration we randomly supply a state and an action to the model and receive the corresponding reward. This information is used for updating the value function. Which method among the following would you expect to work\nin this scenario?",
         "options": [
             "SARSA",
             "Expected SARSA",
@@ -1336,9 +1336,9 @@ W7_2026 = [
     {
         "question": "Which of the following is the corrected n-step truncated return?",
         "options": [
-            "R_{t+n} + γ^n V_t(s_{t+n})",
-            "R_{t+1} + γ R_{t+2} + γ^2 R_{t+3} + ... + γ^{n-1} R_{t+n} + γ^n V_t(s_{t+n})",
-            "γ R_{t+1} + γ^2 R_{t+2} + γ^3 R_{t+3} + ... + γ^n R_{t+n} + V_t(s_{t+n})",
+            "R_{t+n} + γⁿ V_t(s_{t+n})",
+            "R_{t+1} + γ R_{t+2} + γ² R_{t+3} + ... + γⁿ⁻¹ R_{t+n} + γⁿ V_t(s_{t+n})",
+            "γ R_{t+1} + γ² R_{t+2} + γ³ R_{t+3} + ... + γⁿ R_{t+n} + V_t(s_{t+n})",
             "None of the above.",
         ],
         "correct": 1,
@@ -1692,7 +1692,7 @@ W8_2025 = [
     {
         "question": "Which of the following will effect generalisation when using the tile coding method?",
         "options": [
-            "modifythenumberoftilesineachtiling(assumingtherangecoveredalongeachdimension\nby the tilings remains unchanged)",
+            "modify the number of tiles in each tiling (assuming the range covered along each dimension by the tilings remains unchanged)",
             "modify the number of tilings",
             "modify the size of tiles",
             "modify the shape of tiles",
@@ -1735,7 +1735,7 @@ W8_2025 = [
             "LSTD learns the state value function",
             "LSTDQ learns the action value function",
             "both LSTD and LSTDQ can reuse samples",
-            "bothLSTDandLSTDQcanbeusedalongwithtabularrepresentationsofvaluefunctions",
+            "both LSTD and LSTDQ can be used along with tabular representations of value functions",
         ],
         "correct": [0, 1, 3],
         "explanation": "Option (c) is not correct. Given a set of samples collected from the actual process (not from\na generative model in which case reusing samples is perhaps not that important) it is useful\nfor these samples to be reused in evaluating different policies. Recall that LSPI is a policy\n2\n\niterationalgorithm wherethe policy isconstantlybeingimprovedupon(and hencechanging).\nSuch sample reuse is possible in LSTDQ if for any policy π, π(s(cid:48)) is available for each s(cid:48) in\nthe set of samples. This is because for different policies, the same samples can be made use\nof, as individual policies only determine the φ(s(cid:48),π(s(cid:48))) component of A˜. This is not the case\nwith LSTD where freedom in action choices is not available and must be determined from the\npolicy that is being evaluated.",
@@ -1878,7 +1878,7 @@ W9_2025 = [
         "explanation": "As we have seen with the Atari games example, the input to the network is raw pixel data\nfrom which the network manages to learn appropriate features to be used for representing the\naction value function.",
     },
     {
-        "question": "IntheDeepQ-learningmethod,isϵ-greedy(orotherequivalenttechniques)requiredtoensure\nexploration, or is this taken care of by the randomisation provided by experience replay?",
+        "question": "In the Deep Q-learning method, is ϵ-greedy (or other equivalent techniques) required to ensure exploration, or is this taken care of by the randomisation provided by experience replay?",
         "options": [
             "no",
             "yes",
@@ -1887,7 +1887,7 @@ W9_2025 = [
         "explanation": "Some technique to ensure exploration is still required. As with the original Q-learning algo-\nrithm,ifweonlyconsidertransitionsgeneratedbytheactionvaluefunction(whichisessentially\nwhat we’ll get with experience replay without any exploration), a large part of the state space\nwill likely remain unexplored.",
     },
     {
-        "question": "Valuefunctionbasedmethodsareorientedtowardsfindingdeterministicpolicieswhereaspolicy\nsearch methods are geared towards finding stochastic policies. True or false?",
+        "question": "Value function based methods are oriented towards finding deterministic policies whereas policy search methods are geared towards finding stochastic policies. True or false?",
         "options": [
             "false",
             "true",
@@ -2229,7 +2229,7 @@ W11_2026 = [
         "explanation": "Refer to the lecture on Option Discovery.",
     },
     {
-        "question": "We define the action value for MAXQ as qπ(i,s,a) = vπ(a,s)+Cπ(i,s,a) where qπ(i,s,a)\ncan be interpreted as expected return when you are in sub-task i, and state s, and you decide\nto perform sub-task a. Assume that in taking a, you get reward r , and after completion of\n1\na, you get reward r in completing sub-task i. Choose the correct value of Cπ(i,s,a) from\n2\nfollowing.",
+        "question": "We define the action value for MAXQ as qπ(i,s,a) = vπ(a,s)+Cπ(i,s,a) where qπ(i,s,a)\ncan be interpreted as expected return when you are in sub-task i, and state s, and you decide\nto perform sub-task a. Assume that in taking a, you get reward r₁, and after completion of a, you get reward r₂ in completing sub-task i. Choose the correct value of Cπ(i,s,a) from the following.",
         "options": [
             "Cπ(i,s,a)=r",
             "Cπ(i,s,a)=r +r\n1 2",
@@ -2318,7 +2318,7 @@ W11_2025 = [
 # ─────────────────────────────────────────────────────────────────────────────
 W12_2026 = [
     {
-        "question": "Consideranenvironmentinwhichanagentisrandomlydroppedintoeitherstates ors with\n1 2\nequalprobability. TheagentcanonlyviewobstaclespresentimmediatelytotheNorth,South,\nEast or West. However the observation made in each direction by the agent may be wrong\nwith a probability of 0.1. If in state s obstacles are present to the North and South, and in\n1\ns obstacles are present to the East and West, what is the probability of the agent being in\n2\nstate s if the observation made is that there are obstacles present to the North and West.",
+        "question": "Consider an environment in which an agent is randomly dropped into either state s₁ or s₂ with equal probability. The agent can only view obstacles present immediately to the North, South, East or West. However the observation made in each direction by the agent may be wrong with a probability of 0.1. If in state s₁ obstacles are present to the North and South, and in s₂ obstacles are present to the East and West, what is the probability of the agent being in state s₁ if the observation made is that there are obstacles present to the North and West?",
         "options": [
             "81/82",
             "41/82",
@@ -2329,7 +2329,7 @@ W12_2026 = [
         "explanation": "Application of Bayes Rule.P(A|B) = P(B|A)P(A) with A being the ”Present in\nP(B|A)P(A)+P(B|¬A)P(¬A)\nstate s ” and B being ”Observed obstacles to the North and West. Ans = 0.5”",
     },
     {
-        "question": "In the same environment as Question 1, suppose state s has obstacles present only to the\n1\nNorth and South, and s has obstacles present only to the East and West. What is the\n2\nprobability of the agent being in state s if the observation made is that there are obstacles\n1\npresent only to the North, East and West.",
+        "question": "In the same environment as Question 1, suppose state s₁ has obstacles present only to the North and South, and s₂ has obstacles present only to the East and West. What is the probability of the agent being in state s₁ if the observation made is that there are obstacles present only to the North, East and West?",
         "options": [
             "81/82",
             "41/82",
@@ -2351,7 +2351,7 @@ W12_2026 = [
         "explanation": "The assertion is true, the number of states increases significantly with trajectory length, how-\never it is due to the exponential increase in the number of states that history-based methods\nare not feasible.",
     },
     {
-        "question": "InthecaseofPOMDPs, whichofthefollowingisagoodestimateofthereturnofatrajectory\nof a policy π, given the current belief state and the solution to the underlying MDP (value\nfunction for all states)?",
+        "question": "In the case of POMDPs, which of the following is a good estimate of the return of a trajectory of a policy π, given the current belief state and the solution to the underlying MDP (value function for all states)?",
         "options": [
             "Average of all Vπ(s) where b(s)>0.",
             "Weighted average of all Vπ(s) where b(s) are the weights.",
@@ -2379,7 +2379,7 @@ W12_2026 = [
 # ─────────────────────────────────────────────────────────────────────────────
 W12_2025 = [
     {
-        "question": "Inthepartialobservabilityexamplethatwesaw,thereweresomeobservationswhichuniquely\nidentify the state of the environment. Suppose in a problem, no such observations exist, i.e.,\nthere are no observations which allow us to exactly determine the state of the environment.\nIn such problems, is it ever possible to be sure which state you are in given only the sequence\nof observations?",
+        "question": "In the partial observability example that we saw, there were some observations which uniquely identify the state of the environment. Suppose in a problem, no such observations exist, i.e.,\nthere are no observations which allow us to exactly determine the state of the environment.\nIn such problems, is it ever possible to be sure which state you are in given only the sequence\nof observations?",
         "options": [
             "no",
             "yes",

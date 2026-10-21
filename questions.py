@@ -60,7 +60,7 @@ W1_2026 = [
             "Same regret for all the above functions.",
         ],
         "correct": 0,
-        "explanation": "If we plot the functions we can clearly see the area between y = 1 and f(t). The exact regret will be equal to integral_0^infinity (1 - f(t)) dt. tanh(t) approaches 1 fastest near t=0, giving the minimum area / least regret.",
+        "explanation": "If we plot the functions we can clearly see the area between y = 1 and f(t). The exact regret will be equal to integral₀^infinity (1 - f(t)) dt. tanh(t) approaches 1 fastest near t=0, giving the minimum area / least regret.",
     },
     {
         "question": "Consider the following statements for ϵ-greedy approach in a non-stationary environment:\ni Keeping a small constant ϵ is a good approach if the environment is non-stationary..\nii Large values of ϵ will lead to unnecessary exploration in the long run.\niii For a stationary environment, decaying ϵ value to zero is a good approach, as after reaching optimality, we would like to reduce exploration.\nWhich of the above statements is/are correct?",
@@ -253,26 +253,26 @@ W2_2026 = [
         "explanation": "The faster-shrinking uncertainty term means fewer samples needed for confidence, which could mean less wasted exploration (fewer sub-optimal pulls) but could also mean worse estimates earlier leading to more sub-optimal pulls. Either (a) or (b) could be True depending on the problem.",
     },
     {
-        "question": "In the proof of the UCB Theorem, when lᵢ = ⌈8ln(m)/Δᵢ²⌉, q*(a*) - q*(i) - 2·C_{m,l} = 0. Which of the following correctly explains q*(a*) - q*(i) - 2·C_{m,Tᵢ(s_i)} being less than 0 when we replace this fixed value of l by the value Tᵢ(s_i): the number of times the arm i is selected?",
+        "question": "In the proof of the UCB Theorem, when lᵢ = ⌈8ln(m)/Δᵢ²⌉, q*(a*) - q*(i) - 2·C_{m,l} = 0. Which of the following correctly explains q*(a*) - q*(i) - 2·C_{m,Tᵢ(sᵢ)} being less than 0 when we replace this fixed value of l by the value Tᵢ(sᵢ): the number of times the arm i is selected?",
         "options": [
-            "Tᵢ(s_i) < l thus C_{m,Tᵢ(s_i)} < C_{m,l}",
-            "Tᵢ(s_i) > m thus C_{m,Tᵢ(s_i)} < C_{m,l}",
-            "Tᵢ(s_i) > l thus C_{m,Tᵢ(s_i)} < C_{m,l}",
-            "Tᵢ(s_i) < l thus C_{m,Tᵢ(s_i)} > C_{m,l}",
+            "Tᵢ(sᵢ) < l thus C_{m,Tᵢ(sᵢ)} < C_{m,l}",
+            "Tᵢ(sᵢ) > m thus C_{m,Tᵢ(sᵢ)} < C_{m,l}",
+            "Tᵢ(sᵢ) > l thus C_{m,Tᵢ(sᵢ)} < C_{m,l}",
+            "Tᵢ(sᵢ) < l thus C_{m,Tᵢ(sᵢ)} > C_{m,l}",
         ],
         "correct": 3,
-        "explanation": "If the arm is selected fewer times than l, confidence interval is larger: C_{m,Tᵢ(s_i)} > C_{m,l}, which makes q*(a*) - q*(i) - 2·C_{m,Tᵢ(s_i)} < 0.",
+        "explanation": "If the arm is selected fewer times than l, confidence interval is larger: C_{m,Tᵢ(sᵢ)} > C_{m,l}, which makes q*(a*) - q*(i) - 2·C_{m,Tᵢ(sᵢ)} < 0.",
     },
     {
         "question": "Which of the following is true about the Median Elimination algorithm?",
         "options": [
             "It is a regret minimizing algorithm.",
-            "The probability of the ϵ_l-optimal arms of round l being eliminated is less than δ_l for the round.",
+            "The probability of the ϵₗ-optimal arms of round l being eliminated is less than δₗ for the round.",
             "It is guaranteed to provide an ϵ-optimal arm at the end.",
             "Replacing ϵ with ϵ/2 in the algorithm doubles the sample complexity.",
         ],
         "correct": 1,
-        "explanation": "From the derivation for Median Elimination, the probability of the best arms in a given round being eliminated is bounded by δ_l. Options (a), (c), (d) are incorrect.",
+        "explanation": "From the derivation for Median Elimination, the probability of the best arms in a given round being eliminated is bounded by δₗ. Options (a), (c), (d) are incorrect.",
     },
     {
         "question": "We need 8 rounds of median-elimination to get an (ϵ,δ)-PAC arm. Approximately how many samples would have been required using the naive (ϵ,δ)-PAC algorithm given (ϵ,δ) = (1/2, 1/e)? (Choose the value closest to the correct answer)",
@@ -308,15 +308,15 @@ W2_2026 = [
         "explanation": "Using the Chernoff-Hoeffding bounds with the modified sample count, the probability of incorrectly returning a sub-optimal arm is bounded by 2*δ, so the guarantee is 1 - 2*δ.",
     },
     {
-        "question": "In median elimination method for obtaining (ϵ,δ)-PAC bounds, which of the following is a plausible update rule for ϵ_l and δ_l if ϵ_1 = ϵ/3 and δ_1 = δ/4?",
+        "question": "In median elimination method for obtaining (ϵ,δ)-PAC bounds, which of the following is a plausible update rule for ϵₗ and δₗ if ϵ_1 = ϵ/3 and δ_1 = δ/4?",
         "options": [
-            "ϵ_{l+1} = (3/4)*ϵ_l and δ_{l+1} = (4/5)*δ_l",
-            "ϵ_{l+1} = (3/4)*ϵ_l and δ_{l+1} = (3/4)*δ_l",
-            "ϵ_{l+1} = (2/3)*ϵ_l and δ_{l+1} = (3/4)*δ_l",
-            "ϵ_{l+1} = (2/3)*ϵ_l and δ_{l+1} = (4/5)*δ_l",
+            "ϵ_{l+1} = (3/4)*ϵₗ and δ_{l+1} = (4/5)*δₗ",
+            "ϵ_{l+1} = (3/4)*ϵₗ and δ_{l+1} = (3/4)*δₗ",
+            "ϵ_{l+1} = (2/3)*ϵₗ and δ_{l+1} = (3/4)*δₗ",
+            "ϵ_{l+1} = (2/3)*ϵₗ and δ_{l+1} = (4/5)*δₗ",
         ],
         "correct": 2,
-        "explanation": "For getting (ϵ,δ)-PAC bounds: sum of ϵ_l <= ϵ and sum of δ_l <= δ. The update ϵ_{l+1} = (2/3)*ϵ_l and δ_{l+1} = (3/4)*δ_l satisfies these conditions.",
+        "explanation": "For getting (ϵ,δ)-PAC bounds: sum of ϵₗ <= ϵ and sum of δₗ <= δ. The update ϵ_{l+1} = (2/3)*ϵₗ and δ_{l+1} = (3/4)*δₗ satisfies these conditions.",
     },
     {
         "question": "Suppose we are facing a non-stationary bandit problem. We want to use posterior sampling for picking the correct arm. What is the likely change that needs to be done to the algorithm so that it can adapt to non-stationarity?",
@@ -330,7 +330,7 @@ W2_2026 = [
         "explanation": "To adapt to non-stationarity, we must prevent the posterior from collapsing (becoming too certain) while still allowing it to learn from current samples. Adding slight noise achieves this.",
     },
     {
-        "question": "In median elimination method for (ϵ,δ)-PAC bounds, we claim that for every phase l, Pr[A ≤ B + ϵ_l] > 1 - δ_l. (S_l – is the set of arms remaining in the lth phase)\nConsider the following statements:\n(i) A – is the maximum of rewards of true best arm in S_l, i.e. in lth phase\n(ii) B – is the maximum of rewards of true best arm in S_{l+1}, i.e. in l+1th phase\n(iii) B – is the minimum of rewards of true best arm in S_{l+1}, i.e. in l+1th phase\n(iv) A – is the minimum of rewards of true best arm in S_l, i.e. in lth phase\n(v) A – is the maximum of rewards of true best arm in S_{l+1}, i.e. in l+1th phase\n(vi) B – is the maximum of rewards of true best arm in S_l, i.e. in lth phase\nWhich of the statements above are correct?",
+        "question": "In median elimination method for (ϵ,δ)-PAC bounds, we claim that for every phase l, Pr[A ≤ B + ϵₗ] > 1 - δₗ. (Sₗ – is the set of arms remaining in the lth phase)\nConsider the following statements:\n(i) A – is the maximum of rewards of true best arm in Sₗ, i.e. in lth phase\n(ii) B – is the maximum of rewards of true best arm in S_{l+1}, i.e. in l+1th phase\n(iii) B – is the minimum of rewards of true best arm in S_{l+1}, i.e. in l+1th phase\n(iv) A – is the minimum of rewards of true best arm in Sₗ, i.e. in lth phase\n(v) A – is the maximum of rewards of true best arm in S_{l+1}, i.e. in l+1th phase\n(vi) B – is the maximum of rewards of true best arm in Sₗ, i.e. in lth phase\nWhich of the statements above are correct?",
         "options": [
             "i and ii",
             "iii and iv",
@@ -339,7 +339,7 @@ W2_2026 = [
             "i and iii",
         ],
         "correct": 0,
-        "explanation": "Refer Lemma 1 in the proof for the Median Elimination Algorithm. A is the maximum of rewards of the true best arm in S_l, and B is the maximum of rewards of the true best arm in S_{l+1}.",
+        "explanation": "Refer Lemma 1 in the proof for the Median Elimination Algorithm. A is the maximum of rewards of the true best arm in Sₗ, and B is the maximum of rewards of the true best arm in S_{l+1}.",
     },
 ]
 
@@ -359,7 +359,7 @@ W2_2025 = [
         "explanation": "The number of times arm j is selected (nⱼ) appears in the denominator of the upper confidence bound for each arm. As nⱼ increases, the bound decreases.",
     },
     {
-        "question": "After 12 iterations of the UCB1 algorithm applied on a 4-arm bandit problem, we have n_1=3, n_2=4, n_3=3, n_4=2 and Q_12(1)=0.55, Q_12(2)=0.63, Q_12(3)=0.61, Q_12(4)=0.40. Which arm should be played next?",
+        "question": "After 12 iterations of the UCB1 algorithm applied on a 4-arm bandit problem, we have n₁=3, n₂=4, n₃=3, n₄=2 and Q₁2(1)=0.55, Q₁2(2)=0.63, Q₁2(3)=0.61, Q₁2(4)=0.40. Which arm should be played next?",
         "options": [
             "1",
             "2",
@@ -370,7 +370,7 @@ W2_2025 = [
         "explanation": "Calculating UCB values: arm 1 = 0.55 + sqrt(2ln12/3) ≈ 1.837; arm 2 = 0.63 + sqrt(2ln12/4) ≈ 1.745; arm 3 = 0.61 + sqrt(2ln12/3) ≈ 1.897; arm 4 = 0.40 + sqrt(2ln12/2) ≈ 1.976. Arm 4 has the highest UCB value.",
     },
     {
-        "question": "In the proof of the UCB 1 algorithm, we had the following expression: {min_{0<s<m} (Q_s(a*) + C_{m-1,T_{a*}(s)}) <= max_{l<=s_i<=m} (Q_{s_i}(i) + C_{m-1,Tᵢ(s_i)})}. What does this expression stand for?",
+        "question": "In the proof of the UCB 1 algorithm, we had the following expression: {min_{0<s<m} (Qₛ(a*) + C_{m-1,T_{a*}(s)}) <= max_{l<=s_i<=m} (Q_{sᵢ}(i) + C_{m-1,Tᵢ(sᵢ)})}. What does this expression stand for?",
         "options": [
             "the number of instances where the minimum value among the upper confidence bound values of an optimal arm up till the mth time step is less than or equal to the maximum value among the upper confidence bound values of the ith arm between the times steps l and m",
             "the condition that the minimum value among the upper confidence bound values of an optimal arm up till the mth time step is less than or equal to the maximum value among the upper confidence bound values of the ith arm between the times steps l and m",
@@ -412,7 +412,7 @@ W2_2025 = [
         "explanation": "For Q(a') to be greater than Q(a*), at least one of the concentration deviation events on the RHS must occur, making it a necessary condition. Hence P(LHS) <= P(union of RHS events).",
     },
     {
-        "question": "Suppose we have a 64-arm bandit problem. We apply the median elimination algorithm where the (ϵ, δ) values are: ϵ = 0.5 and δ = 0.01. How many times do we sample arms in the first round? (Note: in each round, each arm is sampled (1/(ϵ_l^2/2))*ln(3/δ_l) times).",
+        "question": "Suppose we have a 64-arm bandit problem. We apply the median elimination algorithm where the (ϵ, δ) values are: ϵ = 0.5 and δ = 0.01. How many times do we sample arms in the first round? (Note: in each round, each arm is sampled (1/(ϵₗ^2/2))*ln(3/δₗ) times).",
         "options": [
             "52404",
             "818",
@@ -420,7 +420,7 @@ W2_2025 = [
             "819",
         ],
         "correct": 2,
-        "explanation": "Round 1: epsilon_1 = epsilon/4 = 0.125, delta_1 = delta/2 = 0.005. Samples per arm = (1/(0.125^2/2))*ln(3/0.005) = (2/0.015625)*ln(600) = 128*6.3969 ≈ 819. Total samples across 64 arms = 64 * 819 = 52416.",
+        "explanation": "Round 1: epsilon₁ = epsilon/4 = 0.125, delta₁ = delta/2 = 0.005. Samples per arm = (1/(0.125^2/2))*ln(3/0.005) = (2/0.015625)*ln(600) = 128*6.3969 ≈ 819. Total samples across 64 arms = 64 * 819 = 52416.",
     },
     {
         "question": "Continuing with the previous example, what is the number of samples in the third round? Also, what is the total number of rounds required to identify the (ϵ, δ)-optimal arm?",
@@ -431,7 +431,7 @@ W2_2025 = [
             "201514, 7",
         ],
         "correct": 0,
-        "explanation": "Round 3: 16 arms remain. epsilon_3 = (3/4)^2 * (0.5/4) = 9/16 * 0.125; delta_3 = delta/8 = 0.00125. Samples per arm = 3149. Total samples = 16 * 3149 = 50384. Number of rounds = log2(64) = 6.",
+        "explanation": "Round 3: 16 arms remain. epsilon₃ = (3/4)^2 * (0.5/4) = 9/16 * 0.125; delta₃ = delta/8 = 0.00125. Samples per arm = 3149. Total samples = 16 * 3149 = 50384. Number of rounds = log2(64) = 6.",
     },
     {
         "question": "Consider a bandit problem in which there is a single optimal arm, a*. Applying the median elimination algorithm to this problem, is it possible that arm a* is eliminated in the first round? In case it is possible, does this mean that the algorithm cannot output an arm that is epsilon-close to a*?",
@@ -441,7 +441,7 @@ W2_2025 = [
             "yes, yes",
         ],
         "correct": 1,
-        "explanation": "Yes, it is possible for a* to be eliminated if its sample mean falls below the median. However, this does not mean the algorithm cannot output an arm that is epsilon-close to a*, as the probability of eliminating all epsilon-optimal arms is bounded by delta_l.",
+        "explanation": "Yes, it is possible for a* to be eliminated if its sample mean falls below the median. However, this does not mean the algorithm cannot output an arm that is epsilon-close to a*, as the probability of eliminating all epsilon-optimal arms is bounded by deltaₗ.",
     },
     {
         "question": "We know that there is an exploration/exploitation dilemma in reinforcement learning problems. Considering the Thompson sampling algorithm for solving bandit problems, which step of the algorithm ensures that we perform exploration?",
@@ -464,9 +464,9 @@ W3_2026 = [
         "question": "Which of the following is true for an MDP?",
         "options": [
             "Pr(sₜ₊₁, rₜ₊₁ | sₜ, aₜ) = Pr(sₜ₊₁, rₜ₊₁)",
-            "Pr(sₜ₊₁, rₜ₊₁ | sₜ, aₜ, sₜ₋₁, aₜ₋₁, s_{t-2}, a_{t-2}, ..., s_0, a_0) = Pr(sₜ₊₁, rₜ₊₁ | sₜ, aₜ)",
-            "Pr(sₜ₊₁, rₜ₊₁ | sₜ, aₜ) = Pr(sₜ₊₁, rₜ₊₁ | s_0, a_0)",
-            "Pr(sₜ₊₁, rₜ₊₁ | sₜ, aₜ) = Pr(sₜ, r_t | sₜ₋₁, aₜ₋₁)",
+            "Pr(sₜ₊₁, rₜ₊₁ | sₜ, aₜ, sₜ₋₁, aₜ₋₁, s_{t-2}, a_{t-2}, ..., s₀, a₀) = Pr(sₜ₊₁, rₜ₊₁ | sₜ, aₜ)",
+            "Pr(sₜ₊₁, rₜ₊₁ | sₜ, aₜ) = Pr(sₜ₊₁, rₜ₊₁ | s₀, a₀)",
+            "Pr(sₜ₊₁, rₜ₊₁ | sₜ, aₜ) = Pr(sₜ, rₜ | sₜ₋₁, aₜ₋₁)",
         ],
         "correct": 1,
         "explanation": "(b) is true for any MDP. (a),(c) and (d) are not true.",
@@ -475,8 +475,8 @@ W3_2026 = [
         "question": "The baseline in the REINFORCE update should not depend on which of the following (without voiding any of the steps in the proof of REINFORCE)?",
         "options": [
             "r_{n-1}",
-            "r_n",
-            "Action taken(a_n)",
+            "rₙ",
+            "Action taken(aₙ)",
             "None of the above",
         ],
         "correct": 2,
@@ -493,7 +493,7 @@ W3_2026 = [
         "explanation": "The feedback in most supervised learning algorithms is an error signal which we wish to minimise. Hence, we would look to perform gradient descent. In policy gradient, we are trying to maximise the reward signal, hence gradient ascent.",
     },
     {
-        "question": "In case of linear bandits, let’s consider we have 2 actions - a_1 and a_2. The policy π to be followed when encountering a state s is given by:\nπ(a_1|s) = e^{w_1^T s} / (e^{w_1^T s} + e^{w_2^T s})\nπ(a_2|s) = e^{w_2^T s} / (e^{w_1^T s} + e^{w_2^T s})\nwhere w_1 and w_2 are weight vectors associated with a_1 and a_2 respectively. If we are using REINFORCE to learn the parameters, what will be the update for w_1 and w_2, when we pull action a_1?\n(i) w_1 -> w_1 + α r (s - (e^{w_1^T s} / (e^{w_1^T s} + e^{w_2^T s})) s)\n(ii) w_1 -> w_1 + α r (- (e^{w_1^T s} / (e^{w_1^T s} + e^{w_2^T s})) s)\n(iii) w_2 -> w_2 + α r (s - (e^{w_2^T s} / (e^{w_1^T s} + e^{w_2^T s})) s)\n(iv) w_2 -> w_2 + α r (- (e^{w_2^T s} / (e^{w_1^T s} + e^{w_2^T s})) s)\nWhich of the above updates are correct?",
+        "question": "In case of linear bandits, let’s consider we have 2 actions - a₁ and a₂. The policy π to be followed when encountering a state s is given by:\nπ(a₁|s) = e^{w₁^T s} / (e^{w₁^T s} + e^{w₂^T s})\nπ(a₂|s) = e^{w₂^T s} / (e^{w₁^T s} + e^{w₂^T s})\nwhere w₁ and w₂ are weight vectors associated with a₁ and a₂ respectively. If we are using REINFORCE to learn the parameters, what will be the update for w₁ and w₂, when we pull action a₁?\n(i) w₁ -> w₁ + α r (s - (e^{w₁^T s} / (e^{w₁^T s} + e^{w₂^T s})) s)\n(ii) w₁ -> w₁ + α r (- (e^{w₁^T s} / (e^{w₁^T s} + e^{w₂^T s})) s)\n(iii) w₂ -> w₂ + α r (s - (e^{w₂^T s} / (e^{w₁^T s} + e^{w₂^T s})) s)\n(iv) w₂ -> w₂ + α r (- (e^{w₂^T s} / (e^{w₁^T s} + e^{w₂^T s})) s)\nWhich of the above updates are correct?",
         "options": [
             "(i), (iii)",
             "(i), (iv)",
@@ -501,21 +501,21 @@ W3_2026 = [
             "(ii), (iv)",
         ],
         "correct": 1,
-        "explanation": "Derive the update using the REINFORCE formula: w_1 uses positive gradient term (i) and w_2 uses negative gradient term (iv).",
+        "explanation": "Derive the update using the REINFORCE formula: w₁ uses positive gradient term (i) and w₂ uses negative gradient term (iv).",
     },
     {
-        "question": "The update in REINFORCE is given by θₜ₊₁ = θ_t + α r_t ∂lnπ(aₜ; θ_t)/∂θ_t, where r_t ∂lnπ(aₜ; θ_t)/∂θ_t is an unbiased estimator of the true gradient of the performance function. However, there was another variant of REINFORCE, where a baseline b, that is independent of the action taken, is subtracted from the obtained reward, i.e., the update is given by θₜ₊₁ = θ_t + α(r_t - b) ∂lnπ(aₜ; θ_t)/∂θ_t.\nHow are E[(r_t - b) ∂lnπ(aₜ; θ_t)/∂θ_t] and E[r_t ∂lnπ(aₜ; θ_t)/∂θ_t] related?",
+        "question": "The update in REINFORCE is given by θₜ₊₁ = θₜ + α rₜ ∂lnπ(aₜ; θₜ)/∂θₜ, where rₜ ∂lnπ(aₜ; θₜ)/∂θₜ is an unbiased estimator of the true gradient of the performance function. However, there was another variant of REINFORCE, where a baseline b, that is independent of the action taken, is subtracted from the obtained reward, i.e., the update is given by θₜ₊₁ = θₜ + α(rₜ - b) ∂lnπ(aₜ; θₜ)/∂θₜ.\nHow are E[(rₜ - b) ∂lnπ(aₜ; θₜ)/∂θₜ] and E[rₜ ∂lnπ(aₜ; θₜ)/∂θₜ] related?",
         "options": [
-            "E[(r_t - b) ∂lnπ(aₜ; θ_t)/∂θ_t] = E[r_t ∂lnπ(aₜ; θ_t)/∂θ_t]",
-            "E[(r_t - b) ∂lnπ(aₜ; θ_t)/∂θ_t] < E[r_t ∂lnπ(aₜ; θ_t)/∂θ_t]",
-            "E[(r_t - b) ∂lnπ(aₜ; θ_t)/∂θ_t] > E[r_t ∂lnπ(aₜ; θ_t)/∂θ_t]",
+            "E[(rₜ - b) ∂lnπ(aₜ; θₜ)/∂θₜ] = E[rₜ ∂lnπ(aₜ; θₜ)/∂θₜ]",
+            "E[(rₜ - b) ∂lnπ(aₜ; θₜ)/∂θₜ] < E[rₜ ∂lnπ(aₜ; θₜ)/∂θₜ]",
+            "E[(rₜ - b) ∂lnπ(aₜ; θₜ)/∂θₜ] > E[rₜ ∂lnπ(aₜ; θₜ)/∂θₜ]",
             "Could be either of a, b or c, depending on the choice of baseline",
         ],
         "correct": 0,
-        "explanation": "E[b ∂lnπ(aₜ;θ_t)/∂θ_t] = E[b (1/π(aₜ;θ_t)) ∂π(aₜ;θ_t)/∂θ_t] = sum_a b ∂π(a;θ_t)/∂θ_t = b ∂(sum_a π(a;θ_t))/∂θ_t = b ∂(1)/∂θ_t = 0. Thus, E[(r_t - b) ∂lnπ(aₜ; θ_t)/∂θ_t] = E[r_t ∂lnπ(aₜ; θ_t)/∂θ_t].",
+        "explanation": "E[b ∂lnπ(aₜ;θₜ)/∂θₜ] = E[b (1/π(aₜ;θₜ)) ∂π(aₜ;θₜ)/∂θₜ] = sumₐ b ∂π(a;θₜ)/∂θₜ = b ∂(sumₐ π(a;θₜ))/∂θₜ = b ∂(1)/∂θₜ = 0. Thus, E[(rₜ - b) ∂lnπ(aₜ; θₜ)/∂θₜ] = E[rₜ ∂lnπ(aₜ; θₜ)/∂θₜ].",
     },
     {
-        "question": "Consider the following policy-search algorithm for a multi-armed binary bandit:\n∀a, πₜ₊₁(a) = π_t(a)(1 - α) + α(1_{a=aₜ} r_t + (1 - 1_{a=aₜ})(1 - r_t))\nwhere 1_{a=aₜ} is 1 if aₜ = a and 0 otherwise. Which of the following is true for the above algorithm?",
+        "question": "Consider the following policy-search algorithm for a multi-armed binary bandit:\n∀a, πₜ₊₁(a) = πₜt(a)(1 - α) + α(1_{a=aₜ} rₜ + (1 - 1_{a=aₜ})(1 - rₜ))\nwhere 1_{a=aₜ} is 1 if aₜ = a and 0 otherwise. Which of the following is true for the above algorithm?",
         "options": [
             "It is L_{R-I} algorithm.",
             "It is L_{R-ϵP} algorithm.",
@@ -544,7 +544,7 @@ W3_2026 = [
         "explanation": "When the action space is continuous, storing values for each action is hard in the case of value function-based methods. Due to the action approximation for the continuous actions, it is necessary to optimize the action space for every action chosen from the policy, to find the estimated optimal action. This approach is slow, and policy gradient-based methods are likely to generalize better.",
     },
     {
-        "question": "Let’s assume for some full RL problem we are acting according to a policy π. At some time t, we are in a state s where we took action a_1. After few time steps, at time t′, the same state s was reached where we performed an action a_2 (≠ a_1). Which of the following statements is true?",
+        "question": "Let’s assume for some full RL problem we are acting according to a policy π. At some time t, we are in a state s where we took action a₁. After few time steps, at time t′, the same state s was reached where we performed an action a₂ (≠ a₁). Which of the following statements is true?",
         "options": [
             "π is definitely a stationary policy",
             "π is definitely a non-stationary policy",
@@ -773,10 +773,10 @@ W4_2026 = [
     {
         "question": "Which of the following is a contraction mapping in any norm?",
         "options": [
-            "T([x_1, x_2]) = [0.5 x_1, 0.5 x_2]",
-            "T([x_1, x_2]) = [2 x_1, 2 x_2]",
-            "T([x_1, x_2]) = [2 x_1, 3 x_2]",
-            "T([x_1, x_2]) = [x_1 + x_2, x_1 - x_2]",
+            "T([x₁, x₂]) = [0.5 x₁, 0.5 x₂]",
+            "T([x₁, x₂]) = [2 x₁, 2 x₂]",
+            "T([x₁, x₂]) = [2 x₁, 3 x₂]",
+            "T([x₁, x₂]) = [x₁ + x₂, x₁ - x₂]",
         ],
         "correct": 0,
         "explanation": "(a) is a contraction mapping in any norm as ||Tu - Tv|| = 0.5 ||u - v||.",
@@ -834,7 +834,7 @@ W4_2025 = [
         "explanation": "Using Bellman equation for first row: v(s) = 0.25*(-1+v(s)-1-21-19) = 0.25v(s)-10.5 => v(s)=-14. For second row: v(s) = 0.25*(-1+v(s)-23-21-15) => v(s)=-20.",
     },
     {
-        "question": "If π is the equiprobable random policy, what are the respective values of q_π(s_1, down) and q_π(s_2, down) given that s_1 is the last cell in the third row (value -14) and s_2 is the last cell in the second row?",
+        "question": "If π is the equiprobable random policy, what are the respective values of qπ(s₁, down) and qπ(s₂, down) given that s₁ is the last cell in the third row (value -14) and s₂ is the last cell in the second row?",
         "options": [
             "-1, -15",
             "-15, -21",
@@ -842,7 +842,7 @@ W4_2025 = [
             "-13, -19",
         ],
         "correct": 0,
-        "explanation": "For s_1, moving down transitions to the terminal state (value 0) with reward -1, giving q_π(s_1, down) = -1 + 0 = -1. For s_2, moving down transitions to s_1 (value -14) with reward -1, giving q_π(s_2, down) = -1 + (-14) = -15.",
+        "explanation": "For s₁, moving down transitions to the terminal state (value 0) with reward -1, giving qπ(s₁, down) = -1 + 0 = -1. For s₂, moving down transitions to s₁ (value -14) with reward -1, giving qπ(s₂, down) = -1 + (-14) = -15.",
     },
     {
         "question": "In a particular grid-world example, rewards are positive for goals, negative for running into the edge of the world, and zero the rest of the time. Are the signs of these rewards important, or only the intervals between them? Prove, using the discounted return equation Gₜ = Σ_{k=0}^{∞} γᵏ Rₜ₊ₖ₊₁, that adding a constant C to all rewards adds a constant K to the values of all states. What is K in terms of C and γ?",
@@ -862,10 +862,10 @@ W4_2025 = [
             "Algorithm B",
         ],
         "correct": 1,
-        "explanation": "Using algorithm A's output, to choose an action we need argmax_a sum_{s'} p(s'|s,a)[r + γ v*(s')], which requires knowing transition probabilities p(s'|s,a). Algorithm B gives q*(s,a), allowing optimal action selection simply via argmax_a q*(s,a) without needing transition probabilities.",
+        "explanation": "Using algorithm A's output, to choose an action we need argmaxₐ sum_{s'} p(s'|s,a)[r + γ v*(s')], which requires knowing transition probabilities p(s'|s,a). Algorithm B gives q*(s,a), allowing optimal action selection simply via argmaxₐ q*(s,a) without needing transition probabilities.",
     },
     {
-        "question": "In proving that L_π is a contraction, we had the expression\nγ sum_j p(j|s)[v(j) - u(j)] ≤ γ ||v - u|| sum_j p(j|s)\nThis inequality holds because",
+        "question": "In proving that L_π is a contraction, we had the expression\nγ sumⱼ p(j|s)[v(j) - u(j)] ≤ γ ||v - u|| sumⱼ p(j|s)\nThis inequality holds because",
         "options": [
             "v(j) - u(j) is a component of ||v - u||",
             "the max norm of the difference on the LHS is less than the max norm of the difference on the RHS",
@@ -873,7 +873,7 @@ W4_2025 = [
             "the max norm of the difference vector on the RHS will, at worst, be equal to the difference in components on the LHS",
         ],
         "correct": 3,
-        "explanation": "The maximum norm ||v - u|| = max_j |v(j) - u(j)| will at worst be equal to the difference for any individual component j. Thus each term v(j) - u(j) is bounded by ||v - u||.",
+        "explanation": "The maximum norm ||v - u|| = maxⱼ |v(j) - u(j)| will at worst be equal to the difference for any individual component j. Thus each term v(j) - u(j) is bounded by ||v - u||.",
     },
     {
         "question": "We defined the operator L_π : V -> V as L_π v = r_π + γ P_π v. Having seen the proof of the Banach fixed point theorem and assuming that vπ and v* have their usual meanings, which among the following are implications of showing that L_π is a contraction?",
@@ -1420,7 +1420,7 @@ W7_2026 = [
         "explanation": "Explained in the video ”Eligibility Trace Control” in minutes 21:00 to 24:30. Every time an exploratory action is taken, the trace ends, causing traces to become too short.",
     },
     {
-        "question": "Consider the current state is s and the action recommended by the policy, a_1, is taken. The possible reason(s) behind setting ∀a≠a_1, Eₜ(s,a)=0, is/are:\n(i) Rewards obtained by taking a_1 in s should not be attributed to actions other than a_1 taken when in state s previously.\n(ii) It assumed that the timesteps between reaching s are large enough to decay the eligibility trace to 0.\nWhich of the above is/are the correct reason(s)?",
+        "question": "Consider the current state is s and the action recommended by the policy, a₁, is taken. The possible reason(s) behind setting ∀a≠a₁, Eₜ(s,a)=0, is/are:\n(i) Rewards obtained by taking a₁ in s should not be attributed to actions other than a₁ taken when in state s previously.\n(ii) It assumed that the timesteps between reaching s are large enough to decay the eligibility trace to 0.\nWhich of the above is/are the correct reason(s)?",
         "options": [
             "Only (i)",
             "Only (ii)",
@@ -1518,7 +1518,7 @@ W7_2025 = [
             "γ⁷λ⁷+γ³λ³+γλ",
         ],
         "correct": 2,
-        "explanation": "According to the non-recursive expression for accumulating eligibility trace, we have:\ne_t(s) = Σ_{k=0}^{t} (γλ)^{t-k} · I_{s=s_k}\nwhere I_{s=s_k} is an indicator function.\nUsing the above expression along with the given state sequence, we have:\ne₇(s₁) = (γλ)^{7-1} + (γλ)^{7-4} + (γλ)^{7-6} = γλ + γ³λ³ + γ⁶λ⁶",
+        "explanation": "According to the non-recursive expression for accumulating eligibility trace, we have:\neₜ(s) = Σ_{k=0}^{t} (γλ)^{t-k} · I_{s=sₖ}\nwhere I_{s=sₖ} is an indicator function.\nUsing the above expression along with the given state sequence, we have:\ne₇(s₁) = (γλ)^{7-1} + (γλ)^{7-4} + (γλ)^{7-6} = γλ + γ³λ³ + γ⁶λ⁶",
     },
     {
         "question": "For the above question, what is the eligibility value if replacing traces are used?",
@@ -1549,7 +1549,7 @@ W7_2025 = [
             "insufficient data",
         ],
         "correct": 0,
-        "explanation": "For accumulating traces maximum increase in eligibility occurs if the state is selected: e_t(s) = γλ·eₜ₋₁(s) + 1. At maximum, e_t(s) = eₜ₋₁(s), giving e_t(s) = eₜ₋₁(s) = 1/(1-γλ).",
+        "explanation": "For accumulating traces maximum increase in eligibility occurs if the state is selected: eₜ(s) = γλ·eₜ₋₁(s) + 1. At maximum, eₜ(s) = eₜ₋₁(s), giving eₜ(s) = eₜ₋₁(s) = 1/(1-γλ).",
     },
 ]
 

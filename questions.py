@@ -30,12 +30,12 @@ W1_2026 = [
         "explanation": "In the stationary case, the weightage of all rewards given so far is 1/n, where n is the number of rewards obtained for that arm/action so far. Therefore it is hyperbolic. In the non-stationary update, the weightage given to the most recent reward is α, for the pre-update Q value it is 1-α. Upon expansion of the pre-update Q value, we can see that the weightage of the reward in the last but one time step is α(1-α). We can continue to expand in a similar fashion to get that a reward obtained t time steps ago has a weightage of α(1-α)^t (exponential decay).",
     },
     {
-        "question": "In the update rule Q_{t+1}(a) ← Q_t(a) + α(R_t - Q_t(a)), select the value of α that we would prefer to estimate Q values in a non-stationary bandit problem.",
+        "question": "In the update rule Qₜ₊₁(a) ← Qₜ(a) + α(Rₜ - Qₜ(a)), select the value of α that we would prefer to estimate Q values in a non-stationary bandit problem.",
         "options": [
-            "α = 1 / (n_a + 1)",
+            "α = 1 / (nₐ + 1)",
             "α = 0.1",
-            "α = n_a + 1",
-            "α = 1 / (n_a + 1)²",
+            "α = nₐ + 1",
+            "α = 1 / (nₐ + 1)²",
         ],
         "correct": 1,
         "explanation": "By using a constant value of α, we decrease the importance of past samples exponentially as time progresses, so that our Q value estimates are able to shift as the true action values change. Option (a) weights each sample equally (computing a simple average), preventing meaningful updates when action-values change. Option (c) creates an unbounded sum where estimates grow to infinity. Option (d) weights newer samples lower than case (a).",
@@ -74,7 +74,7 @@ W1_2026 = [
         "explanation": "In non-stationary environment since optimal state changes, hence it requires constant exploration to find the optimal state. Decaying epsilon to zero may not find an optimal state; hence, iii is incorrect. Both i and ii are correct.",
     },
     {
-        "question": "Following are two ways for defining the probability of selecting an action/arm. Select the option regarding better choice among the following:\n(i) Pr(a_t = a) = Q_t(a) / Σ_a Q_t(a)\n(ii) Pr(a_t = a) = e^{Q_t(a)} / Σ_{b=1}^{n} e^{Q_t(b)}",
+        "question": "Following are two ways for defining the probability of selecting an action/arm. Select the option regarding better choice among the following:\n(i) Pr(aₜ = a) = Qₜ(a) / Σ_a Qₜ(a)\n(ii) Pr(aₜ = a) = e^{Qₜ(a)} / Σ_{b=1}^{n} e^{Qₜ(b)}",
         "options": [
             "Both are good as both formulas can bound probability in range 0 to 1.",
             "(i) is better because it is differentiable and requires less complex computation.",
@@ -242,7 +242,7 @@ W2_2026 = [
         "explanation": "We are not constrained to Gaussian priors — any prior distribution can be assumed over the q* values for each arm. Statement (d) is false.",
     },
     {
-        "question": "In UCB, the term √(2ln(n)/n_j) is added to each arm’s Q value and the arm with the highest value of this sum is chosen. Which one of the following would definitely happen to the frequency of picking sub-optimal arms when adding √(2ln(n)/n_j²) instead of √(2ln(n)/n_j)?",
+        "question": "In UCB, the term √(2ln(n)/nⱼ) is added to each arm’s Q value and the arm with the highest value of this sum is chosen. Which one of the following would definitely happen to the frequency of picking sub-optimal arms when adding √(2ln(n)/nⱼ²) instead of √(2ln(n)/nⱼ)?",
         "options": [
             "Sub-optimal arms would be chosen more frequently.",
             "Sub-optimal arms would be chosen less frequently.",
@@ -253,15 +253,15 @@ W2_2026 = [
         "explanation": "The faster-shrinking uncertainty term means fewer samples needed for confidence, which could mean less wasted exploration (fewer sub-optimal pulls) but could also mean worse estimates earlier leading to more sub-optimal pulls. Either (a) or (b) could be True depending on the problem.",
     },
     {
-        "question": "In the proof of the UCB Theorem, when l_i = ⌈8ln(m)/Δᵢ²⌉, q*(a*) - q*(i) - 2·C_{m,l} = 0. Which of the following correctly explains q*(a*) - q*(i) - 2·C_{m,T_i(s_i)} being less than 0 when we replace this fixed value of l by the value T_i(s_i): the number of times the arm i is selected?",
+        "question": "In the proof of the UCB Theorem, when lᵢ = ⌈8ln(m)/Δᵢ²⌉, q*(a*) - q*(i) - 2·C_{m,l} = 0. Which of the following correctly explains q*(a*) - q*(i) - 2·C_{m,Tᵢ(s_i)} being less than 0 when we replace this fixed value of l by the value Tᵢ(s_i): the number of times the arm i is selected?",
         "options": [
-            "T_i(s_i) < l thus C_{m,T_i(s_i)} < C_{m,l}",
-            "T_i(s_i) > m thus C_{m,T_i(s_i)} < C_{m,l}",
-            "T_i(s_i) > l thus C_{m,T_i(s_i)} < C_{m,l}",
-            "T_i(s_i) < l thus C_{m,T_i(s_i)} > C_{m,l}",
+            "Tᵢ(s_i) < l thus C_{m,Tᵢ(s_i)} < C_{m,l}",
+            "Tᵢ(s_i) > m thus C_{m,Tᵢ(s_i)} < C_{m,l}",
+            "Tᵢ(s_i) > l thus C_{m,Tᵢ(s_i)} < C_{m,l}",
+            "Tᵢ(s_i) < l thus C_{m,Tᵢ(s_i)} > C_{m,l}",
         ],
         "correct": 3,
-        "explanation": "If the arm is selected fewer times than l, confidence interval is larger: C_{m,T_i(s_i)} > C_{m,l}, which makes q*(a*) - q*(i) - 2·C_{m,T_i(s_i)} < 0.",
+        "explanation": "If the arm is selected fewer times than l, confidence interval is larger: C_{m,Tᵢ(s_i)} > C_{m,l}, which makes q*(a*) - q*(i) - 2·C_{m,Tᵢ(s_i)} < 0.",
     },
     {
         "question": "Which of the following is true about the Median Elimination algorithm?",
@@ -286,7 +286,7 @@ W2_2026 = [
         "explanation": "8 rounds ⟹ 2⁸ = 256 arms. Naive algorithm samples = 2k·ln(2k/δ)/ϵ² = 2·256·ln(512e)/(0.25) ≈ 14824 ≈ 15000.",
     },
     {
-        "question": "In case of UCB, the regret is generally of the form f(n)+c, where, for the confidence bound given by √(2ln(n)/n_j), f(n) = Σ_{j=1}^{k} (8ln(n)/Δ_j) and c = (1 + π²/3) Σ_{j=1}^{k} Δ_j. What is the form of f(n) for the confidence bound given by √(α·ln(n)/n_j), where α ≥ 2?",
+        "question": "In case of UCB, the regret is generally of the form f(n)+c, where, for the confidence bound given by √(2ln(n)/nⱼ), f(n) = Σ_{j=1}^{k} (8ln(n)/Δ_j) and c = (1 + π²/3) Σ_{j=1}^{k} Δ_j. What is the form of f(n) for the confidence bound given by √(α·ln(n)/nⱼ), where α ≥ 2?",
         "options": [
             "Σ_{j=1}^{k} 4α·ln(n)/Δ_j",
             "Σ_{j=1}^{k} 2α²·ln(n)/Δ_j",
@@ -356,7 +356,7 @@ W2_2025 = [
             "on selecting an arm its interval is shrunk by half every time",
         ],
         "correct": 2,
-        "explanation": "The number of times arm j is selected (n_j) appears in the denominator of the upper confidence bound for each arm. As n_j increases, the bound decreases.",
+        "explanation": "The number of times arm j is selected (nⱼ) appears in the denominator of the upper confidence bound for each arm. As nⱼ increases, the bound decreases.",
     },
     {
         "question": "After 12 iterations of the UCB1 algorithm applied on a 4-arm bandit problem, we have n_1=3, n_2=4, n_3=3, n_4=2 and Q_12(1)=0.55, Q_12(2)=0.63, Q_12(3)=0.61, Q_12(4)=0.40. Which arm should be played next?",
@@ -370,7 +370,7 @@ W2_2025 = [
         "explanation": "Calculating UCB values: arm 1 = 0.55 + sqrt(2ln12/3) ≈ 1.837; arm 2 = 0.63 + sqrt(2ln12/4) ≈ 1.745; arm 3 = 0.61 + sqrt(2ln12/3) ≈ 1.897; arm 4 = 0.40 + sqrt(2ln12/2) ≈ 1.976. Arm 4 has the highest UCB value.",
     },
     {
-        "question": "In the proof of the UCB 1 algorithm, we had the following expression: {min_{0<s<m} (Q_s(a*) + C_{m-1,T_{a*}(s)}) <= max_{l<=s_i<=m} (Q_{s_i}(i) + C_{m-1,T_i(s_i)})}. What does this expression stand for?",
+        "question": "In the proof of the UCB 1 algorithm, we had the following expression: {min_{0<s<m} (Q_s(a*) + C_{m-1,T_{a*}(s)}) <= max_{l<=s_i<=m} (Q_{s_i}(i) + C_{m-1,Tᵢ(s_i)})}. What does this expression stand for?",
         "options": [
             "the number of instances where the minimum value among the upper confidence bound values of an optimal arm up till the mth time step is less than or equal to the maximum value among the upper confidence bound values of the ith arm between the times steps l and m",
             "the condition that the minimum value among the upper confidence bound values of an optimal arm up till the mth time step is less than or equal to the maximum value among the upper confidence bound values of the ith arm between the times steps l and m",
@@ -388,7 +388,7 @@ W2_2025 = [
             "it remains constant until it is selected",
         ],
         "correct": 0,
-        "explanation": "The presence of n (total number of time steps) in the numerator ensures that at each step, n increases while n_j for the unselected arm remains constant, so its upper confidence bound increases.",
+        "explanation": "The presence of n (total number of time steps) in the numerator ensures that at each step, n increases while nⱼ for the unselected arm remains constant, so its upper confidence bound increases.",
     },
     {
         "question": "Suppose that we apply the naive PAC algorithm on a 10-arm bandit problem where the required (ϵ, δ) values are: ϵ = 0.5 and δ = 0.05. How many iterations would the algorithm take to output an arm selection? (Note: each arm is sampled (2/ϵ^2)*ln(2k/δ) times).",
@@ -463,10 +463,10 @@ W3_2026 = [
     {
         "question": "Which of the following is true for an MDP?",
         "options": [
-            "Pr(s_{t+1}, r_{t+1} | s_t, a_t) = Pr(s_{t+1}, r_{t+1})",
-            "Pr(s_{t+1}, r_{t+1} | s_t, a_t, s_{t-1}, a_{t-1}, s_{t-2}, a_{t-2}, ..., s_0, a_0) = Pr(s_{t+1}, r_{t+1} | s_t, a_t)",
-            "Pr(s_{t+1}, r_{t+1} | s_t, a_t) = Pr(s_{t+1}, r_{t+1} | s_0, a_0)",
-            "Pr(s_{t+1}, r_{t+1} | s_t, a_t) = Pr(s_t, r_t | s_{t-1}, a_{t-1})",
+            "Pr(sₜ₊₁, rₜ₊₁ | sₜ, aₜ) = Pr(sₜ₊₁, rₜ₊₁)",
+            "Pr(sₜ₊₁, rₜ₊₁ | sₜ, aₜ, sₜ₋₁, aₜ₋₁, s_{t-2}, a_{t-2}, ..., s_0, a_0) = Pr(sₜ₊₁, rₜ₊₁ | sₜ, aₜ)",
+            "Pr(sₜ₊₁, rₜ₊₁ | sₜ, aₜ) = Pr(sₜ₊₁, rₜ₊₁ | s_0, a_0)",
+            "Pr(sₜ₊₁, rₜ₊₁ | sₜ, aₜ) = Pr(sₜ, r_t | sₜ₋₁, aₜ₋₁)",
         ],
         "correct": 1,
         "explanation": "(b) is true for any MDP. (a),(c) and (d) are not true.",
@@ -504,18 +504,18 @@ W3_2026 = [
         "explanation": "Derive the update using the REINFORCE formula: w_1 uses positive gradient term (i) and w_2 uses negative gradient term (iv).",
     },
     {
-        "question": "The update in REINFORCE is given by θ_{t+1} = θ_t + α r_t ∂lnπ(a_t; θ_t)/∂θ_t, where r_t ∂lnπ(a_t; θ_t)/∂θ_t is an unbiased estimator of the true gradient of the performance function. However, there was another variant of REINFORCE, where a baseline b, that is independent of the action taken, is subtracted from the obtained reward, i.e., the update is given by θ_{t+1} = θ_t + α(r_t - b) ∂lnπ(a_t; θ_t)/∂θ_t.\nHow are E[(r_t - b) ∂lnπ(a_t; θ_t)/∂θ_t] and E[r_t ∂lnπ(a_t; θ_t)/∂θ_t] related?",
+        "question": "The update in REINFORCE is given by θₜ₊₁ = θ_t + α r_t ∂lnπ(aₜ; θ_t)/∂θ_t, where r_t ∂lnπ(aₜ; θ_t)/∂θ_t is an unbiased estimator of the true gradient of the performance function. However, there was another variant of REINFORCE, where a baseline b, that is independent of the action taken, is subtracted from the obtained reward, i.e., the update is given by θₜ₊₁ = θ_t + α(r_t - b) ∂lnπ(aₜ; θ_t)/∂θ_t.\nHow are E[(r_t - b) ∂lnπ(aₜ; θ_t)/∂θ_t] and E[r_t ∂lnπ(aₜ; θ_t)/∂θ_t] related?",
         "options": [
-            "E[(r_t - b) ∂lnπ(a_t; θ_t)/∂θ_t] = E[r_t ∂lnπ(a_t; θ_t)/∂θ_t]",
-            "E[(r_t - b) ∂lnπ(a_t; θ_t)/∂θ_t] < E[r_t ∂lnπ(a_t; θ_t)/∂θ_t]",
-            "E[(r_t - b) ∂lnπ(a_t; θ_t)/∂θ_t] > E[r_t ∂lnπ(a_t; θ_t)/∂θ_t]",
+            "E[(r_t - b) ∂lnπ(aₜ; θ_t)/∂θ_t] = E[r_t ∂lnπ(aₜ; θ_t)/∂θ_t]",
+            "E[(r_t - b) ∂lnπ(aₜ; θ_t)/∂θ_t] < E[r_t ∂lnπ(aₜ; θ_t)/∂θ_t]",
+            "E[(r_t - b) ∂lnπ(aₜ; θ_t)/∂θ_t] > E[r_t ∂lnπ(aₜ; θ_t)/∂θ_t]",
             "Could be either of a, b or c, depending on the choice of baseline",
         ],
         "correct": 0,
-        "explanation": "E[b ∂lnπ(a_t;θ_t)/∂θ_t] = E[b (1/π(a_t;θ_t)) ∂π(a_t;θ_t)/∂θ_t] = sum_a b ∂π(a;θ_t)/∂θ_t = b ∂(sum_a π(a;θ_t))/∂θ_t = b ∂(1)/∂θ_t = 0. Thus, E[(r_t - b) ∂lnπ(a_t; θ_t)/∂θ_t] = E[r_t ∂lnπ(a_t; θ_t)/∂θ_t].",
+        "explanation": "E[b ∂lnπ(aₜ;θ_t)/∂θ_t] = E[b (1/π(aₜ;θ_t)) ∂π(aₜ;θ_t)/∂θ_t] = sum_a b ∂π(a;θ_t)/∂θ_t = b ∂(sum_a π(a;θ_t))/∂θ_t = b ∂(1)/∂θ_t = 0. Thus, E[(r_t - b) ∂lnπ(aₜ; θ_t)/∂θ_t] = E[r_t ∂lnπ(aₜ; θ_t)/∂θ_t].",
     },
     {
-        "question": "Consider the following policy-search algorithm for a multi-armed binary bandit:\n∀a, π_{t+1}(a) = π_t(a)(1 - α) + α(1_{a=a_t} r_t + (1 - 1_{a=a_t})(1 - r_t))\nwhere 1_{a=a_t} is 1 if a_t = a and 0 otherwise. Which of the following is true for the above algorithm?",
+        "question": "Consider the following policy-search algorithm for a multi-armed binary bandit:\n∀a, πₜ₊₁(a) = π_t(a)(1 - α) + α(1_{a=aₜ} r_t + (1 - 1_{a=aₜ})(1 - r_t))\nwhere 1_{a=aₜ} is 1 if aₜ = a and 0 otherwise. Which of the following is true for the above algorithm?",
         "options": [
             "It is L_{R-I} algorithm.",
             "It is L_{R-ϵP} algorithm.",
@@ -706,7 +706,7 @@ W4_2026 = [
         "explanation": "RL algorithms require to know the state the agent is in, the action it takes and a reward signal from the environment to solve the MDP. However, they do not need to know the state transition probability matrix.",
     },
     {
-        "question": "Consider the following equations:\n(i) vπ(s) = E_π [Σ_{i=t}^{∞} γ^{i-t} R_{i+1} | S_t = s]\n(ii) qπ(s,a) = Σ_{s'} p(s'|s,a) vπ(s')\n(iii) vπ(s) = Σ_a π(a|s) qπ(s,a)\nWhich of the above are correct?",
+        "question": "Consider the following equations:\n(i) vπ(s) = E_π [Σₜ^{∞} γ^{i-t} R_{i+1} | Sₜ = s]\n(ii) qπ(s,a) = Σ_{s'} p(s'|s,a) vπ(s')\n(iii) vπ(s) = Σ_a π(a|s) qπ(s,a)\nWhich of the above are correct?",
         "options": [
             "Only (i)",
             "Only (i), (ii)",
@@ -845,7 +845,7 @@ W4_2025 = [
         "explanation": "For s_1, moving down transitions to the terminal state (value 0) with reward -1, giving q_π(s_1, down) = -1 + 0 = -1. For s_2, moving down transitions to s_1 (value -14) with reward -1, giving q_π(s_2, down) = -1 + (-14) = -15.",
     },
     {
-        "question": "In a particular grid-world example, rewards are positive for goals, negative for running into the edge of the world, and zero the rest of the time. Are the signs of these rewards important, or only the intervals between them? Prove, using the discounted return equation G_t = Σ_{k=0}^{∞} γᵏ R_{t+k+1}, that adding a constant C to all rewards adds a constant K to the values of all states. What is K in terms of C and γ?",
+        "question": "In a particular grid-world example, rewards are positive for goals, negative for running into the edge of the world, and zero the rest of the time. Are the signs of these rewards important, or only the intervals between them? Prove, using the discounted return equation Gₜ = Σ_{k=0}^{∞} γᵏ Rₜ₊ₖ₊₁, that adding a constant C to all rewards adds a constant K to the values of all states. What is K in terms of C and γ?",
         "options": [
             "K = 1 / (C(1 - γ))",
             "K = C(1/(1-γ) - 1)",
@@ -853,7 +853,7 @@ W4_2025 = [
             "K = C / (1 - γ)",
         ],
         "correct": 3,
-        "explanation": "G'_t = Σ_{k=0}^{∞} γᵏ (R_{t+k+1} + C) = Σ_{k=0}^{∞} γᵏ R_{t+k+1} + C Σ_{k=0}^{∞} γᵏ = G_t + C / (1 - γ). Thus, K = C / (1 - γ).",
+        "explanation": "G'_t = Σ_{k=0}^{∞} γᵏ (Rₜ₊ₖ₊₁ + C) = Σ_{k=0}^{∞} γᵏ Rₜ₊ₖ₊₁ + C Σ_{k=0}^{∞} γᵏ = Gₜ + C / (1 - γ). Thus, K = C / (1 - γ).",
     },
     {
         "question": "Given a reinforcement learning problem, algorithm A will return the optimal state value function for that problem and algorithm B will return the optimal action value function. Your aim is to use the value function so obtained to behave optimally in the environment. Assuming that you know the expected rewards for each state transition, but not the state transition probabilities, which algorithm’s output would you prefer to use?",
@@ -1336,21 +1336,21 @@ W7_2026 = [
     {
         "question": "Which of the following is the corrected n-step truncated return?",
         "options": [
-            "R_{t+n} + γⁿ V_t(s_{t+n})",
-            "R_{t+1} + γ R_{t+2} + γ² R_{t+3} + ... + γⁿ⁻¹ R_{t+n} + γⁿ V_t(s_{t+n})",
-            "γ R_{t+1} + γ² R_{t+2} + γ³ R_{t+3} + ... + γⁿ R_{t+n} + V_t(s_{t+n})",
+            "Rₜ₊ₙ + γⁿ Vₜ(sₜ₊ₙ)",
+            "Rₜ₊₁ + γ Rₜ₊₂ + γ² Rₜ₊₃ + ... + γⁿ⁻¹ Rₜ₊ₙ + γⁿ Vₜ(sₜ₊ₙ)",
+            "γ Rₜ₊₁ + γ² Rₜ₊₂ + γ³ Rₜ₊₃ + ... + γⁿ Rₜ₊ₙ + Vₜ(sₜ₊ₙ)",
             "None of the above.",
         ],
         "correct": 1,
-        "explanation": "From the definition of G_t^{(n)} given in ”Eligibility Traces” video.",
+        "explanation": "From the definition of Gₜ^{(n)} given in ”Eligibility Traces” video.",
     },
     {
         "question": "Which of the following is correct way to implement replacing traces?",
         "options": [
-            "E_t(s) = 1 if s_t ≠ s, else (γλ)E_{t-1}(s)",
-            "E_t(s) = (γλ)E_{t-1}(s) + 1 if s_t = s, else (γλ)E_{t-1}(s)",
-            "E_t(s) = (γλ)E_{t-1}(s) + 1 if s_t ≠ s, else (γλ)E_{t-1}(s)",
-            "E_t(s) = 1 if s_t = s, else (γλ)E_{t-1}(s)",
+            "Eₜ(s) = 1 if sₜ ≠ s, else (γλ)Eₜ₋₁(s)",
+            "Eₜ(s) = (γλ)Eₜ₋₁(s) + 1 if sₜ = s, else (γλ)Eₜ₋₁(s)",
+            "Eₜ(s) = (γλ)Eₜ₋₁(s) + 1 if sₜ ≠ s, else (γλ)Eₜ₋₁(s)",
+            "Eₜ(s) = 1 if sₜ = s, else (γλ)Eₜ₋₁(s)",
         ],
         "correct": 3,
         "explanation": "(d) correctly defines replacing traces: setting the trace to 1 upon visiting state s, and decaying by γλ otherwise.",
@@ -1387,7 +1387,7 @@ W7_2026 = [
         "explanation": "It depends on the length of an episode (as well as the value of λ). For example, consider an episode of length 3 and a value of λ=0.7.",
     },
     {
-        "question": "Assertion: It is possible to use the forward view of eligibility traces based target for updates before the end of an episode.\nReason: G_t^λ is the weighed average of terms of the form G_t^i, where each G_t^i is computable after a finite number of steps i, making G_t^λ also computable after a finite number of steps in all cases.",
+        "question": "Assertion: It is possible to use the forward view of eligibility traces based target for updates before the end of an episode.\nReason: Gₜ^λ is the weighed average of terms of the form Gₜ^i, where each Gₜ^i is computable after a finite number of steps i, making Gₜ^λ also computable after a finite number of steps in all cases.",
         "options": [
             "Both Assertion and Reason are true, and Reason is correct explanation for Assertion.",
             "Both Assertion and Reason are true, but Reason is not correct explanation for assertion.",
@@ -1395,15 +1395,15 @@ W7_2026 = [
             "Both Assertion and Reason are false",
         ],
         "correct": 3,
-        "explanation": "The assertion is wrong, the forward view of eligibility traces based target cannot be computed till the end of the episode, making updates before the end of an episode impossible. The reason is wrong as well, each G_t^i is computable after i steps, however i has no upper bound, making G_t^λ impossible to calculate in a finite amount of time in some cases.",
+        "explanation": "The assertion is wrong, the forward view of eligibility traces based target cannot be computed till the end of the episode, making updates before the end of an episode impossible. The reason is wrong as well, each Gₜ^i is computable after i steps, however i has no upper bound, making Gₜ^λ impossible to calculate in a finite amount of time in some cases.",
     },
     {
         "question": "Which of the following is a way to use replacing traces in SARSA(λ) such that we only update the estimate for the action, a, taken in the state, s, in a trajectory at timestep t?",
         "options": [
-            "E_t(s,a) = γλE_{t-1}(s,a) + 1 if s_t=s, a_t=a; else (γλ)E_{t-1}(s,a)",
-            "E_t(s,a) = 1 if s_t=s, a_t=a; else (γλ)E_{t-1}(s,a)",
-            "E_t(s,a) = γλE_{t-1}(s,a) + 1 if s_t=s, a_t=a; 0 if s_t=s, a_t≠a; else (γλ)E_{t-1}(s,a)",
-            "E_t(s,a) = 1 if s_t=s, a_t=a; 0 if s_t=s, a_t≠a; else (γλ)E_{t-1}(s,a)",
+            "Eₜ(s,a) = γλEₜ₋₁(s,a) + 1 if sₜ=s, aₜ=a; else (γλ)Eₜ₋₁(s,a)",
+            "Eₜ(s,a) = 1 if sₜ=s, aₜ=a; else (γλ)Eₜ₋₁(s,a)",
+            "Eₜ(s,a) = γλEₜ₋₁(s,a) + 1 if sₜ=s, aₜ=a; 0 if sₜ=s, aₜ≠a; else (γλ)Eₜ₋₁(s,a)",
+            "Eₜ(s,a) = 1 if sₜ=s, aₜ=a; 0 if sₜ=s, aₜ≠a; else (γλ)Eₜ₋₁(s,a)",
         ],
         "correct": 3,
         "explanation": "(d) is an aggressive form of replacing traces update for SARSA(λ) where we update estimate only for estimate for action taken in a state by making traces for other actions zero.",
@@ -1420,7 +1420,7 @@ W7_2026 = [
         "explanation": "Explained in the video ”Eligibility Trace Control” in minutes 21:00 to 24:30. Every time an exploratory action is taken, the trace ends, causing traces to become too short.",
     },
     {
-        "question": "Consider the current state is s and the action recommended by the policy, a_1, is taken. The possible reason(s) behind setting ∀a≠a_1, E_t(s,a)=0, is/are:\n(i) Rewards obtained by taking a_1 in s should not be attributed to actions other than a_1 taken when in state s previously.\n(ii) It assumed that the timesteps between reaching s are large enough to decay the eligibility trace to 0.\nWhich of the above is/are the correct reason(s)?",
+        "question": "Consider the current state is s and the action recommended by the policy, a_1, is taken. The possible reason(s) behind setting ∀a≠a_1, Eₜ(s,a)=0, is/are:\n(i) Rewards obtained by taking a_1 in s should not be attributed to actions other than a_1 taken when in state s previously.\n(ii) It assumed that the timesteps between reaching s are large enough to decay the eligibility trace to 0.\nWhich of the above is/are the correct reason(s)?",
         "options": [
             "Only (i)",
             "Only (ii)",
@@ -1431,15 +1431,15 @@ W7_2026 = [
         "explanation": "Explained in the video ”Eligibility Trace Control”. (i) is the correct reason.",
     },
     {
-        "question": "In off-policy TD(λ), which of the following is a correct way to update eligibility trace, if π is the policy whose Q-values we want to estimate, µ is the behaviour policy, and ρ_t = π(s_t,a_t) / µ(s_t,a_t)?",
+        "question": "In off-policy TD(λ), which of the following is a correct way to update eligibility trace, if π is the policy whose Q-values we want to estimate, µ is the behaviour policy, and ρₜ = π(sₜ,aₜ) / µ(sₜ,aₜ)?",
         "options": [
-            "E_t(s) = ρ_t γλE_{t-1}(s) + 1 if s_t=s; else ρ_t γλE_{t-1}(s)",
-            "E_t(s) = ρ_t (γλE_{t-1}(s) + 1) if s_t=s; else ρ_t γλE_{t-1}(s)",
-            "E_t(s) = γλE_{t-1}(s) + 1 if s_t=s; else ρ_t γλE_{t-1}(s)",
-            "E_t(s) = ρ_t (γλE_{t-1}(s) + 1) if s_t=s; else γλE_{t-1}(s)",
+            "Eₜ(s) = ρₜ γλEₜ₋₁(s) + 1 if sₜ=s; else ρₜ γλEₜ₋₁(s)",
+            "Eₜ(s) = ρₜ (γλEₜ₋₁(s) + 1) if sₜ=s; else ρₜ γλEₜ₋₁(s)",
+            "Eₜ(s) = γλEₜ₋₁(s) + 1 if sₜ=s; else ρₜ γλEₜ₋₁(s)",
+            "Eₜ(s) = ρₜ (γλEₜ₋₁(s) + 1) if sₜ=s; else γλEₜ₋₁(s)",
         ],
         "correct": 1,
-        "explanation": "The correct equation for this update is (b) as it takes care of importance sampling ratio for both cases, s_t=s and otherwise, by multiplying ρ_t to both terms.",
+        "explanation": "The correct equation for this update is (b) as it takes care of importance sampling ratio for both cases, sₜ=s and otherwise, by multiplying ρₜ to both terms.",
     },
 ]
 
@@ -1549,7 +1549,7 @@ W7_2025 = [
             "insufficient data",
         ],
         "correct": 0,
-        "explanation": "For accumulating traces maximum increase in eligibility occurs if the state is selected: e_t(s) = γλ·e_{t-1}(s) + 1. At maximum, e_t(s) = e_{t-1}(s), giving e_t(s) = e_{t-1}(s) = 1/(1-γλ).",
+        "explanation": "For accumulating traces maximum increase in eligibility occurs if the state is selected: e_t(s) = γλ·eₜ₋₁(s) + 1. At maximum, e_t(s) = eₜ₋₁(s), giving e_t(s) = eₜ₋₁(s) = 1/(1-γλ).",
     },
 ]
 

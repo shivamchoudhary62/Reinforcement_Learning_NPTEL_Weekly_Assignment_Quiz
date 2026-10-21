@@ -74,7 +74,7 @@ W1_2026 = [
         "explanation": "In non-stationary environment since optimal state changes, hence it requires constant exploration to find the optimal state. Decaying epsilon to zero may not find an optimal state; hence, iii is incorrect. Both i and ii are correct.",
     },
     {
-        "question": "Following are two ways for defining the probability of selecting an action/arm. Select the option regarding better choice among the following:\n(i) Pr(aₜ = a) = Qₜ(a) / Σ_a Qₜ(a)\n(ii) Pr(aₜ = a) = e^{Qₜ(a)} / Σ_{b=1}^{n} e^{Qₜ(b)}",
+        "question": "Following are two ways for defining the probability of selecting an action/arm. Select the option regarding better choice among the following:\n(i) Pr(aₜ = a) = Qₜ(a) / Σ_a Qₜ(a)\n(ii) Pr(aₜ = a) = e^{Qₜ(a)} / Σb₌₁ⁿ e^{Qₜ(b)}",
         "options": [
             "Both are good as both formulas can bound probability in range 0 to 1.",
             "(i) is better because it is differentiable and requires less complex computation.",
@@ -253,15 +253,15 @@ W2_2026 = [
         "explanation": "The faster-shrinking uncertainty term means fewer samples needed for confidence, which could mean less wasted exploration (fewer sub-optimal pulls) but could also mean worse estimates earlier leading to more sub-optimal pulls. Either (a) or (b) could be True depending on the problem.",
     },
     {
-        "question": "In the proof of the UCB Theorem, when lᵢ = ⌈8ln(m)/Δᵢ²⌉, q*(a*) - q*(i) - 2·C_{m,l} = 0. Which of the following correctly explains q*(a*) - q*(i) - 2·C_{m,Tᵢ(sᵢ)} being less than 0 when we replace this fixed value of l by the value Tᵢ(sᵢ): the number of times the arm i is selected?",
+        "question": "In the proof of the UCB Theorem, when lᵢ = ⌈8ln(m)/Δᵢ²⌉, q*(a*) - q*(i) - 2·Cₘ,ₗ = 0. Which of the following correctly explains q*(a*) - q*(i) - 2·Cₘ,Tᵢ(sᵢ) being less than 0 when we replace this fixed value of l by the value Tᵢ(sᵢ): the number of times the arm i is selected?",
         "options": [
-            "Tᵢ(sᵢ) < l thus C_{m,Tᵢ(sᵢ)} < C_{m,l}",
-            "Tᵢ(sᵢ) > m thus C_{m,Tᵢ(sᵢ)} < C_{m,l}",
-            "Tᵢ(sᵢ) > l thus C_{m,Tᵢ(sᵢ)} < C_{m,l}",
-            "Tᵢ(sᵢ) < l thus C_{m,Tᵢ(sᵢ)} > C_{m,l}",
+            "Tᵢ(sᵢ) < l thus Cₘ,Tᵢ(sᵢ) < Cₘ,ₗ",
+            "Tᵢ(sᵢ) > m thus Cₘ,Tᵢ(sᵢ) < Cₘ,ₗ",
+            "Tᵢ(sᵢ) > l thus Cₘ,Tᵢ(sᵢ) < Cₘ,ₗ",
+            "Tᵢ(sᵢ) < l thus Cₘ,Tᵢ(sᵢ) > Cₘ,ₗ",
         ],
         "correct": 3,
-        "explanation": "If the arm is selected fewer times than l, confidence interval is larger: C_{m,Tᵢ(sᵢ)} > C_{m,l}, which makes q*(a*) - q*(i) - 2·C_{m,Tᵢ(sᵢ)} < 0.",
+        "explanation": "If the arm is selected fewer times than l, confidence interval is larger: Cₘ,Tᵢ(sᵢ) > Cₘ,ₗ, which makes q*(a*) - q*(i) - 2·Cₘ,Tᵢ(sᵢ) < 0.",
     },
     {
         "question": "Which of the following is true about the Median Elimination algorithm?",
@@ -286,15 +286,15 @@ W2_2026 = [
         "explanation": "8 rounds ⟹ 2⁸ = 256 arms. Naive algorithm samples = 2k·ln(2k/δ)/ϵ² = 2·256·ln(512e)/(0.25) ≈ 14824 ≈ 15000.",
     },
     {
-        "question": "In case of UCB, the regret is generally of the form f(n)+c, where, for the confidence bound given by √(2ln(n)/nⱼ), f(n) = Σ_{j=1}^{k} (8ln(n)/Δ_j) and c = (1 + π²/3) Σ_{j=1}^{k} Δ_j. What is the form of f(n) for the confidence bound given by √(α·ln(n)/nⱼ), where α ≥ 2?",
+        "question": "In case of UCB, the regret is generally of the form f(n)+c, where, for the confidence bound given by √(2ln(n)/nⱼ), f(n) = Σⱼ₌₁ᵏ (8ln(n)/Δⱼ) and c = (1 + π²/3) Σⱼ₌₁ᵏ Δⱼ. What is the form of f(n) for the confidence bound given by √(α·ln(n)/nⱼ), where α ≥ 2?",
         "options": [
-            "Σ_{j=1}^{k} 4α·ln(n)/Δ_j",
-            "Σ_{j=1}^{k} 2α²·ln(n)/Δ_j",
-            "Σ_{j=1}^{k} α³·ln(n)/Δ_j",
-            "Σ_{j=1}^{k} α⁴·ln(n)/(2·Δ_j)",
+            "Σⱼ₌₁ᵏ 4α·ln(n)/Δⱼ",
+            "Σⱼ₌₁ᵏ 2α²·ln(n)/Δⱼ",
+            "Σⱼ₌₁ᵏ α³·ln(n)/Δⱼ",
+            "Σⱼ₌₁ᵏ α⁴·ln(n)/(2·Δⱼ)",
         ],
         "correct": 0,
-        "explanation": "Re-deriving the UCB proof with general α gives f(n) = Σ 4α·ln(n)/Δ_j.",
+        "explanation": "Re-deriving the UCB proof with general α gives f(n) = Σ 4α·ln(n)/Δⱼ.",
     },
     {
         "question": "In the naive (ϵ,δ)-PAC algorithm, suppose we draw 2ln(k/δ)/ϵ² samples for each arm instead of 2ln(2k/δ)/ϵ² samples. Using the same analysis presented in the lectures, with what probability can we guarantee that the arm a' returned will have q*(a') value ϵ close to the q* value of the optimal arm?",
@@ -391,7 +391,7 @@ W2_2025 = [
         "explanation": "The presence of n (total number of time steps) in the numerator ensures that at each step, n increases while nⱼ for the unselected arm remains constant, so its upper confidence bound increases.",
     },
     {
-        "question": "Suppose that we apply the naive PAC algorithm on a 10-arm bandit problem where the required (ϵ, δ) values are: ϵ = 0.5 and δ = 0.05. How many iterations would the algorithm take to output an arm selection? (Note: each arm is sampled (2/ϵ^2)*ln(2k/δ) times).",
+        "question": "Suppose that we apply the naive PAC algorithm on a 10-arm bandit problem where the required (ϵ, δ) values are: ϵ = 0.5 and δ = 0.05. How many iterations would the algorithm take to output an arm selection? (Note: each arm is sampled (2/ϵ²)*ln(2k/δ) times).",
         "options": [
             "48",
             "21",
@@ -412,7 +412,7 @@ W2_2025 = [
         "explanation": "For Q(a') to be greater than Q(a*), at least one of the concentration deviation events on the RHS must occur, making it a necessary condition. Hence P(LHS) <= P(union of RHS events).",
     },
     {
-        "question": "Suppose we have a 64-arm bandit problem. We apply the median elimination algorithm where the (ϵ, δ) values are: ϵ = 0.5 and δ = 0.01. How many times do we sample arms in the first round? (Note: in each round, each arm is sampled (1/(ϵₗ^2/2))*ln(3/δₗ) times).",
+        "question": "Suppose we have a 64-arm bandit problem. We apply the median elimination algorithm where the (ϵ, δ) values are: ϵ = 0.5 and δ = 0.01. How many times do we sample arms in the first round? (Note: in each round, each arm is sampled (1/(ϵₗ²/2))*ln(3/δₗ) times).",
         "options": [
             "52404",
             "818",
@@ -420,7 +420,7 @@ W2_2025 = [
             "819",
         ],
         "correct": 2,
-        "explanation": "Round 1: epsilon₁ = epsilon/4 = 0.125, delta₁ = delta/2 = 0.005. Samples per arm = (1/(0.125^2/2))*ln(3/0.005) = (2/0.015625)*ln(600) = 128*6.3969 ≈ 819. Total samples across 64 arms = 64 * 819 = 52416.",
+        "explanation": "Round 1: epsilon₁ = epsilon/4 = 0.125, delta₁ = delta/2 = 0.005. Samples per arm = (1/(0.125²/2))*ln(3/0.005) = (2/0.015625)*ln(600) = 128*6.3969 ≈ 819. Total samples across 64 arms = 64 * 819 = 52416.",
     },
     {
         "question": "Continuing with the previous example, what is the number of samples in the third round? Also, what is the total number of rounds required to identify the (ϵ, δ)-optimal arm?",
@@ -431,7 +431,7 @@ W2_2025 = [
             "201514, 7",
         ],
         "correct": 0,
-        "explanation": "Round 3: 16 arms remain. epsilon₃ = (3/4)^2 * (0.5/4) = 9/16 * 0.125; delta₃ = delta/8 = 0.00125. Samples per arm = 3149. Total samples = 16 * 3149 = 50384. Number of rounds = log2(64) = 6.",
+        "explanation": "Round 3: 16 arms remain. epsilon₃ = (3/4)² * (0.5/4) = 9/16 * 0.125; delta₃ = delta/8 = 0.00125. Samples per arm = 3149. Total samples = 16 * 3149 = 50384. Number of rounds = log2(64) = 6.",
     },
     {
         "question": "Consider a bandit problem in which there is a single optimal arm, a*. Applying the median elimination algorithm to this problem, is it possible that arm a* is eliminated in the first round? In case it is possible, does this mean that the algorithm cannot output an arm that is epsilon-close to a*?",
@@ -706,7 +706,7 @@ W4_2026 = [
         "explanation": "RL algorithms require to know the state the agent is in, the action it takes and a reward signal from the environment to solve the MDP. However, they do not need to know the state transition probability matrix.",
     },
     {
-        "question": "Consider the following equations:\n(i) vπ(s) = E_π [Σₜ^{∞} γ^{i-t} R_{i+1} | Sₜ = s]\n(ii) qπ(s,a) = Σ_{s'} p(s'|s,a) vπ(s')\n(iii) vπ(s) = Σ_a π(a|s) qπ(s,a)\nWhich of the above are correct?",
+        "question": "Consider the following equations:\n(i) vπ(s) = E_π [Σₜ^{∞} γⁱ⁻ᵗ R_{i+1} | Sₜ = s]\n(ii) qπ(s,a) = Σ_{s'} p(s'|s,a) vπ(s')\n(iii) vπ(s) = Σ_a π(a|s) qπ(s,a)\nWhich of the above are correct?",
         "options": [
             "Only (i)",
             "Only (i), (ii)",
@@ -763,9 +763,9 @@ W4_2026 = [
         "question": "Which of the following is not a valid norm function? (x is a D-dimensional vector)",
         "options": [
             "max_{d ∈ {1,...,D}} |x_d|",
-            "√(Σ_{d=1}^{D} x_d²)",
+            "√(Σd₌₁ᴰ x_d²)",
             "min_{d ∈ {1,...,D}} |x_d|",
-            "Σ_{d=1}^{D} |x_d|",
+            "Σd₌₁ᴰ |x_d|",
         ],
         "correct": 2,
         "explanation": "(c) can be zero when x is not the zero vector.",
@@ -811,7 +811,7 @@ W4_2025 = [
             "If there is laughter, play the organ; if the room is quiet, do not play the organ and burn incense.",
         ],
         "correct": 3,
-        "explanation": "Option (d) will ensure that the house will enter the quiet state in the next step (since the organ is played while there is laughter) and will remain in the quiet state from then on (since incense is burnt without the organ being played when the house is quiet). In fact, the state transitions and rewards will be: (L, O∧¬I, Q, +1), (Q, ¬O∧I, Q, +1), (Q, ¬O∧I, Q, +1), ... Thus, cumulative return will be: +1 + γ(+1) + γ^2(+1) + ... = 1/(1-γ) = 1/(1-0.9) = 10, which is the maximum possible return.",
+        "explanation": "Option (d) will ensure that the house will enter the quiet state in the next step (since the organ is played while there is laughter) and will remain in the quiet state from then on (since incense is burnt without the organ being played when the house is quiet). In fact, the state transitions and rewards will be: (L, O∧¬I, Q, +1), (Q, ¬O∧I, Q, +1), (Q, ¬O∧I, Q, +1), ... Thus, cumulative return will be: +1 + γ(+1) + γ²(+1) + ... = 1/(1-γ) = 1/(1-0.9) = 10, which is the maximum possible return.",
     },
     {
         "question": "If a policy is greedy with respect to its own value function, then it is an optimal policy.",
@@ -845,7 +845,7 @@ W4_2025 = [
         "explanation": "For s₁, moving down transitions to the terminal state (value 0) with reward -1, giving qπ(s₁, down) = -1 + 0 = -1. For s₂, moving down transitions to s₁ (value -14) with reward -1, giving qπ(s₂, down) = -1 + (-14) = -15.",
     },
     {
-        "question": "In a particular grid-world example, rewards are positive for goals, negative for running into the edge of the world, and zero the rest of the time. Are the signs of these rewards important, or only the intervals between them? Prove, using the discounted return equation Gₜ = Σ_{k=0}^{∞} γᵏ Rₜ₊ₖ₊₁, that adding a constant C to all rewards adds a constant K to the values of all states. What is K in terms of C and γ?",
+        "question": "In a particular grid-world example, rewards are positive for goals, negative for running into the edge of the world, and zero the rest of the time. Are the signs of these rewards important, or only the intervals between them? Prove, using the discounted return equation Gₜ = Σₖ₌₀^∞ γᵏ Rₜ₊ₖ₊₁, that adding a constant C to all rewards adds a constant K to the values of all states. What is K in terms of C and γ?",
         "options": [
             "K = 1 / (C(1 - γ))",
             "K = C(1/(1-γ) - 1)",
@@ -853,7 +853,7 @@ W4_2025 = [
             "K = C / (1 - γ)",
         ],
         "correct": 3,
-        "explanation": "G'_t = Σ_{k=0}^{∞} γᵏ (Rₜ₊ₖ₊₁ + C) = Σ_{k=0}^{∞} γᵏ Rₜ₊ₖ₊₁ + C Σ_{k=0}^{∞} γᵏ = Gₜ + C / (1 - γ). Thus, K = C / (1 - γ).",
+        "explanation": "G'_t = Σₖ₌₀^∞ γᵏ (Rₜ₊ₖ₊₁ + C) = Σₖ₌₀^∞ γᵏ Rₜ₊ₖ₊₁ + C Σₖ₌₀^∞ γᵏ = Gₜ + C / (1 - γ). Thus, K = C / (1 - γ).",
     },
     {
         "question": "Given a reinforcement learning problem, algorithm A will return the optimal state value function for that problem and algorithm B will return the optimal action value function. Your aim is to use the value function so obtained to behave optimally in the environment. Assuming that you know the expected rewards for each state transition, but not the state transition probabilities, which algorithm’s output would you prefer to use?",
@@ -1518,7 +1518,7 @@ W7_2025 = [
             "γ⁷λ⁷+γ³λ³+γλ",
         ],
         "correct": 2,
-        "explanation": "According to the non-recursive expression for accumulating eligibility trace, we have:\neₜ(s) = Σ_{k=0}^{t} (γλ)^{t-k} · I_{s=sₖ}\nwhere I_{s=sₖ} is an indicator function.\nUsing the above expression along with the given state sequence, we have:\ne₇(s₁) = (γλ)^{7-1} + (γλ)^{7-4} + (γλ)^{7-6} = γλ + γ³λ³ + γ⁶λ⁶",
+        "explanation": "According to the non-recursive expression for accumulating eligibility trace, we have:\neₜ(s) = Σₖ₌₀ᵗ (γλ)^{t-k} · I_{s=sₖ}\nwhere I_{s=sₖ} is an indicator function.\nUsing the above expression along with the given state sequence, we have:\ne₇(s₁) = (γλ)^{7-1} + (γλ)^{7-4} + (γλ)^{7-6} = γλ + γ³λ³ + γ⁶λ⁶",
     },
     {
         "question": "For the above question, what is the eligibility value if replacing traces are used?",

@@ -245,6 +245,44 @@ section[data-testid="stSidebar"] button:hover * {
     font-size: 0.96rem !important;
 }
 
+/* Option Review Cards shown after checking answer */
+.option-review-card {
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.96rem;
+    line-height: 1.5;
+    transition: all 0.2s ease;
+}
+
+.option-correct-picked {
+    background: var(--success-bg) !important;
+    border: 1.5px solid var(--success-border) !important;
+    color: var(--text-main) !important;
+}
+
+.option-correct-missed {
+    background: var(--success-bg) !important;
+    border: 1.5px solid var(--success-border) !important;
+    color: var(--text-main) !important;
+}
+
+.option-incorrect-picked {
+    background: var(--error-bg) !important;
+    border: 1.5px solid var(--error-border) !important;
+    color: var(--text-main) !important;
+}
+
+.option-neutral {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--card-border) !important;
+    color: var(--text-muted) !important;
+    opacity: 0.75;
+}
+
 /* Top Hero Banner (Exact match to Screenshots 1 & 2) */
 .hero-banner {
     background: var(--primary-gradient);
@@ -924,26 +962,59 @@ def render_practice_mode(qs, total, wk, bank):
     checked = ans_record.get("checked", False)
 
     # Options Rendering
-    if is_multi:
-        selected_indices = []
-        prev_indices = ans_record.get("selected_indices", [])
-        for opt_i, opt_text in enumerate(q["options"]):
-            chk_key = f"prac_chk_{idx}_{opt_i}"
-            if chk_key not in st.session_state:
-                st.session_state[chk_key] = (opt_i in prev_indices)
-            if st.checkbox(opt_text, key=chk_key, disabled=checked):
-                selected_indices.append(opt_i)
-        selected_choice = None
+    if not checked:
+        if is_multi:
+            selected_indices = []
+            prev_indices = ans_record.get("selected_indices", [])
+            for opt_i, opt_text in enumerate(q["options"]):
+                chk_key = f"prac_chk_{idx}_{opt_i}"
+                if chk_key not in st.session_state:
+                    st.session_state[chk_key] = (opt_i in prev_indices)
+                if st.checkbox(opt_text, key=chk_key):
+                    selected_indices.append(opt_i)
+            selected_choice = None
+        else:
+            prev_idx = ans_record.get("selected_idx", None)
+            selected_choice = st.radio(
+                f"Select an option for Question {idx + 1}:",
+                options=q["options"],
+                index=prev_idx,
+                key=f"prac_opt_{idx}",
+                label_visibility="collapsed"
+            )
+            selected_indices = []
     else:
-        prev_idx = ans_record.get("selected_idx", None)
-        selected_choice = st.radio(
-            f"Select an option for Question {idx + 1}:",
-            options=q["options"],
-            index=prev_idx,
-            key=f"prac_opt_{idx}",
-            label_visibility="collapsed",
-            disabled=checked
-        )
+        # Options Review Cards with color-coding
+        correct_list = q["correct"] if is_multi else [q["correct"]]
+        user_list = ans_record.get("selected_indices", []) if is_multi else ([ans_record.get("selected_idx")] if ans_record.get("selected_idx") is not None else [])
+
+        cards_html = []
+        for opt_i, opt_text in enumerate(q["options"]):
+            is_true_correct = opt_i in correct_list
+            was_user_choice = opt_i in user_list
+
+            if is_true_correct and was_user_choice:
+                card_cls = "option-review-card option-correct-picked"
+                badge = '<span style="background:#10B981;color:#FFFFFF;padding:0.2rem 0.55rem;border-radius:6px;font-size:0.78rem;font-weight:700;flex-shrink:0;">✓ Correct (Your Choice)</span>'
+            elif is_true_correct and not was_user_choice:
+                card_cls = "option-review-card option-correct-missed"
+                badge = '<span style="background:#10B981;color:#FFFFFF;padding:0.2rem 0.55rem;border-radius:6px;font-size:0.78rem;font-weight:700;flex-shrink:0;">✓ Correct Answer</span>'
+            elif not is_true_correct and was_user_choice:
+                card_cls = "option-review-card option-incorrect-picked"
+                badge = '<span style="background:#EF4444;color:#FFFFFF;padding:0.2rem 0.55rem;border-radius:6px;font-size:0.78rem;font-weight:700;flex-shrink:0;">✕ Your Choice (Incorrect)</span>'
+            else:
+                card_cls = "option-review-card option-neutral"
+                badge = '<span style="color:var(--text-sub);padding:0.2rem 0.55rem;border-radius:6px;font-size:0.85rem;font-weight:600;flex-shrink:0;">⚪</span>'
+
+            cards_html.append(
+                f'<div class="{card_cls}">'
+                f'{badge}'
+                f'<div style="flex-grow:1;font-size:0.96rem;line-height:1.5;">{opt_text}</div>'
+                f'</div>'
+            )
+
+        st.markdown("".join(cards_html), unsafe_allow_html=True)
+        selected_choice = None
         selected_indices = []
 
     st.markdown("<div style='height:1rem;'></div>", unsafe_allow_html=True)
@@ -980,9 +1051,19 @@ def render_practice_mode(qs, total, wk, bank):
                     else:
                         st.warning("Please choose an option first.")
         else:
-            if idx > 0:
-                if st.button("← Previous", key="btn_prac_prev", use_container_width=True):
-                    st.session_state.current_question_idx = idx - 1
+            col_prev, col_retry = st.columns([1, 1])
+            with col_prev:
+                if idx > 0:
+                    if st.button("← Previous", key="btn_prac_prev", use_container_width=True):
+                        st.session_state.current_question_idx = idx - 1
+                        st.rerun()
+            with col_retry:
+                if st.button("↺ Try Again", key="btn_prac_retry", use_container_width=True):
+                    if idx in st.session_state.answers:
+                        del st.session_state.answers[idx]
+                    for k in list(st.session_state.keys()):
+                        if k.startswith(f"prac_opt_{idx}") or k.startswith(f"prac_chk_{idx}_"):
+                            del st.session_state[k]
                     st.rerun()
 
     with b2:

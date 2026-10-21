@@ -1253,30 +1253,58 @@ def render_results():
     for i, q in enumerate(qs):
         ans_info = st.session_state.answers.get(i, {})
         is_correct = ans_info.get("correct", False)
-        selected_text = ans_info.get("selected") or "Unanswered"
         is_multi = isinstance(q.get("correct"), list)
+        correct_list = q["correct"] if is_multi else [q["correct"]]
+        user_list = ans_info.get("selected_indices", []) if is_multi else ([ans_info.get("selected_idx")] if ans_info.get("selected_idx") is not None else [])
 
-        if is_multi:
-            correct_text = ", ".join([q["options"][c] for c in q["correct"]])
-        else:
-            correct_text = q["options"][q["correct"]]
+        status_sym = "✓ Correct" if is_correct else ("✕ Unanswered" if not user_list else "✕ Incorrect")
+        status_color = "var(--success-text)" if is_correct else "var(--error-text)"
+        status_bg = "var(--success-bg)" if is_correct else "var(--error-bg)"
+        status_border = "var(--success-border)" if is_correct else "var(--error-border)"
 
-        box_cls = "feedback-box-correct" if is_correct else "feedback-box-incorrect"
-        status_sym = "✓ Correct" if is_correct else "✕ Incorrect"
-
-        corr_line = f'<div style="font-size:0.88rem;margin-top:0.35rem;color:var(--text-main);">Correct Answer: <strong style="color:var(--primary-purple);">{correct_text}</strong></div>' if not is_correct else ""
-
+        # Question header card
         st.markdown(
-            f'<div class="{box_cls}">'
-            f'<div style="display:flex;justify-content:space-between;align-items:center;font-weight:700;">'
-            f'<span>Question {i + 1}</span>'
-            f'<span>{status_sym}</span>'
+            f'<div style="background:{status_bg};border:1px solid {status_border};border-radius:12px;padding:1.15rem 1.35rem;margin-top:1.25rem;margin-bottom:0.75rem;">'
+            f'<div style="display:flex;justify-content:space-between;align-items:center;font-weight:700;margin-bottom:0.5rem;">'
+            f'<span style="font-size:1.05rem;color:var(--text-main);">Question {i + 1}</span>'
+            f'<span style="color:{status_color};font-weight:700;font-size:0.92rem;">{status_sym}</span>'
             f'</div>'
-            f'<div style="font-size:0.95rem;margin:0.5rem 0;color:var(--text-main);font-weight:500;">{q["question"]}</div>'
-            f'<div style="font-size:0.88rem;color:var(--text-muted);">Your Answer: <strong>{selected_text}</strong></div>'
-            f'{corr_line}'
-            f'</div>'
-            f'<div class="feedback-explanation"><strong>Explanation:</strong> {q["explanation"]}</div>',
+            f'<div style="font-size:1rem;font-weight:600;color:var(--text-main);line-height:1.55;white-space:pre-line;">{q["question"]}</div>'
+            f'</div>',
+            unsafe_allow_html=True
+        )
+
+        # Options with clear color coding
+        cards_html = []
+        for opt_i, opt_text in enumerate(q["options"]):
+            is_true_correct = opt_i in correct_list
+            was_user_choice = opt_i in user_list
+
+            if is_true_correct and was_user_choice:
+                card_cls = "option-review-card option-correct-picked"
+                badge = '<span style="background:#10B981;color:#FFFFFF;padding:0.2rem 0.55rem;border-radius:6px;font-size:0.76rem;font-weight:700;flex-shrink:0;">✓ Your Choice (Correct)</span>'
+            elif is_true_correct and not was_user_choice:
+                card_cls = "option-review-card option-correct-missed"
+                badge = '<span style="background:#10B981;color:#FFFFFF;padding:0.2rem 0.55rem;border-radius:6px;font-size:0.76rem;font-weight:700;flex-shrink:0;">✓ Correct Answer</span>'
+            elif not is_true_correct and was_user_choice:
+                card_cls = "option-review-card option-incorrect-picked"
+                badge = '<span style="background:#EF4444;color:#FFFFFF;padding:0.2rem 0.55rem;border-radius:6px;font-size:0.76rem;font-weight:700;flex-shrink:0;">✕ Your Choice (Incorrect)</span>'
+            else:
+                card_cls = "option-review-card option-neutral"
+                badge = '<span style="color:var(--text-sub);padding:0.2rem 0.55rem;border-radius:6px;font-size:0.85rem;font-weight:600;flex-shrink:0;">⚪</span>'
+
+            cards_html.append(
+                f'<div class="{card_cls}">'
+                f'{badge}'
+                f'<div style="flex-grow:1;font-size:0.96rem;line-height:1.5;">{opt_text}</div>'
+                f'</div>'
+            )
+
+        st.markdown("".join(cards_html), unsafe_allow_html=True)
+
+        # Explanation Card
+        st.markdown(
+            f'<div class="feedback-explanation" style="margin-bottom:1.5rem;"><strong>Explanation:</strong><br>{q["explanation"]}</div>',
             unsafe_allow_html=True
         )
 
